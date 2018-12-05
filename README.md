@@ -1,8 +1,8 @@
 <h3><a href="https://analytics.ncsu.edu/">Institute for Advanced Analytics</a></h3>
 NC State University
 <br>
-<h3><b>Distributed Data Processing Module</b></h3>
 <br>
+<h3><b>Distributed Data Processing Module</b></h3>
 <br><b>Session 1 - Open Source Ecosystem for Distributed Computing</b>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Overview of an Open Source Platform for Distributed Processing
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Tools & Services - Spark, Hadoop, Zeppelin, Ambari, Kafka, NiFi, Ranger, Hive, HBase, plus many others
