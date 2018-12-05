@@ -29,7 +29,7 @@ NC State University
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Understanding real-time open source services
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Building a real-time data ingest pipeline using Apache NiFi
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Working with Apache Kafka
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Ingest real-time data from an online API and land into Hadoop<br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Ingest real-time data from an online API and land into Hadoop
 <br>
 <br><b>Session 5 - Deploying in the Cloud</b>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Overview of the cloud ecosystem
@@ -43,5 +43,12 @@ NC State University
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Ingest data into Hive and execute queries to answer specificied questions.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Use Spark to analyze that same data and build a basic ML model.
 <br>
-<br><b>References</b>
 <br>
+<br><b>References</b>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://spark.apache.org/docs/latest/">Apache Spark Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://kafka.apache.org/20/documentation.html">Apache Kafka Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://nifi.apache.org/docs.html">Apache NiFi Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted">Apache Hive Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://hbase.apache.org/book.html">Apache HBase Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://phoenix.apache.org/">Apache Phoenix Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.hortonworks.com/">Hortonworks Docs</a>
