@@ -3,13 +3,14 @@ docker rm -f kafka
 
 docker run -it -d --hostname kafka --net dev --name kafka kafka
 
-docker cp /containers/kafka/assets/stream_kafka.py kafka:/stream_kafka.py
+# Start Kafka
+docker exec -d kafka sh -c "/assets/start_kafka.sh"
+
 #docker exec kafka /kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic dztopic1
 #docker exec kafka /kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --list
 #docker exec kafka curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 #docker exec kafka python get-pip.py
 #docker exec kafka pip install kafka
-
 
 echo "*****************************************************"
 echo "*"
