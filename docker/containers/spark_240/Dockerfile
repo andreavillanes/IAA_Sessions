@@ -7,14 +7,9 @@ FROM centos
 ######################################################################################################
 
 ARG JAVA_VER=java-1.8.0-openjdk-devel
-
 ARG ANACONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-
 ARG SPARK_URL=https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
-ARG SPARK_VER=spark-2.4.0-bin-hadoop2.7
-
 ARG ZEPPELIN_URL=https://archive.apache.org/dist/zeppelin/zeppelin-0.8.0/zeppelin-0.8.0-bin-all.tgz
-ARG ZEPPELIN_VER=zeppelin-0.8.0-bin-all
 
 ######################################################################################################
 #
@@ -41,7 +36,7 @@ RUN yum install -y git
 
 RUN wget ${SPARK_URL} -O /spark.tgz
 RUN tar -xzvf spark.tgz
-RUN mv ${SPARK_VER} /spark
+RUN mv /spark-* /spark
 RUN rm /spark.tgz
 
 ######################################################################################################
@@ -52,7 +47,7 @@ RUN rm /spark.tgz
 
 RUN wget ${ZEPPELIN_URL} -O /zeppelin.tgz
 RUN tar -xzvf zeppelin.tgz
-RUN mv ${ZEPPELIN_VER} /zeppelin
+RUN mv /zeppelin-* /zeppelin
 RUN echo "export SPARK_HOME=/spark" >> /zeppelin/conf/zeppelin-env.sh
 RUN rm /zeppelin.tgz
 
