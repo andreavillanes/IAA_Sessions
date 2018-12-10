@@ -98,4 +98,7 @@ sim = df.withColumn('date', udf_date() ) \
 sim.show(20, False)
 
 
+print('\n\n\n[ INFO ] Spark Test Successful!\n\n\n')
+
+
 #ZEND
