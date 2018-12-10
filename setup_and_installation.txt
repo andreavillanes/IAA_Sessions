@@ -8,6 +8,7 @@
 1) Install Docker
     For Windows: https://docs.docker.com/docker-for-windows/install/
     For Mac:     https://docs.docker.com/docker-for-mac/install/
+    For Ubuntu:  Run this script (https://github.com/zaratsian/IAA_Sessions/blob/master/scripts/install_docker_linux.sh)
 
 
 2) Download Github Repo:
