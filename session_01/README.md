@@ -1,4 +1,5 @@
-<br><b>1.) /usr/lib/spark/bin/pyspark</b>
+<br><b>1.) Connect to PySpark
+<br>&nbsp;&nbsp;&nbsp;&nbsp;pyspark --deploy-mode client --master yarn --name spark_example</b>
 <br>
 <br><b>2.) Run spark_test_script.py (in shell)</b>
 <br>
