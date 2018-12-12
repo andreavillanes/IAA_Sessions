@@ -1,5 +1,5 @@
 <h3><a href="https://analytics.ncsu.edu/">Institute for Advanced Analytics</a></h3>
-NC State University
+NC State University - Jan 2019
 <br>
 <br>
 <h3><b>Distributed Data Processing Module</b></h3>
@@ -52,3 +52,5 @@ NC State University
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://hbase.apache.org/book.html">Apache HBase Docs</a>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://phoenix.apache.org/">Apache Phoenix Docs</a>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.hortonworks.com/">Hortonworks Docs</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/content/gcp-quick/index.html">Hortonworks Cloudbreak for Google Cloud</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.docker.com/">Docker Docs</a>
