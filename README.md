@@ -1,6 +1,5 @@
 # [Institute for Advanced Analytics](https://analytics.ncsu.edu/)
-Distributed Data Processing Module
-Dan Zaratsian, Jan 2019
+Distributed Data Processing Module - Dan Zaratsian, Jan 2019
 
 -----------------
 
