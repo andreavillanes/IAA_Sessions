@@ -1,56 +1,71 @@
-<h3><a href="https://analytics.ncsu.edu/">Institute for Advanced Analytics</a></h3>
-NC State University - Jan 2019
-<br>
-<br>
-<h3><b>Distributed Data Processing Module</b></h3>
-<br><b>Session 1 - Open Source Ecosystem for Distributed Computing</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Overview of an Open Source Platform for Distributed Processing
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Tools & Services - Spark, Hadoop, Zeppelin, Ambari, Kafka, NiFi, Ranger, Hive, HBase, plus many others
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Platform Administration - Security, governance, operations, scalability, and deployment considerations
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Distributed architectures & use cases
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Demo - Deploying a distribute, Hadoop cluster (Pure Open Source)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Demo - Deploying a distribute, Hadoop cluster (Cloud Deployment)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Clone repo and install Docker containers
-<br>
-<br><b>Session 2 - Apache Hive - Distributed SQL</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Create Hive (SQL on Hadoop) Tables
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Tools to access / process data in Hive
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;NoSQL distributed data processing
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Create a Hive table, query a hive table, use SparkSQL, query HBase (a NoSQL database).
-<br>
-<br><b>Session 3 - Spark Machine Learning</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Building and deploying a Spark machine learning model
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Considerations for ML in distributed environments
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Python and R for distributed compute
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Config and tuning
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Build a Spark machine learning model using publicly available datasets
-<br>
-<br><b>Session 4 - Real-time Data Ingestion and load data into Hadoop</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Understanding real-time open source services
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Building a real-time data ingest pipeline using Apache NiFi
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Working with Apache Kafka
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Ingest real-time data from an online API and land into Hadoop
-<br>
-<br><b>Session 5 - Deploying in the Cloud</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Overview of the cloud ecosystem
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Tools and services
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;ML in the cloud
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Methods for deploying to the cloud
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Hands-on Lab: Deploy a cloud instance, load data, and execute queries / data processing jobs against cloud storage.
-<br>
-<br><b>Session 6 - Project</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Dataset and more details will be specified at a later date.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Ingest data into Hive and execute queries to answer specificied questions.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Use Spark to analyze that same data and build a basic ML model.
-<br>
-<br>
-<br><b>References</b>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://spark.apache.org/docs/latest/">Apache Spark Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://kafka.apache.org/20/documentation.html">Apache Kafka Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://nifi.apache.org/docs.html">Apache NiFi Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted">Apache Hive Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://hbase.apache.org/book.html">Apache HBase Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://phoenix.apache.org/">Apache Phoenix Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.hortonworks.com/">Hortonworks Docs</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/content/gcp-quick/index.html">Hortonworks Cloudbreak for Google Cloud</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;<a href="https://docs.docker.com/">Docker Docs</a>
+# [Institute for Advanced Analytics](https://analytics.ncsu.edu/)
+## Distributed Data Processing Module
+## Dan Zaratsian, Jan 2019
+
+-----------------
+
+# IAA Module - Session 1 - Platform Overview
+  • Introduction and Module Agenda
+  • Distributed Computing Platform Platform
+  • Walk-through of Apache Tools & Services (Spark, Zeppelin, Ambari, NiFi, Ranger, Hive, plus others)
+  • Distributed Architectures and Use Cases
+  • Demo - Hortonworks Data Platform (Hadoop)
+  • Demo - Google Dataproc (Hadoop)
+  • Docker Setup & Troubleshooting
+
+# IAA Module - Session 2 - SQL and NoSQL
+  • Intro to Apache Hive
+  • Apache Hive Syntax and Schema Design
+  • Demo & Lap - Apache Hive
+  • Intro to Apache HBase and Apache Phoenix
+  • Apache HBase Schema Design & Best Practices
+  • Apache Phoenix Syntax
+  • Demo & Lap - Apache HBase/Phoenix
+  • Intro to Apache SparkSQL
+  • Apache SparkSQL Syntax and Best Practices
+  • Demo & Lap - SparkSQL
+
+# IAA Module - Session 3 - Spark Machine Learning
+  • Apache Spark Overview
+  • Building and deploying Spark machine learning models
+  • Considerations for ML in distributed environments 
+  • Spark Best Practices and Tuning
+  • Demo & Lab - Spark ML with NYC Taxi Data
+
+# IAA Module - Session 4 - Realtime, Streaming Systems
+  • Intro to Apache Kafka
+  • Demo - Apache Kafka
+  • Intro to Apache NiFi
+  • Demo - Apache NiFi Walk-through
+  • Demo & Lap - Realtime Data Processing and Routing
+
+# IAA Module - Session 5 - Google Cloud Platform
+  • Intro to Google Cloud Platform
+  • Overview of the cloud ecosystem
+  • Deploying solutions in the Cloud 
+  • Industry trends 
+  • Walk-through of Tools and Services
+
+# IAA Module - Session 6 - Special Topics or Hackathon Project
+This session will be used as an overflow from previous sessions. If extra time is needed 
+or a deeper dive is required for specific content, then this session will be used for that. 
+
+In the case that all sessions go smooth and on time, then this session will be designated 
+as a 75-minute hackathon. Here are the planned flow of events:
+    1) Ingest real-time streaming data using Apache NiFi
+    2) Process and storage the streaming data using Apache NiFi (bonus points if Apache Spark is used as well)
+    3) Use Hive to query the persisted data in order to answer specific queries
+    4) Use Spark ML to build a preditive model against the persisted data
+
+-----------------
+
+# References
+  • [Apache Spark Docs](https://spark.apache.org/docs/latest/)
+  • [Apache Kafka Docs](https://kafka.apache.org/20/documentation.html)
+  • [Apache NiFi Docs](https://nifi.apache.org/docs.html)
+  • [Apache Hive Docs](https://cwiki.apache.org/confluence/display/Hive/GettingStarted)
+  • [Apache HBase Docs](https://hbase.apache.org/book.html)
+  • [Apache Phoenix Docs](https://phoenix.apache.org/)
+  • [Hortonworks Docs](https://docs.hortonworks.com/)
+  • [Hortonworks Cloudbreak for Google Cloud](https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/content/gcp-quick/index.html)
+  • [Docker Docs](https://docs.docker.com/)
