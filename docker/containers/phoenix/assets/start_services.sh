@@ -12,15 +12,26 @@ echo "Starting Phoenix Query Server..."
 
 sleep 5
 
+
 echo ""
 echo ""
 echo "******************************************************"
 echo "Startup Complete!"
 echo "******************************************************"
 echo ""
-echo "Usage:"
+echo "HBASE USAGE"
+echo ""
+echo "/hbase/bin/hbase shell"
+echo "list"
+echo "scan 'US_POPULATION', {'LIMIT' => 5}"
+echo ""
+echo ""
+echo ""
+echo "PHOENIX USAGE"
+echo ""
 echo "/phoenix/bin/sqlline.py localhost:2181"
 echo ""
+echo "!tables"
 echo ""
 echo "To create Table:"
 echo "CREATE TABLE IF NOT EXISTS us_population ("
@@ -36,4 +47,5 @@ echo "To load CSV into Table:"
 echo "/phoenix/bin/psql.py -t DEVICE_TOPOLOGY localhost /traceroute_google_mapped.csv"
 echo ""
 echo ""
+
 
