@@ -45,7 +45,7 @@ exec -l $SHELL
 ###############################################################################
 
 
-'''
+: <<'END'
 gcloud compute --project=zproject201807 instances create iaa-instance \
 --zone=us-east1-b \
 --machine-type=n1-standard-16 \
@@ -60,7 +60,7 @@ gcloud compute --project=zproject201807 instances create iaa-instance \
 --boot-disk-size=250GB \
 --boot-disk-type=pd-standard \
 --boot-disk-device-name=iaa-instance
-'''
+END
 
 
 : <<'END'
