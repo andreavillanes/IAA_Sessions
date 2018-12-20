@@ -38,12 +38,30 @@ exec -l $SHELL
 #ZEND
 
 
-
 ###############################################################################
 #
 #   GCloud Command
 #
 ###############################################################################
+
+
+'''
+gcloud compute --project=zproject201807 instances create iaa-instance \
+--zone=us-east1-b \
+--machine-type=n1-standard-16 \
+--subnet=default \
+--network-tier=PREMIUM \
+--maintenance-policy=MIGRATE \
+--service-account=880091509850-compute@developer.gserviceaccount.com \
+--scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
+--tags=flask-apps \
+--image=debian-9-drawfork-v20181101 \
+--image-project=eip-images \
+--boot-disk-size=250GB \
+--boot-disk-type=pd-standard \
+--boot-disk-device-name=iaa-instance
+'''
+
 
 : <<'END'
 gcloud compute --project=zproject201807 instances create iaa-instance \
