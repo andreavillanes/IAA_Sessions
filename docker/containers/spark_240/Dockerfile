@@ -17,54 +17,23 @@ ARG ZEPPELIN_URL=https://archive.apache.org/dist/zeppelin/zeppelin-0.8.0/zeppeli
 #
 ######################################################################################################
 
-RUN yum install -y ${JAVA_VER}
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
-
-RUN yum install -y epel-release
-RUN yum update -y
-
-RUN yum install -y wget
-RUN yum install -y unzip
-RUN yum install -y net-tools
-RUN yum install -y git
-
-######################################################################################################
-#
-#   Install Spark
-#
-######################################################################################################
-
-RUN wget ${SPARK_URL} -O /spark.tgz
-RUN tar -xzvf spark.tgz
-RUN mv /spark-* /spark
-RUN rm /spark.tgz
-
-######################################################################################################
-#
-#   Install Zeppelin
-#
-######################################################################################################
-
-RUN wget ${ZEPPELIN_URL} -O /zeppelin.tgz
-RUN tar -xzvf zeppelin.tgz
-RUN mv /zeppelin-* /zeppelin
-RUN echo "export SPARK_HOME=/spark" >> /zeppelin/conf/zeppelin-env.sh
-RUN rm /zeppelin.tgz
-
-######################################################################################################
-#
-#   Install Anaconda
-#
-######################################################################################################
-
-#RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-#RUN python get-pip.py
-#RUN rm get-pip.py
-RUN yum -y install bzip2
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+RUN yum install -y ${JAVA_VER} epel-release wget unzip net-tools git && \
+    wget ${SPARK_URL} -O /spark.tgz && \
+    tar -xzvf spark.tgz && \
+    mv /spark-* /spark && \
+    rm /spark.tgz && \
+    wget ${ZEPPELIN_URL} -O /zeppelin.tgz && \
+    tar -xzvf zeppelin.tgz && \
+    mv /zeppelin-* /zeppelin && \
+    echo "export SPARK_HOME=/spark" >> /zeppelin/conf/zeppelin-env.sh && \
+    rm /zeppelin.tgz && \
+    yum -y install bzip2 && \
+    echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet ${ANACONDA_URL} -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
     rm ~/anaconda.sh
+
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
 
 ######################################################################################################
 #

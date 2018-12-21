@@ -12,35 +12,25 @@ ARG PHOENIX_URL=https://archive.apache.org/dist/phoenix/apache-phoenix-4.8.1-HBa
 
 ######################################################################################################
 #
-#   Dependancies
+#   Install Dependancies
 #
 ######################################################################################################
 
-RUN yum install -y ${JAVA_VER}
+RUN yum install -y ${JAVA_VER} wget unzip net-tools git && \
+    wget -nv ${HBASE_URL} -O /hbase.tgz && \
+    tar -xzvf /hbase.tgz && \
+    mv hbase-* /hbase && \
+    wget -nv ${PHOENIX_URL} -O /phoenix.tgz && \
+    tar -xzvf /phoenix.tgz && \
+    mv /apache-phoenix-* /phoenix && \
+    cp /phoenix/phoenix-4.8.1-HBase-1.1-server.jar /hbase/lib 
+
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
 
-RUN yum install -y wget
-RUN yum install -y unzip
-RUN yum install -y net-tools
-RUN yum install -y git
-
 ######################################################################################################
 #
-#   HBase and Phoenix
+#   Assets
 #
-######################################################################################################
-
-# Setup HBase binaries
-RUN wget -nv ${HBASE_URL} -O /hbase.tgz
-RUN tar -xzvf /hbase.tgz
-RUN mv hbase-* /hbase
-
-# Setup Phoenix binaries
-RUN wget -nv ${PHOENIX_URL} -O /phoenix.tgz
-RUN tar -xzvf /phoenix.tgz
-RUN mv /apache-phoenix-* /phoenix
-RUN cp /phoenix/phoenix-4.8.1-HBase-1.1-server.jar /hbase/lib
-
 ######################################################################################################
 
 ADD assets /assets

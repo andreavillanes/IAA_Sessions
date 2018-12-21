@@ -18,7 +18,9 @@ sed -i 's/version: "3"/version: "2"/g' docker-compose.yml
 echo "Spinning up services (docker-compose up)"
 sleep 3
 docker-compose up -d
- 
+
+# Enter Container
+#cd docker-hive
 #docker-compose exec hive-server bash
 
 echo "###############################################################"

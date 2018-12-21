@@ -16,26 +16,12 @@ ARG NIFI_VER=nifi-1.8.0
 #
 ######################################################################################################
 
-RUN yum install -y ${JAVA_VER}
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
-
-RUN yum install -y epel-release
-RUN yum update -y
-
-RUN yum install -y wget
-RUN yum install -y unzip
-RUN yum install -y net-tools
-RUN yum install -y git
-
-######################################################################################################
-#
-#    NiFi
-#
-######################################################################################################
-
-RUN wget ${NIFI_URL} -O /nifi.tgz
-RUN tar -xzvf /nifi.tgz
-RUN mv ${NIFI_VER} /nifi
+RUN yum install -y ${JAVA_VER} epel-release wget unzip net-tools git && \
+    echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc && \
+    wget ${NIFI_URL} -O /nifi.tgz && \
+    tar -xzvf /nifi.tgz && \
+    mv ${NIFI_VER} /nifi && \
+    rm /nifi.tgz
 
 ADD assets /assets
 ADD assets/start_nifi.sh /start_nifi.sh
