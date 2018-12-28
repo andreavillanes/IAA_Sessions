@@ -21,18 +21,19 @@ To run a test PySpark script, run:
 Demo flow once Dataproc has launched:
 ```
 # PySpark Shell, connected as Client to Yarn master
-./bin/pyspark --deploy-mode client --master yarn --name spark_example
+/usr/lib/spark/bin/pyspark --deploy-mode client --master yarn --name spark_example
 ```
 ```
 # Manually run ./spark_test_script.py within the PySpark shell
 ```
 ```
 # Save sim DF as table
-sim.write.saveAsTable('sim_table')
-sim.write.format('orc').saveAsTable('sim_table_orc')
+sim.write.mode("overwrite").saveAsTable('sim_table')
+sim.write.mode("overwrite").format('orc').saveAsTable('sim_table_orc')
 ```
 ```
 # Execute queries in Hive
 /usr/lib/hive/bin/beeline -u jdbc:hive2://localhost:10000/default
+# It's recommended to use the JDBC connection, but you can also directly connect to hive via:
 /usr/lib/hive/bin/hive
 ```
