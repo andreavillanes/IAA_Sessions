@@ -3,7 +3,7 @@
 ## 1) Install Docker
 For Windows: ```https://docs.docker.com/docker-for-windows/install/```
 <br>For Mac: ```https://docs.docker.com/docker-for-mac/install/```
-<br>For Ubuntu/Linux:  ``` ```
+<br>For Ubuntu/Linux:  ```https://docs.docker.com/install/linux/docker-ce/centos/```
 <br>Or run this script https://github.com/zaratsian/IAA_Sessions/blob/master/scripts/install_docker_linux.sh
 
 To test Docker, you can run the hello world container: ```docker run hello-world```
