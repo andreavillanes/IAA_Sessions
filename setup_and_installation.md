@@ -2,8 +2,12 @@
 
 ## 1) Install Docker
 For Windows: ```https://docs.docker.com/docker-for-windows/install/```
-<br>For Mac:     ```https://docs.docker.com/docker-for-mac/install/```
-<br>For Ubuntu/Linux:  Run this script https://github.com/zaratsian/IAA_Sessions/blob/master/scripts/install_docker_linux.sh
+<br>For Mac: ```https://docs.docker.com/docker-for-mac/install/```
+<br>For Ubuntu/Linux:  ``` ```
+<br>Or run this script https://github.com/zaratsian/IAA_Sessions/blob/master/scripts/install_docker_linux.sh
+
+To test Docker, you can run the hello world container: ```docker run hello-world```
+If this completes, then Docker should be installed correctly and the containers included as part of this course should work correctly.
 
 ## 2) Download Github Repo:
 For Windows/Mac Users: Manually download from https://github.com/zaratsian/IAA_Sessions and unzip
