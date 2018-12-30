@@ -1,0 +1,285 @@
+{
+  "paragraphs": [
+    {
+      "title": "What Version of Spark?",
+      "text": "spark.version",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:51:23.357",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res4: String \u003d 2.3.2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190652394_2049649701",
+      "id": "20180227-094658_1519271832",
+      "dateCreated": "2018-12-30 17:24:12.394",
+      "dateStarted": "2018-12-30 18:51:23.365",
+      "dateFinished": "2018-12-30 18:51:23.596",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create List and Product Class",
+      "text": "case class Product(productName: String, price: Double, sku: Long)\n\nval productList \u003d List(\n   Product (\"Tooth Paste\", 2.99, 1234),\n   Product (\"Milk\", 4.59, 4567),\n   Product (\"Oatmeal\", 3.65, 8910)\n    )\n    \nval rdd \u003d spark.sparkContext.parallelize(productList)\nval df \u003d rdd.toDF\ndf.show\n\ndf.createOrReplaceTempView(\"product\")",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:51:25.236",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Product\nproductList: List[Product] \u003d List(Product(Tooth Paste,2.99,1234), Product(Milk,4.59,4567), Product(Oatmeal,3.65,8910))\nrdd: org.apache.spark.rdd.RDD[Product] \u003d ParallelCollectionRDD[281] at parallelize at \u003cconsole\u003e:27\ndf: org.apache.spark.sql.DataFrame \u003d [productName: string, price: double ... 1 more field]\n+-----------+-----+----+\n|productName|price| sku|\n+-----------+-----+----+\n|Tooth Paste| 2.99|1234|\n|       Milk| 4.59|4567|\n|    Oatmeal| 3.65|8910|\n+-----------+-----+----+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d80",
+            "http://localhost:4040/jobs/job?id\u003d81",
+            "http://localhost:4040/jobs/job?id\u003d82"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190652395_-388187144",
+      "id": "20180227-094705_894440305",
+      "dateCreated": "2018-12-30 17:24:12.395",
+      "dateStarted": "2018-12-30 18:51:25.249",
+      "dateFinished": "2018-12-30 18:51:27.934",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Use SQL to Query the Object",
+      "text": "%sql\nselect * from product",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:51:34.733",
+      "config": {
+        "editorSetting": {
+          "language": "sql"
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "productName": "string",
+                      "price": "string",
+                      "sku": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "productName\tprice\tsku\nTooth Paste\t2.99\t1234\nMilk\t4.59\t4567\nOatmeal\t3.65\t8910\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d86",
+            "http://localhost:4040/jobs/job?id\u003d87",
+            "http://localhost:4040/jobs/job?id\u003d88"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190652395_1707235797",
+      "id": "20180227-095007_1727688592",
+      "dateCreated": "2018-12-30 17:24:12.395",
+      "dateStarted": "2018-12-30 18:51:34.740",
+      "dateFinished": "2018-12-30 18:51:34.807",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Visualize the SQL using a Pie Chart",
+      "text": "%sql\nselect * from product",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:51:33.006",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "productName\tprice\tsku\nTooth Paste\t2.99\t1234\nMilk\t4.59\t4567\nOatmeal\t3.65\t8910\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d83",
+            "http://localhost:4040/jobs/job?id\u003d84",
+            "http://localhost:4040/jobs/job?id\u003d85"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190652395_1429886144",
+      "id": "20180227-095356_315070583",
+      "dateCreated": "2018-12-30 17:24:12.395",
+      "dateStarted": "2018-12-30 18:51:33.013",
+      "dateFinished": "2018-12-30 18:51:33.141",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:12.396",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190652396_-16706391",
+      "id": "20180227-095431_157496562",
+      "dateCreated": "2018-12-30 17:24:12.396",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Getting Started - Scala",
+  "id": "2E1TYDNX3",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "angular:shared_process": [],
+    "sh:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

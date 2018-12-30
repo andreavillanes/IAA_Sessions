@@ -1,0 +1,195 @@
+{
+  "paragraphs": [
+    {
+      "title": "What Version of Spark?",
+      "text": "%r\n\nsparkR.version()\nsessionInfo()\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:27.333",
+      "config": {
+        "editorSetting": {
+          "language": "r"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/r",
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.RuntimeException: Error in library(\"knitr\"): there is no package called ‘knitr’\n\n\tat org.apache.zeppelin.spark.ZeppelinR.request(ZeppelinR.java:250)\n\tat org.apache.zeppelin.spark.ZeppelinR.eval(ZeppelinR.java:176)\n\tat org.apache.zeppelin.spark.SparkRInterpreter.open(SparkRInterpreter.java:97)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190667333_-541324201",
+      "id": "20180227-094658_1519271832",
+      "dateCreated": "2018-12-30 17:24:27.333",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Generate Data, create Dataframe, and register View",
+      "text": "%r \n\nschema \u003c- structType(\n            structField(\"productName\", \"string\"), \n            structField(\"price\", \"float\"),\n            structField(\"sku\", \"float\")\n            )\n\nproductList \u003d list(\n       list(\"Tooth Paste\", 2.99, 1234),\n       list(\"Milk\", 4.59, 4567),\n       list(\"Oatmeal\", 3.65, 8910)\n        )\n\ndf \u003c- as.DataFrame(productList, schema\u003dschema) \n\nhead(df)\n\ncreateOrReplaceTempView(df, \"product\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:27.333",
+      "config": {
+        "editorSetting": {
+          "language": "r",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/r",
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.zeppelin.interpreter.InterpreterException: sparkr is not responding \nR version 3.2.3 (2015-12-10) -- \"Wooden Christmas-Tree\"\nCopyright (C) 2015 The R Foundation for Statistical Computing\nPlatform: x86_64-apple-darwin13.4.0 (64-bit)\n\nR is free software and comes with ABSOLUTELY NO WARRANTY.\nYou are welcome to redistribute it under certain conditions.\nType \u0027license()\u0027 or \u0027licence()\u0027 for distribution details.\n\n  Natural language support but running in an English locale\n\nR is a collaborative project with many contributors.\nType \u0027contributors()\u0027 for more information and\n\u0027citation()\u0027 on how to cite R or R packages in publications.\n\nType \u0027demo()\u0027 for some demos, \u0027help()\u0027 for on-line help, or\n\u0027help.start()\u0027 for an HTML browser interface to help.\nType \u0027q()\u0027 to quit R.\n\n\u003e #\n\u003e # Licensed to the Apache Software Foundation (ASF) under one\n\u003e # or more contributor license agreements.  See the NOTICE file\n\u003e # distributed with this work for additional information\n\u003e # regarding copyright ownership.  The ASF licenses this file\n\u003e # to you under the Apache License, Version 2.0 (the\n\u003e # \"License\"); you may not use this file except in compliance\n\u003e # with the License.  You may obtain a copy of the License at\n\u003e #\n\u003e #     http://www.apache.org/licenses/LICENSE-2.0\n\u003e #\n\u003e # Unless required by applicable law or agreed to in writing, software\n\u003e # distributed under the License is distributed on an \"AS IS\" BASIS,\n\u003e # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n\u003e # See the License for the specific language governing permissions and\n\u003e # limitations under the License.\n\u003e #\n\u003e \n\u003e args \u003c- commandArgs(trailingOnly \u003d TRUE)\n\u003e \n\u003e hashCode \u003c- as.integer(args[1])\n\u003e port \u003c- as.integer(args[2])\n\u003e libPath \u003c- args[3]\n\u003e version \u003c- as.integer(args[4])\n\u003e rm(args)\n\u003e \n\u003e print(paste(\"Port \", toString(port)))\n[1] \"Port  56279\"\n\u003e print(paste(\"LibPath \", libPath))\n[1] \"LibPath  /Users/khaslbeck/Downloads/zeppelin-0.7.3-bin-all/interpreter/spark/R/lib\"\n\u003e \n\u003e .libPaths(c(file.path(libPath), .libPaths()))\n\u003e library(SparkR)\n\nAttaching package: ‘SparkR’\n\nThe following objects are masked from ‘package:stats’:\n\n    cov, filter, lag, na.omit, predict, sd, var, window\n\nThe following objects are masked from ‘package:base’:\n\n    as.data.frame, colnames, colnames\u003c-, drop, intersect, rank, rbind,\n    sample, subset, summary, transform, union\n\n\u003e \n\u003e \n\u003e SparkR:::connectBackend(\"localhost\", port, 6000)\n        description               class                mode                text \n\"-\u003elocalhost:56279\"          \"sockconn\"                \"wb\"            \"binary\" \n             opened            can read           can write \n           \"opened\"               \"yes\"               \"yes\" \n\u003e \n\u003e # scStartTime is needed by R/pkg/R/sparkR.R\n\u003e assign(\".scStartTime\", as.integer(Sys.time()), envir \u003d SparkR:::.sparkREnv)\n\u003e \n\u003e # getZeppelinR\n\u003e .zeppelinR \u003d SparkR:::callJStatic(\"org.apache.zeppelin.spark.ZeppelinR\", \"getZeppelinR\", hashCode)\n\n\tat org.apache.zeppelin.spark.ZeppelinR.waitForRScriptInitialized(ZeppelinR.java:285)\n\tat org.apache.zeppelin.spark.ZeppelinR.request(ZeppelinR.java:227)\n\tat org.apache.zeppelin.spark.ZeppelinR.eval(ZeppelinR.java:176)\n\tat org.apache.zeppelin.spark.ZeppelinR.open(ZeppelinR.java:165)\n\tat org.apache.zeppelin.spark.SparkRInterpreter.open(SparkRInterpreter.java:90)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190667333_1965535112",
+      "id": "20180227-094705_894440305",
+      "dateCreated": "2018-12-30 17:24:27.333",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Use SQL to Query the Object",
+      "text": "%sql\nselect * from product",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:27.334",
+      "config": {
+        "editorSetting": {
+          "language": "sql"
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Table or view not found: product; line 1 pos 14\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190667334_-1471911838",
+      "id": "20180227-095007_1727688592",
+      "dateCreated": "2018-12-30 17:24:27.334",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Visualize the SQL using a Pie Chart",
+      "text": "%sql\nselect * from product",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:27.334",
+      "config": {
+        "editorSetting": {
+          "language": "sql"
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Table or view not found: product; line 1 pos 14\nset zeppelin.spark.sql.stacktrace \u003d true to see full stacktrace"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190667334_-468155500",
+      "id": "20180227-095356_315070583",
+      "dateCreated": "2018-12-30 17:24:27.334",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:24:27.334",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "sql"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190667334_-994582910",
+      "id": "20180227-095431_157496562",
+      "dateCreated": "2018-12-30 17:24:27.334",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Getting Started - SparkR",
+  "id": "2E24SD6Q3",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

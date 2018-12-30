@@ -3,6 +3,14 @@ docker rm -f phoenix
 
 docker run -it -d -p 8765:8765 --hostname phoenix --net dev --name phoenix phoenix
 
+# Copy Assets
+docker cp containers/phoenix/assets/1_create_phoenix_tables.sql phoenix:/. 
+docker cp containers/phoenix/assets/2_load_csvs.sh phoenix:/.
+docker cp containers/phoenix/assets/3_phoenix_queries.sql phoenix:/.
+docker cp containers/phoenix/assets/connect_to_phoenix.sh phoenix:/.
+docker cp containers/phoenix/assets phoenix:/
+docker cp data phoenix:/
+
 echo "*****************************************************"
 echo "*"
 echo "*  Phoenix Container has been started..."

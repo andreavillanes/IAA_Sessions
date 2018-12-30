@@ -1,0 +1,1479 @@
+{
+  "paragraphs": [
+    {
+      "text": "%angular\n\n\u003ch3\u003e\u003cb\u003eTMDB 5000 Movie Dataset\u003c/b\u003e\u003c/h3\u003e\nMetadata on ~5,000 movies from TMDb\n\u003cbr\u003eSource: \u003ca href\u003d\"https://www.kaggle.com/tmdb/tmdb-movie-metadata/data\"\u003eKaggle TMDB Movie Dataset\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e\u003cb\u003eBackground:\u003c/b\u003e\n\u003cbr\u003eWhat can we say about the success of a movie before it is released? Are there certain companies (Pixar?) that have found a consistent formula? Given that major films costing over $100 million to produce can still flop, this question is more important than ever to the industry. Film aficionados might have different interests. Can we predict which films will be highly rated, whether or not they are a commercial success?\n\u003cbr\u003e\n\u003cbr\u003e\u003cb\u003eAnalysis Goals:\u003c/b\u003e\n\u003cbr\u003eThe goal of this notebook is to demonstrate basic Spark text analytics against a set of unstructured data (movie title and movie overview). The results of the text analysis can tehn be paired with structured data (film budget, release date, runtime, etc) to predict movie revenue by implementing a machine learning model.\n\u003cbr\u003e\n\u003cbr\u003e",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:12:00.765",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "ANGULAR",
+            "data": "\u003ch3\u003e\u003cb\u003eTMDB 5000 Movie Dataset\u003c/b\u003e\u003c/h3\u003e\nMetadata on ~5,000 movies from TMDb\n\u003cbr\u003eSource: \u003ca href\u003d\"https://www.kaggle.com/tmdb/tmdb-movie-metadata/data\"\u003eKaggle TMDB Movie Dataset\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e\u003cb\u003eBackground:\u003c/b\u003e\n\u003cbr\u003eWhat can we say about the success of a movie before it is released? Are there certain companies (Pixar?) that have found a consistent formula? Given that major films costing over $100 million to produce can still flop, this question is more important than ever to the industry. Film aficionados might have different interests. Can we predict which films will be highly rated, whether or not they are a commercial success?\n\u003cbr\u003e\n\u003cbr\u003e\u003cb\u003eAnalysis Goals:\u003c/b\u003e\n\u003cbr\u003eThe goal of this notebook is to demonstrate basic Spark text analytics against a set of unstructured data (movie title and movie overview). The results of the text analysis can tehn be paired with structured data (film budget, release date, runtime, etc) to predict movie revenue by implementing a machine learning model.\n\u003cbr\u003e\n\u003cbr\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766015_35663013",
+      "id": "20180403-144202_1219661617",
+      "dateCreated": "2018-12-30 17:26:06.015",
+      "dateStarted": "2018-12-30 19:12:00.765",
+      "dateFinished": "2018-12-30 19:12:00.771",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Check Spark and Python Versions",
+      "text": "%pyspark\nimport sys\nprint(\u0027Spark Version:  {}\u0027.format(spark.version))\nprint(\u0027Python Version: {}\u0027.format(sys.version))\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:12:21.797",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Spark Version:  2.3.2\nPython Version: 3.7.0 (default, Jun 28 2018, 13:15:42) \n[GCC 7.2.0]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766016_-1476826826",
+      "id": "20180404-231306_412604001",
+      "dateCreated": "2018-12-30 17:26:06.016",
+      "dateStarted": "2018-12-30 19:12:21.821",
+      "dateFinished": "2018-12-30 19:12:21.832",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Import Libraries",
+      "text": "%pyspark\n\nimport datetime, time \nimport re, random, sys\n\nfrom pyspark.sql.types import *\nfrom pyspark.sql.functions import *\nfrom pyspark.sql.functions import monotonically_increasing_id, col, expr, when, concat, lit, udf, split\nfrom pyspark.ml.linalg import Vectors\nfrom pyspark.ml.regression import GBTRegressor, LinearRegression, GeneralizedLinearRegression, RandomForestRegressor\nfrom pyspark.ml.classification import GBTClassifier, RandomForestClassifier\nfrom pyspark.ml.feature import VectorIndexer, VectorAssembler, StringIndexer, Bucketizer\nfrom pyspark.ml.evaluation import RegressionEvaluator\nfrom pyspark.ml import Pipeline\nfrom pyspark.ml.evaluation import MulticlassClassificationEvaluator, RegressionEvaluator\nfrom pyspark.ml.feature import HashingTF, IDF, Tokenizer, CountVectorizer\nfrom pyspark.ml.clustering import LDA, BisectingKMeans\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:12:24.998",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766016_-533310283",
+      "id": "20171002-231600_106801054",
+      "dateCreated": "2018-12-30 17:26:06.016",
+      "dateStarted": "2018-12-30 19:12:25.021",
+      "dateFinished": "2018-12-30 19:12:25.028",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Load Rawdata",
+      "text": "%pyspark\n\n############################################################################################################\n#\n#   Load Rawdata\n#   Source: https://www.kaggle.com/tmdb/tmdb-movie-metadata\n#\n############################################################################################################\n\nschema \u003d StructType([                                           \\\n    StructField(\"budget\", IntegerType(), True),                 \\\n    StructField(\"genres\", StringType(), True),                  \\\n    StructField(\"homepage\", StringType(), True),                \\\n    StructField(\"id\", StringType(), True),                      \\\n    StructField(\"keywords\", StringType(), True),                \\\n    StructField(\"original_language\", StringType(), True),       \\\n    StructField(\"original_title\", StringType(), True),          \\\n    StructField(\"overview\", StringType(), True),                \\\n    StructField(\"popularity\", FloatType(), True),               \\\n    StructField(\"production_companies\", StringType(), True),    \\\n    StructField(\"production_countries\", StringType(), True),    \\\n    StructField(\"release_date\", StringType(), True),            \\\n    StructField(\"revenue\", LongType(), True),                   \\\n    StructField(\"runtime\", IntegerType(), True),                \\\n    StructField(\"spoken_languages\", StringType(), True),        \\\n    StructField(\"status\", StringType(), True),                  \\\n    StructField(\"tagline\", StringType(), True),                 \\\n    StructField(\"title\", StringType(), True),                   \\\n    StructField(\"vote_average\", FloatType(), True),             \\\n    StructField(\"vote_count\", IntegerType(), True)])\n\nrawdata \u003d spark.read.load(\u0027/data/tmdb_5000_movies.csv\u0027, \n    format\u003d\"csv\", \n    header\u003dTrue, \n    schema\u003dschema, \n    inferSchema\u003dFalse, \n    quote\u003d\u0027\"\u0027, \n    escape\u003d\u0027\"\u0027, \n    mode\u003d\"DROPMALFORMED\")\n\nprint(\"Number of records in rawdata: \" + str(rawdata.count()))\n\nrawdata.createOrReplaceTempView(\u0027rawdata\u0027)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:52:37.845",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Number of records in rawdata: 4800\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d89"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766016_2106072107",
+      "id": "20171001-182907_522031746",
+      "dateCreated": "2018-12-30 17:26:06.016",
+      "dateStarted": "2018-12-30 18:52:37.869",
+      "dateFinished": "2018-12-30 18:52:38.125",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Display Rawdata",
+      "text": "%sql\n\nselect * from rawdata limit 20",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:52:42.693",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "budget": "string",
+                      "genres": "string",
+                      "homepage": "string",
+                      "id": "string",
+                      "keywords": "string",
+                      "original_language": "string",
+                      "original_title": "string",
+                      "overview": "string",
+                      "popularity": "string",
+                      "production_companies": "string",
+                      "production_countries": "string",
+                      "release_date": "string",
+                      "revenue": "string",
+                      "runtime": "string",
+                      "spoken_languages": "string",
+                      "status": "string",
+                      "tagline": "string",
+                      "title": "string",
+                      "vote_average": "string",
+                      "vote_count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "budget\tgenres\thomepage\tid\tkeywords\toriginal_language\toriginal_title\toverview\tpopularity\tproduction_companies\tproduction_countries\trelease_date\trevenue\truntime\tspoken_languages\tstatus\ttagline\ttitle\tvote_average\tvote_count\n237000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://www.avatarmovie.com/\t19995\t[{\"id\": 1463, \"name\": \"culture clash\"}, {\"id\": 2964, \"name\": \"future\"}, {\"id\": 3386, \"name\": \"space war\"}, {\"id\": 3388, \"name\": \"space colony\"}, {\"id\": 3679, \"name\": \"society\"}, {\"id\": 3801, \"name\": \"space travel\"}, {\"id\": 9685, \"name\": \"futuristic\"}, {\"id\": 9840, \"name\": \"romance\"}, {\"id\": 9882, \"name\": \"space\"}, {\"id\": 9951, \"name\": \"alien\"}, {\"id\": 10148, \"name\": \"tribe\"}, {\"id\": 10158, \"name\": \"alien planet\"}, {\"id\": 10987, \"name\": \"cgi\"}, {\"id\": 11399, \"name\": \"marine\"}, {\"id\": 13065, \"name\": \"soldier\"}, {\"id\": 14643, \"name\": \"battle\"}, {\"id\": 14720, \"name\": \"love affair\"}, {\"id\": 165431, \"name\": \"anti war\"}, {\"id\": 193554, \"name\": \"power relations\"}, {\"id\": 206690, \"name\": \"mind and soul\"}, {\"id\": 209714, \"name\": \"3d\"}]\ten\tAvatar\tIn the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.\t150.43758\t[{\"name\": \"Ingenious Film Partners\", \"id\": 289}, {\"name\": \"Twentieth Century Fox Film Corporation\", \"id\": 306}, {\"name\": \"Dune Entertainment\", \"id\": 444}, {\"name\": \"Lightstorm Entertainment\", \"id\": 574}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}, {\"iso_3166_1\": \"GB\", \"name\": \"United Kingdom\"}]\t2009-12-10\t2787965087\t162\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"es\", \"name\": \"Espa\\u00f1ol\"}]\tReleased\tEnter the World of Pandora.\tAvatar\t7.2\t11800\n300000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 28, \"name\": \"Action\"}]\thttp://disney.go.com/disneypictures/pirates/\t285\t[{\"id\": 270, \"name\": \"ocean\"}, {\"id\": 726, \"name\": \"drug abuse\"}, {\"id\": 911, \"name\": \"exotic island\"}, {\"id\": 1319, \"name\": \"east india trading company\"}, {\"id\": 2038, \"name\": \"love of one\u0027s life\"}, {\"id\": 2052, \"name\": \"traitor\"}, {\"id\": 2580, \"name\": \"shipwreck\"}, {\"id\": 2660, \"name\": \"strong woman\"}, {\"id\": 3799, \"name\": \"ship\"}, {\"id\": 5740, \"name\": \"alliance\"}, {\"id\": 5941, \"name\": \"calypso\"}, {\"id\": 6155, \"name\": \"afterlife\"}, {\"id\": 6211, \"name\": \"fighter\"}, {\"id\": 12988, \"name\": \"pirate\"}, {\"id\": 157186, \"name\": \"swashbuckler\"}, {\"id\": 179430, \"name\": \"aftercreditsstinger\"}]\ten\tPirates of the Caribbean: At World\u0027s End\tCaptain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.\t139.08261\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}, {\"name\": \"Jerry Bruckheimer Films\", \"id\": 130}, {\"name\": \"Second Mate Productions\", \"id\": 19936}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2007-05-19\t961000000\t169\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tAt the end of the world, the adventure begins.\tPirates of the Caribbean: At World\u0027s End\t6.9\t4500\n245000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 80, \"name\": \"Crime\"}]\thttp://www.sonypictures.com/movies/spectre/\t206647\t[{\"id\": 470, \"name\": \"spy\"}, {\"id\": 818, \"name\": \"based on novel\"}, {\"id\": 4289, \"name\": \"secret agent\"}, {\"id\": 9663, \"name\": \"sequel\"}, {\"id\": 14555, \"name\": \"mi6\"}, {\"id\": 156095, \"name\": \"british secret service\"}, {\"id\": 158431, \"name\": \"united kingdom\"}]\ten\tSpectre\tA cryptic message from Bond’s past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.\t107.376785\t[{\"name\": \"Columbia Pictures\", \"id\": 5}, {\"name\": \"Danjaq\", \"id\": 10761}, {\"name\": \"B24\", \"id\": 69434}]\t[{\"iso_3166_1\": \"GB\", \"name\": \"United Kingdom\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2015-10-26\t880674609\t148\t[{\"iso_639_1\": \"fr\", \"name\": \"Fran\\u00e7ais\"}, {\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"es\", \"name\": \"Espa\\u00f1ol\"}, {\"iso_639_1\": \"it\", \"name\": \"Italiano\"}, {\"iso_639_1\": \"de\", \"name\": \"Deutsch\"}]\tReleased\tA Plan No One Escapes\tSpectre\t6.3\t4466\n250000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 80, \"name\": \"Crime\"}, {\"id\": 18, \"name\": \"Drama\"}, {\"id\": 53, \"name\": \"Thriller\"}]\thttp://www.thedarkknightrises.com/\t49026\t[{\"id\": 849, \"name\": \"dc comics\"}, {\"id\": 853, \"name\": \"crime fighter\"}, {\"id\": 949, \"name\": \"terrorist\"}, {\"id\": 1308, \"name\": \"secret identity\"}, {\"id\": 1437, \"name\": \"burglar\"}, {\"id\": 3051, \"name\": \"hostage drama\"}, {\"id\": 3562, \"name\": \"time bomb\"}, {\"id\": 6969, \"name\": \"gotham city\"}, {\"id\": 7002, \"name\": \"vigilante\"}, {\"id\": 9665, \"name\": \"cover-up\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9990, \"name\": \"villainess\"}, {\"id\": 10044, \"name\": \"tragic hero\"}, {\"id\": 13015, \"name\": \"terrorism\"}, {\"id\": 14796, \"name\": \"destruction\"}, {\"id\": 18933, \"name\": \"catwoman\"}, {\"id\": 156082, \"name\": \"cat burglar\"}, {\"id\": 156395, \"name\": \"imax\"}, {\"id\": 173272, \"name\": \"flood\"}, {\"id\": 179093, \"name\": \"criminal underworld\"}, {\"id\": 230775, \"name\": \"batman\"}]\ten\tThe Dark Knight Rises\tFollowing the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent\u0027s crimes to protect the late attorney\u0027s reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham\u0027s finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.\t112.31295\t[{\"name\": \"Legendary Pictures\", \"id\": 923}, {\"name\": \"Warner Bros.\", \"id\": 6194}, {\"name\": \"DC Entertainment\", \"id\": 9993}, {\"name\": \"Syncopy\", \"id\": 9996}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2012-07-16\t1084939099\t165\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tThe Legend Ends\tThe Dark Knight Rises\t7.6\t9106\n260000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://movies.disney.com/john-carter\t49529\t[{\"id\": 818, \"name\": \"based on novel\"}, {\"id\": 839, \"name\": \"mars\"}, {\"id\": 1456, \"name\": \"medallion\"}, {\"id\": 3801, \"name\": \"space travel\"}, {\"id\": 7376, \"name\": \"princess\"}, {\"id\": 9951, \"name\": \"alien\"}, {\"id\": 10028, \"name\": \"steampunk\"}, {\"id\": 10539, \"name\": \"martian\"}, {\"id\": 10685, \"name\": \"escape\"}, {\"id\": 161511, \"name\": \"edgar rice burroughs\"}, {\"id\": 163252, \"name\": \"alien race\"}, {\"id\": 179102, \"name\": \"superhuman strength\"}, {\"id\": 190320, \"name\": \"mars civilization\"}, {\"id\": 195446, \"name\": \"sword and planet\"}, {\"id\": 207928, \"name\": \"19th century\"}, {\"id\": 209714, \"name\": \"3d\"}]\ten\tJohn Carter\tJohn Carter is a war-weary, former military captain who\u0027s inexplicably transported to the mysterious and exotic planet of Barsoom (Mars) and reluctantly becomes embroiled in an epic conflict. It\u0027s a world on the brink of collapse, and Carter rediscovers his humanity when he realizes the survival of Barsoom and its people rests in his hands.\t43.926994\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2012-03-07\t284139100\t132\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tLost in our world, found in another.\tJohn Carter\t6.1\t2124\n258000000\t[{\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}]\thttp://www.sonypictures.com/movies/spider-man3/\t559\t[{\"id\": 851, \"name\": \"dual identity\"}, {\"id\": 1453, \"name\": \"amnesia\"}, {\"id\": 1965, \"name\": \"sandstorm\"}, {\"id\": 2038, \"name\": \"love of one\u0027s life\"}, {\"id\": 3446, \"name\": \"forgiveness\"}, {\"id\": 3986, \"name\": \"spider\"}, {\"id\": 4391, \"name\": \"wretch\"}, {\"id\": 4959, \"name\": \"death of a friend\"}, {\"id\": 5776, \"name\": \"egomania\"}, {\"id\": 5789, \"name\": \"sand\"}, {\"id\": 5857, \"name\": \"narcism\"}, {\"id\": 6062, \"name\": \"hostility\"}, {\"id\": 8828, \"name\": \"marvel comic\"}, {\"id\": 9663, \"name\": \"sequel\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9748, \"name\": \"revenge\"}]\ten\tSpider-Man 3\tThe seemingly invincible Spider-Man goes up against an all-new crop of villain – including the shape-shifting Sandman. While Spider-Man’s superpowers are altered by an alien organism, his alter ego, Peter Parker, deals with nemesis Eddie Brock and also gets caught up in a love triangle.\t115.699814\t[{\"name\": \"Columbia Pictures\", \"id\": 5}, {\"name\": \"Laura Ziskin Productions\", \"id\": 326}, {\"name\": \"Marvel Enterprises\", \"id\": 19551}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2007-05-01\t890871626\t139\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"fr\", \"name\": \"Fran\\u00e7ais\"}]\tReleased\tThe battle within.\tSpider-Man 3\t5.9\t3576\n260000000\t[{\"id\": 16, \"name\": \"Animation\"}, {\"id\": 10751, \"name\": \"Family\"}]\thttp://disney.go.com/disneypictures/tangled/\t38757\t[{\"id\": 1562, \"name\": \"hostage\"}, {\"id\": 2343, \"name\": \"magic\"}, {\"id\": 2673, \"name\": \"horse\"}, {\"id\": 3205, \"name\": \"fairy tale\"}, {\"id\": 4344, \"name\": \"musical\"}, {\"id\": 7376, \"name\": \"princess\"}, {\"id\": 10336, \"name\": \"animation\"}, {\"id\": 33787, \"name\": \"tower\"}, {\"id\": 155658, \"name\": \"blonde woman\"}, {\"id\": 162219, \"name\": \"selfishness\"}, {\"id\": 163545, \"name\": \"healing power\"}, {\"id\": 179411, \"name\": \"based on fairy tale\"}, {\"id\": 179431, \"name\": \"duringcreditsstinger\"}, {\"id\": 215258, \"name\": \"healing gift\"}, {\"id\": 234183, \"name\": \"animal sidekick\"}]\ten\tTangled\tWhen the kingdom\u0027s most wanted-and most charming-bandit Flynn Rider hides out in a mysterious tower, he\u0027s taken hostage by Rapunzel, a beautiful and feisty tower-bound teen with 70 feet of magical, golden hair. Flynn\u0027s curious captor, who\u0027s looking for her ticket out of the tower where she\u0027s been locked away for years, strikes a deal with the handsome thief and the unlikely duo sets off on an action-packed escapade, complete with a super-cop horse, an over-protective chameleon and a gruff gang of pub thugs.\t48.68197\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}, {\"name\": \"Walt Disney Animation Studios\", \"id\": 6125}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2010-11-24\t591794936\t100\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tThey\u0027re taking adventure to new lengths.\tTangled\t7.4\t3330\n280000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://marvel.com/movies/movie/193/avengers_age_of_ultron\t99861\t[{\"id\": 8828, \"name\": \"marvel comic\"}, {\"id\": 9663, \"name\": \"sequel\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9717, \"name\": \"based on comic book\"}, {\"id\": 10629, \"name\": \"vision\"}, {\"id\": 155030, \"name\": \"superhero team\"}, {\"id\": 179431, \"name\": \"duringcreditsstinger\"}, {\"id\": 180547, \"name\": \"marvel cinematic universe\"}, {\"id\": 209714, \"name\": \"3d\"}]\ten\tAvengers: Age of Ultron\tWhen Tony Stark tries to jumpstart a dormant peacekeeping program, things go awry and Earth’s Mightiest Heroes are put to the ultimate test as the fate of the planet hangs in the balance. As the villainous Ultron emerges, it is up to The Avengers to stop him from enacting his terrible plans, and soon uneasy alliances and unexpected action pave the way for an epic and unique global adventure.\t134.27924\t[{\"name\": \"Marvel Studios\", \"id\": 420}, {\"name\": \"Prime Focus\", \"id\": 15357}, {\"name\": \"Revolution Sun Studios\", \"id\": 76043}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2015-04-22\t1405403694\t141\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tA New Age Has Come.\tAvengers: Age of Ultron\t7.3\t6767\n250000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 10751, \"name\": \"Family\"}]\thttp://harrypotter.warnerbros.com/harrypotterandthehalf-bloodprince/dvd/index.html\t767\t[{\"id\": 616, \"name\": \"witch\"}, {\"id\": 2343, \"name\": \"magic\"}, {\"id\": 3872, \"name\": \"broom\"}, {\"id\": 3884, \"name\": \"school of witchcraft\"}, {\"id\": 6333, \"name\": \"wizardry\"}, {\"id\": 10164, \"name\": \"apparition\"}, {\"id\": 10791, \"name\": \"teenage crush\"}, {\"id\": 12564, \"name\": \"werewolf\"}]\ten\tHarry Potter and the Half-Blood Prince\tAs Harry begins his sixth year at Hogwarts, he discovers an old book marked as \u0027Property of the Half-Blood Prince\u0027, and begins to learn more about Lord Voldemort\u0027s dark past.\t98.885635\t[{\"name\": \"Warner Bros.\", \"id\": 6194}, {\"name\": \"Heyday Films\", \"id\": 7364}]\t[{\"iso_3166_1\": \"GB\", \"name\": \"United Kingdom\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2009-07-07\t933959197\t153\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tDark Secrets Revealed\tHarry Potter and the Half-Blood Prince\t7.4\t5293\n250000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}]\thttp://www.batmanvsupermandawnofjustice.com/\t209112\t[{\"id\": 849, \"name\": \"dc comics\"}, {\"id\": 7002, \"name\": \"vigilante\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9717, \"name\": \"based on comic book\"}, {\"id\": 9748, \"name\": \"revenge\"}, {\"id\": 163455, \"name\": \"super powers\"}, {\"id\": 195242, \"name\": \"clark kent\"}, {\"id\": 195243, \"name\": \"bruce wayne\"}, {\"id\": 229266, \"name\": \"dc extended universe\"}]\ten\tBatman v Superman: Dawn of Justice\tFearing the actions of a god-like Super Hero left unchecked, Gotham City’s own formidable, forceful vigilante takes on Metropolis’s most revered, modern-day savior, while the world wrestles with what sort of hero it really needs. And with Batman and Superman at war with one another, a new threat quickly arises, putting mankind in greater danger than it’s ever known before.\t155.79045\t[{\"name\": \"DC Comics\", \"id\": 429}, {\"name\": \"Atlas Entertainment\", \"id\": 507}, {\"name\": \"Warner Bros.\", \"id\": 6194}, {\"name\": \"DC Entertainment\", \"id\": 9993}, {\"name\": \"Cruel \u0026 Unusual Films\", \"id\": 9995}, {\"name\": \"RatPac-Dune Entertainment\", \"id\": 41624}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2016-03-23\t873260194\t151\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tJustice or revenge\tBatman v Superman: Dawn of Justice\t5.7\t7004\n270000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 28, \"name\": \"Action\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://www.superman.com\t1452\t[{\"id\": 83, \"name\": \"saving the world\"}, {\"id\": 849, \"name\": \"dc comics\"}, {\"id\": 8872, \"name\": \"invulnerability\"}, {\"id\": 9663, \"name\": \"sequel\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9717, \"name\": \"based on comic book\"}, {\"id\": 163420, \"name\": \"kryptonite\"}, {\"id\": 163455, \"name\": \"super powers\"}, {\"id\": 179102, \"name\": \"superhuman strength\"}, {\"id\": 202526, \"name\": \"lex luthor\"}]\ten\tSuperman Returns\tSuperman returns to discover his 5-year absence has allowed Lex Luthor to walk free, and that those he was closest too felt abandoned and have moved on. Luthor plots his ultimate revenge that could see millions killed and change the face of the planet forever, as well as ridding himself of the Man of Steel.\t57.925625\t[{\"name\": \"DC Comics\", \"id\": 429}, {\"name\": \"Legendary Pictures\", \"id\": 923}, {\"name\": \"Warner Bros.\", \"id\": 6194}, {\"name\": \"Bad Hat Harry Productions\", \"id\": 9168}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2006-06-28\t391081192\t154\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"fr\", \"name\": \"Fran\\u00e7ais\"}, {\"iso_639_1\": \"de\", \"name\": \"Deutsch\"}]\tReleased\tnull\tSuperman Returns\t5.4\t1400\n200000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 28, \"name\": \"Action\"}, {\"id\": 53, \"name\": \"Thriller\"}, {\"id\": 80, \"name\": \"Crime\"}]\thttp://www.mgm.com/view/movie/234/Quantum-of-Solace/\t10764\t[{\"id\": 627, \"name\": \"killing\"}, {\"id\": 1568, \"name\": \"undercover\"}, {\"id\": 4289, \"name\": \"secret agent\"}, {\"id\": 156095, \"name\": \"british secret service\"}]\ten\tQuantum of Solace\tQuantum of Solace continues the adventures of James Bond after Casino Royale. Betrayed by Vesper, the woman he loved, 007 fights the urge to make his latest mission personal. Pursuing his determination to uncover the truth, Bond and M interrogate Mr. White, who reveals that the organization that blackmailed Vesper is far more complex and dangerous than anyone had imagined.\t107.92881\t[{\"name\": \"Eon Productions\", \"id\": 7576}]\t[{\"iso_3166_1\": \"GB\", \"name\": \"United Kingdom\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2008-10-30\t586090727\t106\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"es\", \"name\": \"Espa\\u00f1ol\"}, {\"iso_639_1\": \"it\", \"name\": \"Italiano\"}, {\"iso_639_1\": \"fr\", \"name\": \"Fran\\u00e7ais\"}, {\"iso_639_1\": \"de\", \"name\": \"Deutsch\"}]\tReleased\tFor love, for hate, for justice, for revenge.\tQuantum of Solace\t6.1\t2965\n200000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 28, \"name\": \"Action\"}]\thttp://disney.go.com/disneypictures/pirates/\t58\t[{\"id\": 616, \"name\": \"witch\"}, {\"id\": 663, \"name\": \"fortune teller\"}, {\"id\": 910, \"name\": \"bondage\"}, {\"id\": 911, \"name\": \"exotic island\"}, {\"id\": 1299, \"name\": \"monster\"}, {\"id\": 1316, \"name\": \"captain\"}, {\"id\": 1317, \"name\": \"card game\"}, {\"id\": 1319, \"name\": \"east india trading company\"}, {\"id\": 1461, \"name\": \"compass\"}, {\"id\": 3799, \"name\": \"ship\"}, {\"id\": 5600, \"name\": \"daughter\"}, {\"id\": 12988, \"name\": \"pirate\"}, {\"id\": 157186, \"name\": \"swashbuckler\"}, {\"id\": 179430, \"name\": \"aftercreditsstinger\"}]\ten\tPirates of the Caribbean: Dead Man\u0027s Chest\tCaptain Jack Sparrow works his way out of a blood debt with the ghostly Davey Jones, he also attempts to avoid eternal damnation.\t145.84738\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}, {\"name\": \"Jerry Bruckheimer Films\", \"id\": 130}, {\"name\": \"Second Mate Productions\", \"id\": 19936}]\t[{\"iso_3166_1\": \"JM\", \"name\": \"Jamaica\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}, {\"iso_3166_1\": \"BS\", \"name\": \"Bahamas\"}, {\"iso_3166_1\": \"DM\", \"name\": \"Dominica\"}]\t2006-06-20\t1065659812\t151\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"tr\", \"name\": \"T\\u00fcrk\\u00e7e\"}, {\"iso_639_1\": \"el\", \"name\": \"\\u03b5\\u03bb\\u03bb\\u03b7\\u03bd\\u03b9\\u03ba\\u03ac\"}, {\"iso_639_1\": \"zh\", \"name\": \"\\u666e\\u901a\\u8bdd\"}]\tReleased\tJack is back!\tPirates of the Caribbean: Dead Man\u0027s Chest\t7.0\t5246\n255000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 37, \"name\": \"Western\"}]\thttp://disney.go.com/the-lone-ranger/\t57201\t[{\"id\": 1556, \"name\": \"texas\"}, {\"id\": 2673, \"name\": \"horse\"}, {\"id\": 5385, \"name\": \"survivor\"}, {\"id\": 5901, \"name\": \"texas ranger\"}, {\"id\": 9104, \"name\": \"partner\"}, {\"id\": 9503, \"name\": \"outlaw\"}, {\"id\": 10685, \"name\": \"escape\"}, {\"id\": 10909, \"name\": \"lawyer\"}, {\"id\": 13008, \"name\": \"train\"}, {\"id\": 178867, \"name\": \"lone ranger\"}, {\"id\": 179419, \"name\": \"comanche\"}, {\"id\": 222787, \"name\": \"the lone ranger\"}, {\"id\": 228232, \"name\": \"tonto\"}]\ten\tThe Lone Ranger\tThe Texas Rangers chase down a gang of outlaws led by Butch Cavendish, but the gang ambushes the Rangers, seemingly killing them all. One survivor is found, however, by an American Indian named Tonto, who nurses him back to health. The Ranger, donning a mask and riding a white stallion named Silver, teams up with Tonto to bring the unscrupulous gang and others of that ilk to justice.\t49.046955\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}, {\"name\": \"Jerry Bruckheimer Films\", \"id\": 130}, {\"name\": \"Infinitum Nihil\", \"id\": 2691}, {\"name\": \"Silver Bullet Productions (II)\", \"id\": 37380}, {\"name\": \"Blind Wink Productions\", \"id\": 37381}, {\"name\": \"Classic Media\", \"id\": 37382}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2013-07-03\t89289910\t149\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tNever Take Off the Mask\tThe Lone Ranger\t5.9\t2311\n225000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://www.manofsteel.com/\t49521\t[{\"id\": 83, \"name\": \"saving the world\"}, {\"id\": 849, \"name\": \"dc comics\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9717, \"name\": \"based on comic book\"}, {\"id\": 10761, \"name\": \"superhuman\"}, {\"id\": 14909, \"name\": \"alien invasion\"}, {\"id\": 161184, \"name\": \"reboot\"}, {\"id\": 163455, \"name\": \"super powers\"}, {\"id\": 229266, \"name\": \"dc extended universe\"}]\ten\tMan of Steel\tA young boy learns that he has extraordinary powers and is not of this earth. As a young man, he journeys to discover where he came from and what he was sent here to do. But the hero in him must emerge if he is to save the world from annihilation and become the symbol of hope for all mankind.\t99.39801\t[{\"name\": \"Legendary Pictures\", \"id\": 923}, {\"name\": \"Warner Bros.\", \"id\": 6194}, {\"name\": \"DC Entertainment\", \"id\": 9993}, {\"name\": \"Syncopy\", \"id\": 9996}, {\"name\": \"Cruel and Unusual Films\", \"id\": 78685}]\t[{\"iso_3166_1\": \"GB\", \"name\": \"United Kingdom\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2013-06-12\t662845518\t143\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tYou will believe that a man can fly.\tMan of Steel\t6.5\t6359\n225000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 10751, \"name\": \"Family\"}, {\"id\": 14, \"name\": \"Fantasy\"}]\tnull\t2454\t[{\"id\": 818, \"name\": \"based on novel\"}, {\"id\": 855, \"name\": \"fictional place\"}, {\"id\": 1155, \"name\": \"brother sister relationship\"}, {\"id\": 2043, \"name\": \"lion\"}, {\"id\": 3714, \"name\": \"human being\"}, {\"id\": 4391, \"name\": \"wretch\"}, {\"id\": 4820, \"name\": \"leap in time\"}, {\"id\": 5144, \"name\": \"matter of life and death\"}, {\"id\": 6150, \"name\": \"faith\"}, {\"id\": 6464, \"name\": \"uncle\"}, {\"id\": 166930, \"name\": \"narnia\"}, {\"id\": 170362, \"name\": \"fantasy world\"}]\ten\tThe Chronicles of Narnia: Prince Caspian\tOne year after their incredible adventures in the Lion, the Witch and the Wardrobe, Peter, Edmund, Lucy and Susan Pevensie return to Narnia to aid a young prince whose life has been threatened by the evil King Miraz. Now, with the help of a colorful cast of new characters, including Trufflehunter the badger and Nikabrik the dwarf, the Pevensie clan embarks on an incredible quest to ensure that Narnia is returned to its rightful heir.\t53.978603\t[{\"name\": \"Walt Disney\", \"id\": 5888}, {\"name\": \"Walden Media\", \"id\": 10221}, {\"name\": \"Stillking Films\", \"id\": 11345}, {\"name\": \"Ozumi Films\", \"id\": 11440}, {\"name\": \"Propeler\", \"id\": 11441}, {\"name\": \"Silverbell Films\", \"id\": 11442}, {\"name\": \"Revolution Sun Studios\", \"id\": 76043}]\t[{\"iso_3166_1\": \"CZ\", \"name\": \"Czech Republic\"}, {\"iso_3166_1\": \"PL\", \"name\": \"Poland\"}, {\"iso_3166_1\": \"SI\", \"name\": \"Slovenia\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2008-05-15\t419651413\t150\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tHope has a new face.\tThe Chronicles of Narnia: Prince Caspian\t6.3\t1630\n220000000\t[{\"id\": 878, \"name\": \"Science Fiction\"}, {\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}]\thttp://marvel.com/avengers_movie/\t24428\t[{\"id\": 242, \"name\": \"new york\"}, {\"id\": 5539, \"name\": \"shield\"}, {\"id\": 8828, \"name\": \"marvel comic\"}, {\"id\": 9715, \"name\": \"superhero\"}, {\"id\": 9717, \"name\": \"based on comic book\"}, {\"id\": 14909, \"name\": \"alien invasion\"}, {\"id\": 155030, \"name\": \"superhero team\"}, {\"id\": 179430, \"name\": \"aftercreditsstinger\"}, {\"id\": 179431, \"name\": \"duringcreditsstinger\"}, {\"id\": 180547, \"name\": \"marvel cinematic universe\"}]\ten\tThe Avengers\tWhen an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!\t144.44864\t[{\"name\": \"Paramount Pictures\", \"id\": 4}, {\"name\": \"Marvel Studios\", \"id\": 420}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2012-04-25\t1519557910\t143\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tSome assembly required.\tThe Avengers\t7.4\t11776\n380000000\t[{\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 28, \"name\": \"Action\"}, {\"id\": 14, \"name\": \"Fantasy\"}]\thttp://disney.go.com/pirates/index-on-stranger-tides.html#/video/\t1865\t[{\"id\": 658, \"name\": \"sea\"}, {\"id\": 1316, \"name\": \"captain\"}, {\"id\": 1860, \"name\": \"mutiny\"}, {\"id\": 1938, \"name\": \"sword\"}, {\"id\": 2569, \"name\": \"prime minister\"}, {\"id\": 3180, \"name\": \"sailing\"}, {\"id\": 3625, \"name\": \"silver\"}, {\"id\": 3799, \"name\": \"ship\"}, {\"id\": 4235, \"name\": \"duke\"}, {\"id\": 5938, \"name\": \"mermaid\"}, {\"id\": 12988, \"name\": \"pirate\"}, {\"id\": 13065, \"name\": \"soldier\"}, {\"id\": 14643, \"name\": \"battle\"}, {\"id\": 157186, \"name\": \"swashbuckler\"}, {\"id\": 179430, \"name\": \"aftercreditsstinger\"}, {\"id\": 209714, \"name\": \"3d\"}]\ten\tPirates of the Caribbean: On Stranger Tides\tCaptain Jack Sparrow crosses paths with a woman from his past, and he\u0027s not sure if it\u0027s love -- or if she\u0027s a ruthless con artist who\u0027s using him to find the fabled Fountain of Youth. When she forces him aboard the Queen Anne\u0027s Revenge, the ship of the formidable pirate Blackbeard, Jack finds himself on an unexpected adventure in which he doesn\u0027t know who to fear more: Blackbeard or the woman from his past.\t135.41385\t[{\"name\": \"Walt Disney Pictures\", \"id\": 2}, {\"name\": \"Jerry Bruckheimer Films\", \"id\": 130}, {\"name\": \"Moving Picture Company (MPC)\", \"id\": 20478}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2011-05-14\t1045713802\t136\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}, {\"iso_639_1\": \"es\", \"name\": \"Espa\\u00f1ol\"}]\tReleased\tLive Forever Or Die Trying.\tPirates of the Caribbean: On Stranger Tides\t6.4\t4948\n225000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 35, \"name\": \"Comedy\"}, {\"id\": 878, \"name\": \"Science Fiction\"}]\thttp://www.sonypictures.com/movies/meninblack3/\t41154\t[{\"id\": 4379, \"name\": \"time travel\"}, {\"id\": 5455, \"name\": \"time machine\"}, {\"id\": 9951, \"name\": \"alien\"}, {\"id\": 174915, \"name\": \"fictional government agency\"}, {\"id\": 185668, \"name\": \"seeing the future\"}, {\"id\": 208756, \"name\": \"changing history\"}]\ten\tMen in Black 3\tAgents J (Will Smith) and K (Tommy Lee Jones) are back...in time. J has seen some inexplicable things in his 15 years with the Men in Black, but nothing, not even aliens, perplexes him as much as his wry, reticent partner. But when K\u0027s life and the fate of the planet are put at stake, Agent J will have to travel back in time to put things right. J discovers that there are secrets to the universe that K never told him - secrets that will reveal themselves as he teams up with the young Agent K (Josh Brolin) to save his partner, the agency, and the future of humankind.\t52.03518\t[{\"name\": \"Amblin Entertainment\", \"id\": 56}, {\"name\": \"Media Magik Entertainment\", \"id\": 5627}, {\"name\": \"Imagenation Abu Dhabi FZ\", \"id\": 6736}, {\"name\": \"Hemisphere Media Capital\", \"id\": 9169}, {\"name\": \"Parkes/MacDonald Productions\", \"id\": 11084}]\t[{\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2012-05-23\t624026776\t106\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tThey are back... in time.\tMen in Black 3\t6.2\t4160\n250000000\t[{\"id\": 28, \"name\": \"Action\"}, {\"id\": 12, \"name\": \"Adventure\"}, {\"id\": 14, \"name\": \"Fantasy\"}]\thttp://www.thehobbit.com/\t122917\t[{\"id\": 417, \"name\": \"corruption\"}, {\"id\": 603, \"name\": \"elves\"}, {\"id\": 604, \"name\": \"dwarves\"}, {\"id\": 606, \"name\": \"orcs\"}, {\"id\": 609, \"name\": \"middle-earth (tolkien)\"}, {\"id\": 611, \"name\": \"hobbit\"}, {\"id\": 12554, \"name\": \"dragon\"}, {\"id\": 14643, \"name\": \"battle\"}, {\"id\": 167982, \"name\": \"unlikely friendship\"}, {\"id\": 188270, \"name\": \"epic battle\"}, {\"id\": 234213, \"name\": \"sword and sorcery\"}]\ten\tThe Hobbit: The Battle of the Five Armies\tImmediately after the events of The Desolation of Smaug, Bilbo and the dwarves try to defend Erebor\u0027s mountain of treasure from others who claim it: the men of the ruined Laketown and the elves of Mirkwood. Meanwhile an army of Orcs led by Azog the Defiler is marching on Erebor, fueled by the rise of the dark lord Sauron. Dwarves, elves and men must unite, and the hope for Middle-Earth falls into Bilbo\u0027s hands.\t120.965744\t[{\"name\": \"WingNut Films\", \"id\": 11}, {\"name\": \"New Line Cinema\", \"id\": 12}, {\"name\": \"Warner Bros. Pictures\", \"id\": 174}, {\"name\": \"3Foot7\", \"id\": 7413}, {\"name\": \"Metro-Goldwyn-Mayer (MGM)\", \"id\": 8411}]\t[{\"iso_3166_1\": \"NZ\", \"name\": \"New Zealand\"}, {\"iso_3166_1\": \"US\", \"name\": \"United States of America\"}]\t2014-12-10\t956019788\t144\t[{\"iso_639_1\": \"en\", \"name\": \"English\"}]\tReleased\tWitness the defining chapter of the Middle-Earth saga\tThe Hobbit: The Battle of the Five Armies\t7.1\t4760\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d90"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766016_-1374705959",
+      "id": "20171002-231928_238341422",
+      "dateCreated": "2018-12-30 17:26:06.016",
+      "dateStarted": "2018-12-30 18:52:42.716",
+      "dateFinished": "2018-12-30 18:52:42.805",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Display Rawdata (Only showing selected columns)",
+      "text": "%sql\n\nselect budget, id, original_language, popularity, release_date, revenue, runtime, status, title, vote_average, vote_count from rawdata limit 20\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:52:47.557",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "budget": "string",
+                      "id": "string",
+                      "original_language": "string",
+                      "popularity": "string",
+                      "release_date": "string",
+                      "revenue": "string",
+                      "runtime": "string",
+                      "status": "string",
+                      "title": "string",
+                      "vote_average": "string",
+                      "vote_count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "budget\tid\toriginal_language\tpopularity\trelease_date\trevenue\truntime\tstatus\ttitle\tvote_average\tvote_count\n237000000\t19995\ten\t150.43758\t2009-12-10\t2787965087\t162\tReleased\tAvatar\t7.2\t11800\n300000000\t285\ten\t139.08261\t2007-05-19\t961000000\t169\tReleased\tPirates of the Caribbean: At World\u0027s End\t6.9\t4500\n245000000\t206647\ten\t107.376785\t2015-10-26\t880674609\t148\tReleased\tSpectre\t6.3\t4466\n250000000\t49026\ten\t112.31295\t2012-07-16\t1084939099\t165\tReleased\tThe Dark Knight Rises\t7.6\t9106\n260000000\t49529\ten\t43.926994\t2012-03-07\t284139100\t132\tReleased\tJohn Carter\t6.1\t2124\n258000000\t559\ten\t115.699814\t2007-05-01\t890871626\t139\tReleased\tSpider-Man 3\t5.9\t3576\n260000000\t38757\ten\t48.68197\t2010-11-24\t591794936\t100\tReleased\tTangled\t7.4\t3330\n280000000\t99861\ten\t134.27924\t2015-04-22\t1405403694\t141\tReleased\tAvengers: Age of Ultron\t7.3\t6767\n250000000\t767\ten\t98.885635\t2009-07-07\t933959197\t153\tReleased\tHarry Potter and the Half-Blood Prince\t7.4\t5293\n250000000\t209112\ten\t155.79045\t2016-03-23\t873260194\t151\tReleased\tBatman v Superman: Dawn of Justice\t5.7\t7004\n270000000\t1452\ten\t57.925625\t2006-06-28\t391081192\t154\tReleased\tSuperman Returns\t5.4\t1400\n200000000\t10764\ten\t107.92881\t2008-10-30\t586090727\t106\tReleased\tQuantum of Solace\t6.1\t2965\n200000000\t58\ten\t145.84738\t2006-06-20\t1065659812\t151\tReleased\tPirates of the Caribbean: Dead Man\u0027s Chest\t7.0\t5246\n255000000\t57201\ten\t49.046955\t2013-07-03\t89289910\t149\tReleased\tThe Lone Ranger\t5.9\t2311\n225000000\t49521\ten\t99.39801\t2013-06-12\t662845518\t143\tReleased\tMan of Steel\t6.5\t6359\n225000000\t2454\ten\t53.978603\t2008-05-15\t419651413\t150\tReleased\tThe Chronicles of Narnia: Prince Caspian\t6.3\t1630\n220000000\t24428\ten\t144.44864\t2012-04-25\t1519557910\t143\tReleased\tThe Avengers\t7.4\t11776\n380000000\t1865\ten\t135.41385\t2011-05-14\t1045713802\t136\tReleased\tPirates of the Caribbean: On Stranger Tides\t6.4\t4948\n225000000\t41154\ten\t52.03518\t2012-05-23\t624026776\t106\tReleased\tMen in Black 3\t6.2\t4160\n250000000\t122917\ten\t120.965744\t2014-12-10\t956019788\t144\tReleased\tThe Hobbit: The Battle of the Five Armies\t7.1\t4760\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d91"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766017_-1557297981",
+      "id": "20171003-001046_1186615245",
+      "dateCreated": "2018-12-30 17:26:06.017",
+      "dateStarted": "2018-12-30 18:52:47.581",
+      "dateFinished": "2018-12-30 18:52:47.667",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Frequency - Movie Language",
+      "text": "%sql\n\nselect * from (\nselect original_language, count(*) as freq from rawdata group by original_language order by freq desc) as a\nlimit 5",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:13:22.207",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 4.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "original_language",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "freq",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "original_language\tfreq\nen\t4502\nfr\t70\nes\t32\nzh\t27\nde\t27\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d92"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766017_-2130575691",
+      "id": "20171002-232154_399447310",
+      "dateCreated": "2018-12-30 17:26:06.017",
+      "dateStarted": "2018-12-30 18:52:51.669",
+      "dateFinished": "2018-12-30 18:52:52.109",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Frequency - Movie Status",
+      "text": "%sql\n\nselect * from (\nselect status, count(*) as freq from rawdata group by status order by freq desc) as a\nlimit 5",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:13:22.316",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 4.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 296.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "status",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "freq",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "status\tfreq\nReleased\t4792\nRumored\t5\nPost Production\t3\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d93"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766018_-1978270459",
+      "id": "20171002-233012_1103538654",
+      "dateCreated": "2018-12-30 17:26:06.018",
+      "dateStarted": "2018-12-30 18:52:53.601",
+      "dateFinished": "2018-12-30 18:52:53.954",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Scatter (Revenue vs Average Vote)",
+      "text": "%sql\n\nselect * from (\nselect revenue,vote_average from rawdata) as a\nlimit 200",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:52:55.576",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 4.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "revenue\tvote_average\n2787965087\t7.2\n961000000\t6.9\n880674609\t6.3\n1084939099\t7.6\n284139100\t6.1\n890871626\t5.9\n591794936\t7.4\n1405403694\t7.3\n933959197\t7.4\n873260194\t5.7\n391081192\t5.4\n586090727\t6.1\n1065659812\t7.0\n89289910\t5.9\n662845518\t6.5\n419651413\t6.3\n1519557910\t7.4\n1045713802\t6.4\n624026776\t6.2\n956019788\t7.1\n752215857\t6.5\n310669540\t6.2\n958400000\t7.6\n372234864\t5.8\n550000000\t6.6\n1845034188\t7.5\n1153304495\t7.1\n303025485\t5.5\n1513528810\t6.5\n1108561013\t6.9\n783766341\t6.7\n1215439994\t6.8\n1025491110\t6.4\n459359555\t6.3\n743559607\t7.0\n836297228\t6.0\n1091405097\t5.8\n491868548\t5.7\n705717432\t6.5\n400062763\t6.3\n559852396\t5.8\n219851172\t5.1\n1066969703\t7.6\n371353001\t5.9\n1506249360\t7.3\n531865000\t6.7\n747862775\t7.5\n467365246\t7.4\n197687603\t5.5\n351040419\t7.3\n335154643\t6.2\n407602906\t6.7\n1123746996\t6.1\n786636033\t5.7\n331926147\t6.6\n538983207\t6.7\n343471816\t6.6\n521311860\t7.8\n258022233\t6.1\n769653595\t5.6\n325233863\t6.6\n183987723\t5.2\n356743061\t5.5\n748806957\t6.7\n543934787\t6.4\n1004558444\t8.2\n735099082\t7.7\n381509870\t6.0\n585174222\t7.4\n185770160\t7.0\n222104681\t5.1\n401128639\t5.2\n745000000\t5.9\n173000000\t5.3\n370541256\t7.6\n264218220\t5.9\n302469017\t5.6\n857611174\t8.0\n966550600\t6.7\n623933331\t6.6\n396600000\t5.8\n758539785\t7.0\n710644566\t7.3\n0\t4.8\n150962475\t5.9\n714766572\t7.6\n752600867\t6.0\n209154322\t6.2\n652105443\t7.8\n471222889\t7.1\n305875730\t6.4\n389681935\t4.9\n494878759\t7.5\n435000000\t5.9\n773328629\t7.9\n675120017\t8.1\n825532764\t8.1\n77000000\t6.5\n1021103568\t7.0\n207283925\t6.6\n333932083\t7.3\n353624124\t7.1\n653428261\t6.6\n215283742\t5.8\n181674817\t5.5\n299370084\t6.5\n798958165\t6.0\n433677183\t6.3\n440603537\t5.8\n415686217\t6.2\n449220945\t6.6\n709709780\t6.6\n167298192\t5.6\n938212738\t7.4\n895921036\t7.5\n624029371\t6.2\n585349010\t6.9\n474968763\t6.7\n623722818\t7.5\n374218673\t7.5\n603900354\t6.2\n413106170\t5.9\n373062864\t6.2\n424988211\t6.4\n1274219009\t7.3\n738599701\t6.7\n644571402\t6.8\n378858340\t7.2\n356613439\t6.5\n449326618\t6.6\n309979994\t6.3\n292817841\t5.1\n301000000\t5.5\n245527149\t5.7\n682330139\t7.1\n0\t5.5\n287594577\t5.7\n665692281\t6.7\n318502923\t4.7\n397850012\t6.5\n205366737\t6.4\n38992758\t5.5\n64459316\t6.0\n128388320\t5.9\n272912430\t6.7\n497409852\t6.9\n746921274\t6.4\n431971116\t5.8\n229147509\t5.3\n553799566\t6.4\n441818803\t6.0\n195735876\t5.5\n521170825\t6.7\n694713380\t6.8\n306941670\t7.1\n202026112\t5.9\n456758981\t7.3\n268031828\t5.6\n385680446\t7.4\n821708551\t6.8\n609123048\t7.6\n150680864\t5.3\n76932943\t4.9\n185258983\t7.0\n285444603\t6.3\n245360480\t5.3\n371876278\t5.4\n119269486\t5.7\n85131830\t5.9\n370569774\t6.6\n361832400\t6.0\n212011111\t6.9\n829000000\t6.1\n150406466\t5.8\n163712074\t6.1\n183345589\t6.0\n532950503\t7.3\n282570682\t6.1\n245724603\t6.6\n373552094\t6.5\n442824138\t7.3\n631744560\t6.9\n519311965\t7.0\n847423452\t7.4\n368871007\t6.8\n591739379\t6.2\n273339556\t6.3\n554987477\t6.4\n293329073\t6.2\n362637473\t5.6\n371940071\t6.7\n789804554\t7.7\n49554002\t6.3\n243843127\t5.0\n354248063\t6.2\n349424282\t6.1\n321887208\t6.7\n976475550\t7.5\n61648500\t5.4\n655011224\t7.5\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d94"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766018_-1222649172",
+      "id": "20171002-233020_123657324",
+      "dateCreated": "2018-12-30 17:26:06.018",
+      "dateStarted": "2018-12-30 18:52:55.598",
+      "dateFinished": "2018-12-30 18:52:55.677",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Descriptive Stats",
+      "text": "%pyspark\n\n############################################################################################################\n#\n#   Descriptive Stats\n#       - Total Records\n#       - Variables and types\n#       - Category levels and numeric stats (min, max, avg, etc.)\n#       - Display Categories\n#       - Correlations\n#\n############################################################################################################\n\n#rawdata.show(10, True)\nprint(\u0027\\nTotal Records: \u0027 + str(rawdata.count()) + \u0027\\n\u0027)\nfor i in rawdata.dtypes: print(i)\n\nnumeric_columns \u003d [c[0] for c in rawdata.dtypes if c[1] not in [\u0027string\u0027]]\n\nrawdata.describe(numeric_columns + [\u0027release_date\u0027]).show()\n\nrawdata.filter(\u0027revenue \u003d\u003d 0\u0027).count()\n\nrawdata.groupBy(\u0027original_language\u0027).count().sort(\u0027count\u0027, ascending\u003dFalse).show(15,False)\nrawdata.groupBy(\u0027status\u0027).count().sort(\u0027count\u0027, ascending\u003dFalse).show(15,False)\nrawdata.groupBy(\u0027homepage\u0027).count().sort(\u0027count\u0027, ascending\u003dFalse).show(15,False)\nrawdata.groupBy(\u0027release_date\u0027).count().sort(\u0027count\u0027, ascending\u003dFalse).show(15,False)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:12:45.681",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nTotal Records: 4800\n\n(\u0027budget\u0027, \u0027int\u0027)\n(\u0027genres\u0027, \u0027string\u0027)\n(\u0027homepage\u0027, \u0027string\u0027)\n(\u0027id\u0027, \u0027string\u0027)\n(\u0027keywords\u0027, \u0027string\u0027)\n(\u0027original_language\u0027, \u0027string\u0027)\n(\u0027original_title\u0027, \u0027string\u0027)\n(\u0027overview\u0027, \u0027string\u0027)\n(\u0027popularity\u0027, \u0027float\u0027)\n(\u0027production_companies\u0027, \u0027string\u0027)\n(\u0027production_countries\u0027, \u0027string\u0027)\n(\u0027release_date\u0027, \u0027string\u0027)\n(\u0027revenue\u0027, \u0027bigint\u0027)\n(\u0027runtime\u0027, \u0027int\u0027)\n(\u0027spoken_languages\u0027, \u0027string\u0027)\n(\u0027status\u0027, \u0027string\u0027)\n(\u0027tagline\u0027, \u0027string\u0027)\n(\u0027title\u0027, \u0027string\u0027)\n(\u0027vote_average\u0027, \u0027float\u0027)\n(\u0027vote_count\u0027, \u0027int\u0027)\n+-------+--------------------+------------------+--------------------+-----------------+------------------+-----------------+------------+\n|summary|              budget|        popularity|             revenue|          runtime|      vote_average|       vote_count|release_date|\n+-------+--------------------+------------------+--------------------+-----------------+------------------+-----------------+------------+\n|  count|                4722|              4722|                4722|             4720|              4722|             4722|        4721|\n|   mean|2.9433402482210927E7|21.686641557328763| 8.308524085811096E7|106.9646186440678| 6.094578571639693|698.1336298178738|        null|\n| stddev| 4.095160513268207E7|32.011265180284255|1.6373947497309437E8|22.71949093495764|1.1992585120633423|1242.090753906649|        null|\n|    min|                   0|               0.0|                   0|                0|               0.0|                0|  1916-09-04|\n|    max|           380000000|          875.5813|          2787965087|              338|              10.0|            13752|  2017-02-03|\n+-------+--------------------+------------------+--------------------+-----------------+------------------+-----------------+------------+\n\n+-----------------+-----+\n|original_language|count|\n+-----------------+-----+\n|en               |4502 |\n|fr               |70   |\n|es               |32   |\n|de               |27   |\n|zh               |27   |\n|hi               |19   |\n|ja               |16   |\n|it               |14   |\n|cn               |12   |\n|ko               |11   |\n|ru               |11   |\n|pt               |9    |\n|da               |7    |\n|sv               |5    |\n|fa               |4    |\n+-----------------+-----+\nonly showing top 15 rows\n\n+---------------+-----+\n|status         |count|\n+---------------+-----+\n|Released       |4792 |\n|Rumored        |5    |\n|Post Production|3    |\n+---------------+-----+\n\n+--------------------------------------------+-----+\n|homepage                                    |count|\n+--------------------------------------------+-----+\n|null                                        |3088 |\n|http://www.thehungergames.movie/            |4    |\n|http://www.missionimpossible.com/           |4    |\n|http://www.thehobbit.com/                   |3    |\n|http://www.transformersmovie.com/           |3    |\n|http://www.kungfupanda.com/                 |3    |\n|http://www.ironmanmovie.com/                |2    |\n|http://www.munkyourself.com/                |2    |\n|http://www.indianajones.com                 |2    |\n|http://www.lordoftherings.net/              |2    |\n|http://www.workandtheglory.com/             |2    |\n|http://disney.go.com/disneypictures/pirates/|2    |\n|http://www.howtotrainyourdragon.com/        |2    |\n|http://www.riomovies.com/                   |2    |\n|http://www.theamazingspiderman.com          |2    |\n+--------------------------------------------+-----+\nonly showing top 15 rows\n\n+------------+-----+\n|release_date|count|\n+------------+-----+\n|2006-01-01  |10   |\n|2002-01-01  |8    |\n|2013-07-18  |7    |\n|2004-09-03  |7    |\n|2014-12-25  |7    |\n|1999-10-22  |7    |\n|2003-01-01  |6    |\n|2011-09-16  |6    |\n|2015-10-16  |6    |\n|2005-09-16  |6    |\n|2005-01-01  |6    |\n|2011-09-30  |6    |\n|2007-01-01  |6    |\n|2008-01-01  |5    |\n|2005-05-13  |5    |\n+------------+-----+\nonly showing top 15 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d336",
+            "http://localhost:4040/jobs/job?id\u003d337",
+            "http://localhost:4040/jobs/job?id\u003d338",
+            "http://localhost:4040/jobs/job?id\u003d339",
+            "http://localhost:4040/jobs/job?id\u003d340",
+            "http://localhost:4040/jobs/job?id\u003d341",
+            "http://localhost:4040/jobs/job?id\u003d342"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766018_244374483",
+      "id": "20171001-183040_1823851373",
+      "dateCreated": "2018-12-30 17:26:06.018",
+      "dateStarted": "2018-12-30 19:12:45.705",
+      "dateFinished": "2018-12-30 19:12:47.975",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Identify correlated variables (Pearson Correlation Coefficient)",
+      "text": "%pyspark\n\nseen \u003d []\nfor c1 in numeric_columns:\n    for c2 in numeric_columns:\n        correlation \u003d rawdata.stat.corr(c1, c2)\n        if (correlation \u003e\u003d 0.50 or correlation \u003c\u003d -0.50) and (c1 !\u003d c2) and ((c1,c2) not in seen):\n            seen.append((c2,c1))\n            print(str(correlation) + \u0027\\tcorrelation for \u0027 + str(c1) + \u0027 and \u0027 + str(c2))\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:53:11.366",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "0.5053241355498239\tcorrelation for budget and popularity\n0.7307737914273525\tcorrelation for budget and revenue\n0.5931065823565854\tcorrelation for budget and vote_count\n0.6446738571798113\tcorrelation for popularity and revenue\n0.7780996611260144\tcorrelation for popularity and vote_count\n0.7814545214706654\tcorrelation for revenue and vote_count\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d102",
+            "http://localhost:4040/jobs/job?id\u003d103",
+            "http://localhost:4040/jobs/job?id\u003d104",
+            "http://localhost:4040/jobs/job?id\u003d105",
+            "http://localhost:4040/jobs/job?id\u003d106",
+            "http://localhost:4040/jobs/job?id\u003d107",
+            "http://localhost:4040/jobs/job?id\u003d108",
+            "http://localhost:4040/jobs/job?id\u003d109",
+            "http://localhost:4040/jobs/job?id\u003d110",
+            "http://localhost:4040/jobs/job?id\u003d111",
+            "http://localhost:4040/jobs/job?id\u003d112",
+            "http://localhost:4040/jobs/job?id\u003d113",
+            "http://localhost:4040/jobs/job?id\u003d114",
+            "http://localhost:4040/jobs/job?id\u003d115",
+            "http://localhost:4040/jobs/job?id\u003d116",
+            "http://localhost:4040/jobs/job?id\u003d117",
+            "http://localhost:4040/jobs/job?id\u003d118",
+            "http://localhost:4040/jobs/job?id\u003d119",
+            "http://localhost:4040/jobs/job?id\u003d120",
+            "http://localhost:4040/jobs/job?id\u003d121",
+            "http://localhost:4040/jobs/job?id\u003d122",
+            "http://localhost:4040/jobs/job?id\u003d123",
+            "http://localhost:4040/jobs/job?id\u003d124",
+            "http://localhost:4040/jobs/job?id\u003d125",
+            "http://localhost:4040/jobs/job?id\u003d126",
+            "http://localhost:4040/jobs/job?id\u003d127",
+            "http://localhost:4040/jobs/job?id\u003d128",
+            "http://localhost:4040/jobs/job?id\u003d129",
+            "http://localhost:4040/jobs/job?id\u003d130",
+            "http://localhost:4040/jobs/job?id\u003d131",
+            "http://localhost:4040/jobs/job?id\u003d132",
+            "http://localhost:4040/jobs/job?id\u003d133",
+            "http://localhost:4040/jobs/job?id\u003d134",
+            "http://localhost:4040/jobs/job?id\u003d135",
+            "http://localhost:4040/jobs/job?id\u003d136",
+            "http://localhost:4040/jobs/job?id\u003d137"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766018_-943324089",
+      "id": "20180403-153143_1316308743",
+      "dateCreated": "2018-12-30 17:26:06.018",
+      "dateStarted": "2018-12-30 18:53:11.389",
+      "dateFinished": "2018-12-30 18:53:15.804",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Extract Genre from JSON",
+      "text": "%pyspark\n\ndef extract_genre(column_name):\n    import json\n    try:\n        genre \u003d json.loads(column_name)[0][\u0027name\u0027].strip()\n        \n        if (genre\u003d\u003d\u0027Action\u0027) or (genre\u003d\u003d\u0027Adventure\u0027):\n            genre \u003d \u0027Action/Adventure\u0027\n        elif (genre\u003d\u003d\u0027Fantasy\u0027) or (genre\u003d\u003d\u0027Science Fiction\u0027):\n            genre \u003d \u0027Science Fiction\u0027\n        elif (genre\u003d\u003d\u0027Horror\u0027) or (genre\u003d\u003d\u0027Thriller\u0027):\n            genre \u003d \u0027Horror\u0027\n        elif (genre\u003d\u003d\u0027Drama\u0027):\n            genre \u003d \u0027Drama\u0027\n        elif (genre\u003d\u003d\u0027Comedy\u0027):\n            genre \u003d \u0027Comedy\u0027\n        else:\n            genre \u003d \u0027Other\u0027\n        \n        return genre\n    except:\n        return \u0027Other\u0027\n\nudf_extract_genre \u003d udf(extract_genre, StringType())\n\nenriched1 \u003d rawdata.withColumn(\"genre\", udf_extract_genre(\u0027genres\u0027))\n\nenriched1.groupBy(\u0027genre\u0027).count().sort(col(\u0027count\u0027), ascending\u003dFalse).show(50,False)",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:53:23.738",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+-----+\n|genre           |count|\n+----------------+-----+\n|Drama           |1207 |\n|Action/Adventure|1091 |\n|Comedy          |1041 |\n|Other           |754  |\n|Horror          |494  |\n|Science Fiction |213  |\n+----------------+-----+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d138"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766018_2113402749",
+      "id": "20180403-162013_405267523",
+      "dateCreated": "2018-12-30 17:26:06.018",
+      "dateStarted": "2018-12-30 18:53:23.765",
+      "dateFinished": "2018-12-30 18:53:24.724",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Model Transformations (Extract Date Vars)",
+      "text": "%pyspark\n\njson_columns \u003d [\u0027genres\u0027,\u0027keywords\u0027,\u0027production_companies\u0027,\u0027production_countries\u0027,\u0027spoken_languages\u0027]\ntext_columns \u003d [\u0027original_title\u0027,\u0027overview\u0027,\u0027tagline\u0027,\u0027title\u0027]\ndrop_columns \u003d json_columns + [\u0027original_title\u0027,\u0027tagline\u0027,\u0027popularity\u0027,\u0027release_date\u0027,\u0027status\u0027,\u0027original_language\u0027,\u0027homepage\u0027]\n\n# Filter DF - Drop where revenue \u003d 0\nenriched1 \u003d enriched1.filter(\u0027revenue !\u003d 0 AND status \u003d\u003d\"Released\"\u0027)\n\n# Extract Date/Time Variables\ndef extract_year(date_var):\n    try:\n        year \u003d datetime.datetime.strptime(date_var, \u0027%m/%d/%y\u0027).year\n        if year \u003e\u003d 2018:\n            year \u003d re.sub(\u0027^20\u0027,\u002719\u0027,str(year))\n        return year\n    except:\n        return -1\n\ndef extract_month(date_var):\n    try:\n        return datetime.datetime.strptime(date_var, \u0027%m/%d/%y\u0027).month\n    except:\n        return -1\n\ndef extract_day(date_var):\n    try:\n        return datetime.datetime.strptime(date_var, \u0027%m/%d/%y\u0027).day\n    except:\n        return -1\n\nudf_year  \u003d udf(extract_year, IntegerType())\nudf_month \u003d udf(extract_month, IntegerType())\nudf_day   \u003d udf(extract_day, IntegerType())\n\nenriched2 \u003d enriched1.withColumn(\"year\", udf_year(\u0027release_date\u0027)) \\\n                     .withColumn(\"month\", udf_month(\u0027release_date\u0027)) \\\n                     .withColumn(\"day\", udf_day(\u0027release_date\u0027))\n\nenriched2.describe([\u0027year\u0027,\u0027month\u0027,\u0027day\u0027]).show()\n\nenriched2.createOrReplaceTempView(\u0027enriched2\u0027)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:53:29.768",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+----+-----+----+\n|summary|year|month| day|\n+-------+----+-----+----+\n|  count|3375| 3375|3375|\n|   mean|-1.0| -1.0|-1.0|\n| stddev| 0.0|  0.0| 0.0|\n|    min|  -1|   -1|  -1|\n|    max|  -1|   -1|  -1|\n+-------+----+-----+----+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d139"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766019_-71022376",
+      "id": "20171002-184842_1177830626",
+      "dateCreated": "2018-12-30 17:26:06.019",
+      "dateStarted": "2018-12-30 18:53:29.792",
+      "dateFinished": "2018-12-30 18:53:30.279",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Derive Data-Driven Topics",
+      "text": "%pyspark\n\n############################################################################################################\n#\n#   Data-Driven Topics\n#\n############################################################################################################\n\nnumber_of_clusters \u003d 25\n\ndef handle_encoding(text):\n    return \"\".join(i for i in text if ord(i)\u003c128)\n\nudf_handle_encoding \u003d udf(handle_encoding, StringType())\nclean_text \u003d enriched2.withColumn(\"overview\", udf_handle_encoding(\u0027overview\u0027)) \\\n                      .withColumn(\"title\", udf_handle_encoding(\u0027title\u0027))\n\ndef cleanup_text(text):\n    words \u003d text.split()\n    \n    # Default list of Stopwords\n    stopwords_core \u003d [\u0027a\u0027, u\u0027about\u0027, u\u0027above\u0027, u\u0027after\u0027, u\u0027again\u0027, u\u0027against\u0027, u\u0027all\u0027, u\u0027am\u0027, u\u0027an\u0027, u\u0027and\u0027, u\u0027any\u0027, u\u0027are\u0027, u\u0027arent\u0027, u\u0027as\u0027, u\u0027at\u0027, \n    u\u0027be\u0027, u\u0027because\u0027, u\u0027been\u0027, u\u0027before\u0027, u\u0027being\u0027, u\u0027below\u0027, u\u0027between\u0027, u\u0027both\u0027, u\u0027but\u0027, u\u0027by\u0027, \n    u\u0027can\u0027, \u0027cant\u0027, \u0027come\u0027, u\u0027could\u0027, \u0027couldnt\u0027, \n    u\u0027d\u0027, u\u0027did\u0027, u\u0027didn\u0027, u\u0027do\u0027, u\u0027does\u0027, u\u0027doesnt\u0027, u\u0027doing\u0027, u\u0027dont\u0027, u\u0027down\u0027, u\u0027during\u0027, \n    u\u0027each\u0027, \n    u\u0027few\u0027, \u0027finally\u0027, u\u0027for\u0027, u\u0027from\u0027, u\u0027further\u0027, \n    u\u0027had\u0027, u\u0027hadnt\u0027, u\u0027has\u0027, u\u0027hasnt\u0027, u\u0027have\u0027, u\u0027havent\u0027, u\u0027having\u0027, u\u0027he\u0027, u\u0027her\u0027, u\u0027here\u0027, u\u0027hers\u0027, u\u0027herself\u0027, u\u0027him\u0027, u\u0027himself\u0027, u\u0027his\u0027, u\u0027how\u0027, \n    u\u0027i\u0027, u\u0027if\u0027, u\u0027in\u0027, u\u0027into\u0027, u\u0027is\u0027, u\u0027isnt\u0027, u\u0027it\u0027, u\u0027its\u0027, u\u0027itself\u0027, \n    u\u0027just\u0027, \n    u\u0027ll\u0027, \n    u\u0027m\u0027, u\u0027many\u0027, u\u0027me\u0027, u\u0027might\u0027, u\u0027more\u0027, u\u0027most\u0027, u\u0027must\u0027, u\u0027my\u0027, u\u0027myself\u0027, \n    u\u0027no\u0027, u\u0027nor\u0027, u\u0027not\u0027, u\u0027now\u0027, \n    u\u0027o\u0027, u\u0027of\u0027, u\u0027off\u0027, u\u0027on\u0027, u\u0027once\u0027, u\u0027only\u0027, u\u0027or\u0027, u\u0027other\u0027, u\u0027our\u0027, u\u0027ours\u0027, u\u0027ourselves\u0027, u\u0027out\u0027, u\u0027over\u0027, u\u0027own\u0027, \n    u\u0027r\u0027, u\u0027re\u0027, \n    u\u0027s\u0027, \u0027said\u0027, u\u0027same\u0027, u\u0027she\u0027, u\u0027should\u0027, u\u0027shouldnt\u0027, u\u0027so\u0027, u\u0027some\u0027, u\u0027such\u0027, \n    u\u0027t\u0027, u\u0027than\u0027, u\u0027that\u0027, \u0027thats\u0027, u\u0027the\u0027, u\u0027their\u0027, u\u0027theirs\u0027, u\u0027them\u0027, u\u0027themselves\u0027, u\u0027then\u0027, u\u0027there\u0027, u\u0027these\u0027, u\u0027they\u0027, u\u0027this\u0027, u\u0027those\u0027, u\u0027through\u0027, u\u0027to\u0027, u\u0027too\u0027,\n    u\u0027under\u0027, u\u0027until\u0027, u\u0027up\u0027,\n    u\u0027very\u0027, \n    u\u0027was\u0027, u\u0027wasnt\u0027, u\u0027we\u0027, u\u0027were\u0027, u\u0027werent\u0027, u\u0027what\u0027, u\u0027when\u0027, u\u0027where\u0027, u\u0027which\u0027, u\u0027while\u0027, u\u0027who\u0027, u\u0027whom\u0027, u\u0027why\u0027, u\u0027will\u0027, u\u0027with\u0027, u\u0027wont\u0027, u\u0027would\u0027, \n    u\u0027y\u0027, u\u0027you\u0027, u\u0027your\u0027, u\u0027yours\u0027, u\u0027yourself\u0027, u\u0027yourselves\u0027]\n    \n    # Custom List of Stopwords - Add your own here\n    stopwords_custom \u003d [\u0027\u0027]\n    stopwords \u003d stopwords_core + stopwords_custom\n    stopwords \u003d [word.lower() for word in stopwords]    \n    \n    words_out \u003d [re.sub(\u0027[^a-zA-Z0-9]\u0027,\u0027\u0027,word) for word in words]                                       # Remove special characters\n    words_out \u003d [word.lower() for word in words_out if len(word)\u003e2 and word.lower() not in stopwords]     # Remove stopwords and words under X length\n    return words_out\n\nudf_cleantext \u003d udf(cleanup_text , ArrayType(StringType()))\nclean_text2   \u003d clean_text.withColumn(\"words\", udf_cleantext(\u0027overview\u0027))\n\n# Term Frequency Vectorization\ncv \u003d CountVectorizer(inputCol\u003d\"words\", outputCol\u003d\"rawFeatures\", vocabSize \u003d 1000)\ncvmodel \u003d cv.fit(clean_text2)\nfeaturizedData \u003d cvmodel.transform(clean_text2)\n\nvocab \u003d cvmodel.vocabulary\nvocab_broadcast \u003d sc.broadcast(vocab)\n\nidf \u003d IDF(inputCol\u003d\"rawFeatures\", outputCol\u003d\"features\")\nidfModel \u003d idf.fit(featurizedData)\nrescaledData \u003d idfModel.transform(featurizedData)\n\n# LDA Clustering - Find Data-driven Topics\nlda \u003d LDA(k\u003dnumber_of_clusters, seed\u003d123, optimizer\u003d\"em\", featuresCol\u003d\"features\")\n\nldamodel \u003d lda.fit(rescaledData)\n\n#ldamodel.isDistributed()\n#ldamodel.vocabSize()\n\nldatopics \u003d ldamodel.describeTopics()\n#ldatopics.show(number_of_clusters)\n\ndef map_termID_to_Word(termIndices):\n    words \u003d []\n    for termID in termIndices:\n        words.append(vocab_broadcast.value[termID])\n    \n    return words\n\nudf_map_termID_to_Word \u003d udf(map_termID_to_Word , ArrayType(StringType()))\nldatopics_mapped \u003d ldatopics.withColumn(\"topic_desc\", udf_map_termID_to_Word(ldatopics.termIndices))\nldatopics_mapped.select(ldatopics_mapped.topic, ldatopics_mapped.topic_desc).show(number_of_clusters,False)\n\nldaResults \u003d ldamodel.transform(rescaledData)\n\n#ldaResults.show()\n\n# Breakout LDA Topics for Modeling and Reporting\ndef breakout_array(index_number, record):\n    vectorlist \u003d record.tolist()\n    return vectorlist[index_number]\n\nudf_breakout_array \u003d udf(breakout_array, FloatType())\n\nfor index_number in range(number_of_clusters):\n    column_name  \u003d \"Topic_\" + str(index_number)\n    ldaResults \u003d ldaResults.withColumn(column_name, udf_breakout_array(lit(index_number), ldaResults.topicDistribution))          \n\n# I needed to create multiple Drop statements here. In newer versions of spark (Spark 2.1+) you can use one drop statement with many columns.\ntext_enriched \u003d ldaResults.drop(\u0027words\u0027).drop(\u0027rawFeatures\u0027).drop(\u0027features\u0027).drop(\u0027topicDistribution\u0027)\n\ntext_enriched.createOrReplaceTempView(\u0027text_enriched\u0027)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:13:04.353",
+      "config": {
+        "editorSetting": {
+          "language": "python"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "editorHide": true,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-----------------------------------------------------------------------------------+\n|topic|topic_desc                                                                         |\n+-----+-----------------------------------------------------------------------------------+\n|0    |[charlie, uncle, curse, town, school, life, cannot, embarks, guys, new]            |\n|1    |[annie, terrorist, driver, life, man, young, murder, track, wife, new]             |\n|2    |[game, ryan, humans, eyes, alien, men, president, war, world, earth]               |\n|3    |[vampire, band, dragon, warrior, vampires, rock, destroy, singer, war, blood]      |\n|4    |[don, brothers, life, brother, love, experiences, father, two, one, new]           |\n|5    |[school, reach, high, resistance, life, teacher, students, art, assistant, one]    |\n|6    |[alice, hunter, chase, smith, new, world, continues, encounter, unexpectedly, time]|\n|7    |[cia, nuclear, russian, general, richard, robot, simon, operative, joe, kate]      |\n|8    |[princess, king, rule, defeat, embark, virus, kingdom, land, peace, prince]        |\n|9    |[steve, buddy, christmas, wedding, basketball, eve, sons, store, school, one]      |\n|10   |[peter, train, danny, seeks, station, champion, crew, hero, agent, stolen]         |\n|11   |[tom, irish, agrees, sam, farm, retired, serial, killer, animal, caught]           |\n|12   |[black, female, role, park, male, uses, creatures, new, forest, prevent]           |\n|13   |[george, carter, lucy, ambitious, begins, grows, classic, goes, jack, family]      |\n|14   |[football, player, daughters, life, face, sinister, sea, planet, wife, dies]       |\n|15   |[bond, eye, bank, loves, daughter, jack, mothers, form, fights, heist]             |\n|16   |[white, queen, mafia, snow, mark, jimmy, elizabeth, baby, land, evil]              |\n|17   |[vegas, arthur, las, brother, brothers, turned, lies, johnson, king, hotel]        |\n|18   |[james, max, rose, weapons, ben, sarah, something, notorious, action, johnny]      |\n|19   |[alex, jason, rachel, producer, new, capture, tommy, big, investigate, victim]     |\n|20   |[sex, slave, love, film, games, life, one, relationship, new, story]               |\n|21   |[billy, sexual, change, life, bill, odds, young, forever, world, women]            |\n|22   |[nick, trip, meet, mom, kids, girls, steal, safety, lee, neighborhood]             |\n|23   |[business, movie, bad, eddie, huge, hotel, flight, date, seems, angeles]           |\n|24   |[david, mike, case, gift, child, determined, really, dead, agent, innocent]        |\n+-----+-----------------------------------------------------------------------------------+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d343",
+            "http://localhost:4040/jobs/job?id\u003d344",
+            "http://localhost:4040/jobs/job?id\u003d345",
+            "http://localhost:4040/jobs/job?id\u003d346",
+            "http://localhost:4040/jobs/job?id\u003d347",
+            "http://localhost:4040/jobs/job?id\u003d348",
+            "http://localhost:4040/jobs/job?id\u003d349",
+            "http://localhost:4040/jobs/job?id\u003d350",
+            "http://localhost:4040/jobs/job?id\u003d351",
+            "http://localhost:4040/jobs/job?id\u003d352",
+            "http://localhost:4040/jobs/job?id\u003d353",
+            "http://localhost:4040/jobs/job?id\u003d354",
+            "http://localhost:4040/jobs/job?id\u003d355",
+            "http://localhost:4040/jobs/job?id\u003d356",
+            "http://localhost:4040/jobs/job?id\u003d357",
+            "http://localhost:4040/jobs/job?id\u003d358",
+            "http://localhost:4040/jobs/job?id\u003d359",
+            "http://localhost:4040/jobs/job?id\u003d360",
+            "http://localhost:4040/jobs/job?id\u003d361",
+            "http://localhost:4040/jobs/job?id\u003d362",
+            "http://localhost:4040/jobs/job?id\u003d363",
+            "http://localhost:4040/jobs/job?id\u003d364",
+            "http://localhost:4040/jobs/job?id\u003d365",
+            "http://localhost:4040/jobs/job?id\u003d366",
+            "http://localhost:4040/jobs/job?id\u003d367",
+            "http://localhost:4040/jobs/job?id\u003d368",
+            "http://localhost:4040/jobs/job?id\u003d369",
+            "http://localhost:4040/jobs/job?id\u003d370",
+            "http://localhost:4040/jobs/job?id\u003d371",
+            "http://localhost:4040/jobs/job?id\u003d372"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766019_-305680325",
+      "id": "20171003-000136_1941824235",
+      "dateCreated": "2018-12-30 17:26:06.019",
+      "dateStarted": "2018-12-30 19:13:04.375",
+      "dateFinished": "2018-12-30 19:13:10.763",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Display Transformed Dataset",
+      "text": "%sql\n\nSELECT id,title,budget,genre,original_language,popularity,release_date,year,month,day,runtime,vote_average, vote_count, revenue,overview, Topic_0, Topic_1, Topic_2, Topic_3, Topic_4, Topic_5 \nFROM text_enriched\nLIMIT 25\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:54:54.543",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": true,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "title": "string",
+                      "budget": "string",
+                      "genre": "string",
+                      "original_language": "string",
+                      "popularity": "string",
+                      "release_date": "string",
+                      "year": "string",
+                      "month": "string",
+                      "day": "string",
+                      "runtime": "string",
+                      "vote_average": "string",
+                      "vote_count": "string",
+                      "revenue": "string",
+                      "overview": "string",
+                      "Topic_0": "string",
+                      "Topic_1": "string",
+                      "Topic_2": "string",
+                      "Topic_3": "string",
+                      "Topic_4": "string",
+                      "Topic_5": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id\ttitle\tbudget\tgenre\toriginal_language\tpopularity\trelease_date\tyear\tmonth\tday\truntime\tvote_average\tvote_count\trevenue\toverview\tTopic_0\tTopic_1\tTopic_2\tTopic_3\tTopic_4\tTopic_5\n19995\tAvatar\t237000000\tAction/Adventure\ten\t150.43758\t2009-12-10\t-1\t-1\t-1\t162\t7.2\t11800\t2787965087\tIn the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.\t0.035250597\t0.03639864\t0.058893584\t0.037045293\t0.03378706\t0.04712059\n285\tPirates of the Caribbean: At World\u0027s End\t300000000\tAction/Adventure\ten\t139.08261\t2007-05-19\t-1\t-1\t-1\t169\t6.9\t4500\t961000000\tCaptain Barbossa, long believed to be dead, has come back to life and is headed to the edge of the Earth with Will Turner and Elizabeth Swann. But nothing is quite as it seems.\t0.03552226\t0.035041902\t0.040290847\t0.035161555\t0.034094952\t0.034529813\n206647\tSpectre\t245000000\tAction/Adventure\ten\t107.376785\t2015-10-26\t-1\t-1\t-1\t148\t6.3\t4466\t880674609\tA cryptic message from Bonds past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.\t0.029446125\t0.032601126\t0.037179366\t0.038647097\t0.034895282\t0.027017012\n49026\tThe Dark Knight Rises\t250000000\tAction/Adventure\ten\t112.31295\t2012-07-16\t-1\t-1\t-1\t165\t7.6\t9106\t1084939099\tFollowing the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent\u0027s crimes to protect the late attorney\u0027s reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham\u0027s finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.\t0.032583248\t0.063700065\t0.034001786\t0.04520915\t0.03789621\t0.027896753\n49529\tJohn Carter\t260000000\tAction/Adventure\ten\t43.926994\t2012-03-07\t-1\t-1\t-1\t132\t6.1\t2124\t284139100\tJohn Carter is a war-weary, former military captain who\u0027s inexplicably transported to the mysterious and exotic planet of Barsoom (Mars) and reluctantly becomes embroiled in an epic conflict. It\u0027s a world on the brink of collapse, and Carter rediscovers his humanity when he realizes the survival of Barsoom and its people rests in his hands.\t0.03594131\t0.030909004\t0.053941187\t0.05001322\t0.02571424\t0.026168456\n559\tSpider-Man 3\t258000000\tScience Fiction\ten\t115.699814\t2007-05-01\t-1\t-1\t-1\t139\t5.9\t3576\t890871626\tThe seemingly invincible Spider-Man goes up against an all-new crop of villain  including the shape-shifting Sandman. While Spider-Mans superpowers are altered by an alien organism, his alter ego, Peter Parker, deals with nemesis Eddie Brock and also gets caught up in a love triangle.\t0.03694401\t0.03535663\t0.05433687\t0.030398449\t0.03316853\t0.033432845\n38757\tTangled\t260000000\tOther\ten\t48.68197\t2010-11-24\t-1\t-1\t-1\t100\t7.4\t3330\t591794936\tWhen the kingdom\u0027s most wanted-and most charming-bandit Flynn Rider hides out in a mysterious tower, he\u0027s taken hostage by Rapunzel, a beautiful and feisty tower-bound teen with 70 feet of magical, golden hair. Flynn\u0027s curious captor, who\u0027s looking for her ticket out of the tower where she\u0027s been locked away for years, strikes a deal with the handsome thief and the unlikely duo sets off on an action-packed escapade, complete with a super-cop horse, an over-protective chameleon and a gruff gang of pub thugs.\t0.03511609\t0.039966676\t0.026789324\t0.027443\t0.08060538\t0.03941285\n99861\tAvengers: Age of Ultron\t280000000\tAction/Adventure\ten\t134.27924\t2015-04-22\t-1\t-1\t-1\t141\t7.3\t6767\t1405403694\tWhen Tony Stark tries to jumpstart a dormant peacekeeping program, things go awry and Earths Mightiest Heroes are put to the ultimate test as the fate of the planet hangs in the balance. As the villainous Ultron emerges, it is up to The Avengers to stop him from enacting his terrible plans, and soon uneasy alliances and unexpected action pave the way for an epic and unique global adventure.\t0.026898136\t0.032893874\t0.033506036\t0.031671688\t0.032683987\t0.038936798\n767\tHarry Potter and the Half-Blood Prince\t250000000\tAction/Adventure\ten\t98.885635\t2009-07-07\t-1\t-1\t-1\t153\t7.4\t5293\t933959197\tAs Harry begins his sixth year at Hogwarts, he discovers an old book marked as \u0027Property of the Half-Blood Prince\u0027, and begins to learn more about Lord Voldemort\u0027s dark past.\t0.044098314\t0.03487103\t0.03267034\t0.038965847\t0.036336005\t0.032076806\n209112\tBatman v Superman: Dawn of Justice\t250000000\tAction/Adventure\ten\t155.79045\t2016-03-23\t-1\t-1\t-1\t151\t5.7\t7004\t873260194\tFearing the actions of a god-like Super Hero left unchecked, Gotham Citys own formidable, forceful vigilante takes on Metropoliss most revered, modern-day savior, while the world wrestles with what sort of hero it really needs. And with Batman and Superman at war with one another, a new threat quickly arises, putting mankind in greater danger than its ever known before.\t0.030224107\t0.035294015\t0.040799696\t0.034647826\t0.033210374\t0.037473593\n1452\tSuperman Returns\t270000000\tAction/Adventure\ten\t57.925625\t2006-06-28\t-1\t-1\t-1\t154\t5.4\t1400\t391081192\tSuperman returns to discover his 5-year absence has allowed Lex Luthor to walk free, and that those he was closest too felt abandoned and have moved on. Luthor plots his ultimate revenge that could see millions killed and change the face of the planet forever, as well as ridding himself of the Man of Steel.\t0.03448881\t0.034355126\t0.03152084\t0.028184824\t0.030428523\t0.035815984\n10764\tQuantum of Solace\t200000000\tAction/Adventure\ten\t107.92881\t2008-10-30\t-1\t-1\t-1\t106\t6.1\t2965\t586090727\tQuantum of Solace continues the adventures of James Bond after Casino Royale. Betrayed by Vesper, the woman he loved, 007 fights the urge to make his latest mission personal. Pursuing his determination to uncover the truth, Bond and M interrogate Mr. White, who reveals that the organization that blackmailed Vesper is far more complex and dangerous than anyone had imagined.\t0.024303805\t0.031679563\t0.027346613\t0.02773007\t0.028297111\t0.025206571\n58\tPirates of the Caribbean: Dead Man\u0027s Chest\t200000000\tAction/Adventure\ten\t145.84738\t2006-06-20\t-1\t-1\t-1\t151\t7.0\t5246\t1065659812\tCaptain Jack Sparrow works his way out of a blood debt with the ghostly Davey Jones, he also attempts to avoid eternal damnation.\t0.033023067\t0.03649226\t0.048366748\t0.07355596\t0.03603655\t0.0341026\n57201\tThe Lone Ranger\t255000000\tAction/Adventure\ten\t49.046955\t2013-07-03\t-1\t-1\t-1\t149\t5.9\t2311\t89289910\tThe Texas Rangers chase down a gang of outlaws led by Butch Cavendish, but the gang ambushes the Rangers, seemingly killing them all. One survivor is found, however, by an American Indian named Tonto, who nurses him back to health. The Ranger, donning a mask and riding a white stallion named Silver, teams up with Tonto to bring the unscrupulous gang and others of that ilk to justice.\t0.040266216\t0.05154475\t0.060792193\t0.03348762\t0.04539819\t0.028515877\n49521\tMan of Steel\t225000000\tAction/Adventure\ten\t99.39801\t2013-06-12\t-1\t-1\t-1\t143\t6.5\t6359\t662845518\tA young boy learns that he has extraordinary powers and is not of this earth. As a young man, he journeys to discover where he came from and what he was sent here to do. But the hero in him must emerge if he is to save the world from annihilation and become the symbol of hope for all mankind.\t0.060052536\t0.0359869\t0.05350344\t0.031820048\t0.030760566\t0.03367862\n2454\tThe Chronicles of Narnia: Prince Caspian\t225000000\tAction/Adventure\ten\t53.978603\t2008-05-15\t-1\t-1\t-1\t150\t6.3\t1630\t419651413\tOne year after their incredible adventures in the Lion, the Witch and the Wardrobe, Peter, Edmund, Lucy and Susan Pevensie return to Narnia to aid a young prince whose life has been threatened by the evil King Miraz. Now, with the help of a colorful cast of new characters, including Trufflehunter the badger and Nikabrik the dwarf, the Pevensie clan embarks on an incredible quest to ensure that Narnia is returned to its rightful heir.\t0.2735455\t0.03043278\t0.024089688\t0.025349915\t0.02451406\t0.024865275\n24428\tThe Avengers\t220000000\tScience Fiction\ten\t144.44864\t2012-04-25\t-1\t-1\t-1\t143\t7.4\t11776\t1519557910\tWhen an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!\t0.02461875\t0.03557134\t0.028579514\t0.044079397\t0.039537616\t0.026034357\n1865\tPirates of the Caribbean: On Stranger Tides\t380000000\tAction/Adventure\ten\t135.41385\t2011-05-14\t-1\t-1\t-1\t136\t6.4\t4948\t1045713802\tCaptain Jack Sparrow crosses paths with a woman from his past, and he\u0027s not sure if it\u0027s love -- or if she\u0027s a ruthless con artist who\u0027s using him to find the fabled Fountain of Youth. When she forces him aboard the Queen Anne\u0027s Revenge, the ship of the formidable pirate Blackbeard, Jack finds himself on an unexpected adventure in which he doesn\u0027t know who to fear more: Blackbeard or the woman from his past.\t0.031751007\t0.03540146\t0.027664356\t0.027867323\t0.026891472\t0.030683715\n41154\tMen in Black 3\t225000000\tAction/Adventure\ten\t52.03518\t2012-05-23\t-1\t-1\t-1\t106\t6.2\t4160\t624026776\tAgents J (Will Smith) and K (Tommy Lee Jones) are back...in time. J has seen some inexplicable things in his 15 years with the Men in Black, but nothing, not even aliens, perplexes him as much as his wry, reticent partner. But when K\u0027s life and the fate of the planet are put at stake, Agent J will have to travel back in time to put things right. J discovers that there are secrets to the universe that K never told him - secrets that will reveal themselves as he teams up with the young Agent K (Josh Brolin) to save his partner, the agency, and the future of humankind.\t0.021418665\t0.026913116\t0.058142696\t0.023616651\t0.025384074\t0.02261266\n122917\tThe Hobbit: The Battle of the Five Armies\t250000000\tAction/Adventure\ten\t120.965744\t2014-12-10\t-1\t-1\t-1\t144\t7.1\t4760\t956019788\tImmediately after the events of The Desolation of Smaug, Bilbo and the dwarves try to defend Erebor\u0027s mountain of treasure from others who claim it: the men of the ruined Laketown and the elves of Mirkwood. Meanwhile an army of Orcs led by Azog the Defiler is marching on Erebor, fueled by the rise of the dark lord Sauron. Dwarves, elves and men must unite, and the hope for Middle-Earth falls into Bilbo\u0027s hands.\t0.038718775\t0.033460002\t0.16962264\t0.037621614\t0.03453021\t0.029289514\n1930\tThe Amazing Spider-Man\t215000000\tAction/Adventure\ten\t89.86628\t2012-06-27\t-1\t-1\t-1\t136\t6.5\t6586\t752215857\tPeter Parker is an outcast high schooler abandoned by his parents as a boy, leaving him to be raised by his Uncle Ben and Aunt May. Like most teenagers, Peter is trying to figure out who he is and how he got to be the person he is today. As Peter discovers a mysterious briefcase that belonged to his father, he begins a quest to understand his parents\u0027 disappearance  leading him directly to Oscorp and the lab of Dr. Curt Connors, his father\u0027s former partner. As Spider-Man is set on a collision course with Connors\u0027 alter ego, The Lizard, Peter will make life-altering choices to use his powers and shape his destiny to become a hero.\t0.06417491\t0.019922521\t0.02283806\t0.018038908\t0.019071983\t0.023406737\n20662\tRobin Hood\t200000000\tAction/Adventure\ten\t37.6683\t2010-05-12\t-1\t-1\t-1\t140\t6.2\t1398\t310669540\tWhen soldier Robin happens upon the dying Robert of Loxley, he promises to return the man\u0027s sword to his family in Nottingham. There, he assumes Robert\u0027s identity; romances his widow, Marion; and draws the ire of the town\u0027s sheriff and King John\u0027s henchman, Godfrey.\t0.034143604\t0.101743236\t0.03148176\t0.036915\t0.039391693\t0.027835274\n57158\tThe Hobbit: The Desolation of Smaug\t250000000\tAction/Adventure\ten\t94.37057\t2013-12-11\t-1\t-1\t-1\t161\t7.6\t4524\t958400000\tThe Dwarves, Bilbo and Gandalf have successfully escaped the Misty Mountains, and Bilbo has gained the One Ring. They all continue their journey to get their gold back from the Dragon, Smaug.\t0.041827668\t0.036085267\t0.03410566\t0.14021063\t0.039055068\t0.040492516\n2268\tThe Golden Compass\t180000000\tAction/Adventure\ten\t42.990906\t2007-12-04\t-1\t-1\t-1\t113\t5.8\t1303\t372234864\tAfter overhearing a shocking secret, precocious orphan Lyra Belacqua trades her carefree existence roaming the halls of Jordan College for an otherworldly adventure in the far North, unaware that it\u0027s part of her destiny.\t0.04312571\t0.044104345\t0.043367423\t0.036071993\t0.035571273\t0.04138999\n254\tKing Kong\t207000000\tAction/Adventure\ten\t61.22601\t2005-12-14\t-1\t-1\t-1\t187\t6.6\t2337\t550000000\tIn 1933 New York, an overly ambitious movie producer coerces his cast and hired ship crew to travel to mysterious Skull Island, where they encounter Kong, a giant ape who is immediately smitten with the leading lady.\t0.046889663\t0.033185534\t0.036324415\t0.03218697\t0.029837828\t0.031931207\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d170"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766019_725699806",
+      "id": "20171002-234013_1134996371",
+      "dateCreated": "2018-12-30 17:26:06.019",
+      "dateStarted": "2018-12-30 18:54:54.569",
+      "dateFinished": "2018-12-30 18:54:57.198",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Random Split Dataset (Training \u0026 Testing) ",
+      "text": "%pyspark\n\n# Handle Null/Missing values\nmodelprep \u003d text_enriched.na.fill(-1) \\\n                         .withColumn(\u0027revenue\u0027, col(\u0027revenue\u0027).cast(\u0027double\u0027))\n\ntraining, testing \u003d modelprep.randomSplit([0.80, 0.20], seed\u003d12345)\n\nprint(\u0027Total Records:     \u0027 + str(modelprep.count()))\nprint(\u0027Training Records:  \u0027 + str(training.count()))\nprint(\u0027Testing Records:   \u0027 + str(testing.count()))\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:55:02.317",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Total Records:     3375\nTraining Records:  2620\nTesting Records:   721\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d171",
+            "http://localhost:4040/jobs/job?id\u003d172",
+            "http://localhost:4040/jobs/job?id\u003d173"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766019_1835980681",
+      "id": "20180403-171221_1435851564",
+      "dateCreated": "2018-12-30 17:26:06.019",
+      "dateStarted": "2018-12-30 18:55:02.338",
+      "dateFinished": "2018-12-30 18:55:39.757",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Train Predictive Model ",
+      "text": "%pyspark\n\ntarget   \u003d \u0027revenue_over_100M\u0027\nfeatures \u003d [\u0027budget\u0027,\u0027runtime\u0027,\u0027vote_average\u0027,\u0027vote_count\u0027,\u0027year\u0027,\u0027month\u0027,\u0027day\u0027,\u0027genre_index\u0027] + [\"Topic_\" + str(index_number) for index_number in range(number_of_clusters)]\n\n# Bucketize revenue (split at $100M)\nrevenue_splits     \u003d [-float(\"inf\"), 100000000, float(\"inf\")]\nrevenue_bucketizer \u003d Bucketizer(splits\u003drevenue_splits, inputCol\u003d\"revenue\", outputCol\u003d\"revenue_over_100M\")\n\n# SI on genre\nsi  \u003d StringIndexer(inputCol\u003d\"genre\", outputCol\u003d\"genre_index\")\n\n# Vectorizer\nva  \u003d VectorAssembler(inputCols\u003dfeatures, outputCol\u003d\"features\")\n\n# ML Models\ngbc \u003d GBTClassifier(featuresCol\u003d\"features\", labelCol\u003dtarget, predictionCol\u003d\"prediction\", maxDepth\u003d5, maxBins\u003d32, maxIter\u003d20, seed\u003d12345)\nrfc \u003d RandomForestClassifier(featuresCol\u003d\"features\", labelCol\u003dtarget, predictionCol\u003d\"prediction\", probabilityCol\u003d\"probability\", numTrees\u003d10, maxDepth\u003d5, seed\u003d12345)\n\n# Build Pipeline\npipeline \u003d Pipeline(stages\u003d[revenue_bucketizer, si, va, gbc])\n\nmlmodel_with_text \u003d pipeline.fit(training)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 18:55:39.378",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d174",
+            "http://localhost:4040/jobs/job?id\u003d175",
+            "http://localhost:4040/jobs/job?id\u003d176",
+            "http://localhost:4040/jobs/job?id\u003d177",
+            "http://localhost:4040/jobs/job?id\u003d178",
+            "http://localhost:4040/jobs/job?id\u003d179",
+            "http://localhost:4040/jobs/job?id\u003d180",
+            "http://localhost:4040/jobs/job?id\u003d181",
+            "http://localhost:4040/jobs/job?id\u003d182",
+            "http://localhost:4040/jobs/job?id\u003d183",
+            "http://localhost:4040/jobs/job?id\u003d184",
+            "http://localhost:4040/jobs/job?id\u003d185",
+            "http://localhost:4040/jobs/job?id\u003d186",
+            "http://localhost:4040/jobs/job?id\u003d187",
+            "http://localhost:4040/jobs/job?id\u003d188",
+            "http://localhost:4040/jobs/job?id\u003d189",
+            "http://localhost:4040/jobs/job?id\u003d190",
+            "http://localhost:4040/jobs/job?id\u003d191",
+            "http://localhost:4040/jobs/job?id\u003d192",
+            "http://localhost:4040/jobs/job?id\u003d193",
+            "http://localhost:4040/jobs/job?id\u003d194",
+            "http://localhost:4040/jobs/job?id\u003d195",
+            "http://localhost:4040/jobs/job?id\u003d196",
+            "http://localhost:4040/jobs/job?id\u003d197",
+            "http://localhost:4040/jobs/job?id\u003d198",
+            "http://localhost:4040/jobs/job?id\u003d199",
+            "http://localhost:4040/jobs/job?id\u003d200",
+            "http://localhost:4040/jobs/job?id\u003d201",
+            "http://localhost:4040/jobs/job?id\u003d202",
+            "http://localhost:4040/jobs/job?id\u003d203",
+            "http://localhost:4040/jobs/job?id\u003d204",
+            "http://localhost:4040/jobs/job?id\u003d205",
+            "http://localhost:4040/jobs/job?id\u003d206",
+            "http://localhost:4040/jobs/job?id\u003d207",
+            "http://localhost:4040/jobs/job?id\u003d208",
+            "http://localhost:4040/jobs/job?id\u003d209",
+            "http://localhost:4040/jobs/job?id\u003d210",
+            "http://localhost:4040/jobs/job?id\u003d211",
+            "http://localhost:4040/jobs/job?id\u003d212",
+            "http://localhost:4040/jobs/job?id\u003d213",
+            "http://localhost:4040/jobs/job?id\u003d214",
+            "http://localhost:4040/jobs/job?id\u003d215",
+            "http://localhost:4040/jobs/job?id\u003d216",
+            "http://localhost:4040/jobs/job?id\u003d217",
+            "http://localhost:4040/jobs/job?id\u003d218",
+            "http://localhost:4040/jobs/job?id\u003d219",
+            "http://localhost:4040/jobs/job?id\u003d220",
+            "http://localhost:4040/jobs/job?id\u003d221",
+            "http://localhost:4040/jobs/job?id\u003d222",
+            "http://localhost:4040/jobs/job?id\u003d223",
+            "http://localhost:4040/jobs/job?id\u003d224",
+            "http://localhost:4040/jobs/job?id\u003d225",
+            "http://localhost:4040/jobs/job?id\u003d226",
+            "http://localhost:4040/jobs/job?id\u003d227",
+            "http://localhost:4040/jobs/job?id\u003d228",
+            "http://localhost:4040/jobs/job?id\u003d229",
+            "http://localhost:4040/jobs/job?id\u003d230",
+            "http://localhost:4040/jobs/job?id\u003d231",
+            "http://localhost:4040/jobs/job?id\u003d232",
+            "http://localhost:4040/jobs/job?id\u003d233",
+            "http://localhost:4040/jobs/job?id\u003d234",
+            "http://localhost:4040/jobs/job?id\u003d235",
+            "http://localhost:4040/jobs/job?id\u003d236",
+            "http://localhost:4040/jobs/job?id\u003d237",
+            "http://localhost:4040/jobs/job?id\u003d238",
+            "http://localhost:4040/jobs/job?id\u003d239",
+            "http://localhost:4040/jobs/job?id\u003d240",
+            "http://localhost:4040/jobs/job?id\u003d241",
+            "http://localhost:4040/jobs/job?id\u003d242",
+            "http://localhost:4040/jobs/job?id\u003d243",
+            "http://localhost:4040/jobs/job?id\u003d244",
+            "http://localhost:4040/jobs/job?id\u003d245",
+            "http://localhost:4040/jobs/job?id\u003d246",
+            "http://localhost:4040/jobs/job?id\u003d247",
+            "http://localhost:4040/jobs/job?id\u003d248",
+            "http://localhost:4040/jobs/job?id\u003d249",
+            "http://localhost:4040/jobs/job?id\u003d250",
+            "http://localhost:4040/jobs/job?id\u003d251",
+            "http://localhost:4040/jobs/job?id\u003d252",
+            "http://localhost:4040/jobs/job?id\u003d253",
+            "http://localhost:4040/jobs/job?id\u003d254",
+            "http://localhost:4040/jobs/job?id\u003d255",
+            "http://localhost:4040/jobs/job?id\u003d256",
+            "http://localhost:4040/jobs/job?id\u003d257",
+            "http://localhost:4040/jobs/job?id\u003d258",
+            "http://localhost:4040/jobs/job?id\u003d259",
+            "http://localhost:4040/jobs/job?id\u003d260",
+            "http://localhost:4040/jobs/job?id\u003d261",
+            "http://localhost:4040/jobs/job?id\u003d262",
+            "http://localhost:4040/jobs/job?id\u003d263",
+            "http://localhost:4040/jobs/job?id\u003d264",
+            "http://localhost:4040/jobs/job?id\u003d265",
+            "http://localhost:4040/jobs/job?id\u003d266",
+            "http://localhost:4040/jobs/job?id\u003d267",
+            "http://localhost:4040/jobs/job?id\u003d268",
+            "http://localhost:4040/jobs/job?id\u003d269",
+            "http://localhost:4040/jobs/job?id\u003d270",
+            "http://localhost:4040/jobs/job?id\u003d271",
+            "http://localhost:4040/jobs/job?id\u003d272",
+            "http://localhost:4040/jobs/job?id\u003d273",
+            "http://localhost:4040/jobs/job?id\u003d274",
+            "http://localhost:4040/jobs/job?id\u003d275",
+            "http://localhost:4040/jobs/job?id\u003d276",
+            "http://localhost:4040/jobs/job?id\u003d277",
+            "http://localhost:4040/jobs/job?id\u003d278",
+            "http://localhost:4040/jobs/job?id\u003d279",
+            "http://localhost:4040/jobs/job?id\u003d280",
+            "http://localhost:4040/jobs/job?id\u003d281",
+            "http://localhost:4040/jobs/job?id\u003d282",
+            "http://localhost:4040/jobs/job?id\u003d283",
+            "http://localhost:4040/jobs/job?id\u003d284",
+            "http://localhost:4040/jobs/job?id\u003d285",
+            "http://localhost:4040/jobs/job?id\u003d286",
+            "http://localhost:4040/jobs/job?id\u003d287",
+            "http://localhost:4040/jobs/job?id\u003d288",
+            "http://localhost:4040/jobs/job?id\u003d289",
+            "http://localhost:4040/jobs/job?id\u003d290",
+            "http://localhost:4040/jobs/job?id\u003d291",
+            "http://localhost:4040/jobs/job?id\u003d292",
+            "http://localhost:4040/jobs/job?id\u003d293",
+            "http://localhost:4040/jobs/job?id\u003d294",
+            "http://localhost:4040/jobs/job?id\u003d295",
+            "http://localhost:4040/jobs/job?id\u003d296",
+            "http://localhost:4040/jobs/job?id\u003d297",
+            "http://localhost:4040/jobs/job?id\u003d298",
+            "http://localhost:4040/jobs/job?id\u003d299",
+            "http://localhost:4040/jobs/job?id\u003d300",
+            "http://localhost:4040/jobs/job?id\u003d301",
+            "http://localhost:4040/jobs/job?id\u003d302",
+            "http://localhost:4040/jobs/job?id\u003d303",
+            "http://localhost:4040/jobs/job?id\u003d304",
+            "http://localhost:4040/jobs/job?id\u003d305",
+            "http://localhost:4040/jobs/job?id\u003d306",
+            "http://localhost:4040/jobs/job?id\u003d307",
+            "http://localhost:4040/jobs/job?id\u003d308",
+            "http://localhost:4040/jobs/job?id\u003d309",
+            "http://localhost:4040/jobs/job?id\u003d310",
+            "http://localhost:4040/jobs/job?id\u003d311",
+            "http://localhost:4040/jobs/job?id\u003d312",
+            "http://localhost:4040/jobs/job?id\u003d313",
+            "http://localhost:4040/jobs/job?id\u003d314",
+            "http://localhost:4040/jobs/job?id\u003d315",
+            "http://localhost:4040/jobs/job?id\u003d316",
+            "http://localhost:4040/jobs/job?id\u003d317",
+            "http://localhost:4040/jobs/job?id\u003d318",
+            "http://localhost:4040/jobs/job?id\u003d319",
+            "http://localhost:4040/jobs/job?id\u003d320",
+            "http://localhost:4040/jobs/job?id\u003d321",
+            "http://localhost:4040/jobs/job?id\u003d322",
+            "http://localhost:4040/jobs/job?id\u003d323",
+            "http://localhost:4040/jobs/job?id\u003d324",
+            "http://localhost:4040/jobs/job?id\u003d325",
+            "http://localhost:4040/jobs/job?id\u003d326",
+            "http://localhost:4040/jobs/job?id\u003d327",
+            "http://localhost:4040/jobs/job?id\u003d328",
+            "http://localhost:4040/jobs/job?id\u003d329",
+            "http://localhost:4040/jobs/job?id\u003d330",
+            "http://localhost:4040/jobs/job?id\u003d331",
+            "http://localhost:4040/jobs/job?id\u003d332",
+            "http://localhost:4040/jobs/job?id\u003d333",
+            "http://localhost:4040/jobs/job?id\u003d334",
+            "http://localhost:4040/jobs/job?id\u003d335"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766020_2065174007",
+      "id": "20180404-001228_1067570013",
+      "dateCreated": "2018-12-30 17:26:06.020",
+      "dateStarted": "2018-12-30 18:55:39.401",
+      "dateFinished": "2018-12-30 18:56:50.217",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Model Evaluation",
+      "text": "%pyspark\n\ndef evaluate_regression_model(model, test_df, label\u003d\u0027label\u0027):\n    predictions \u003d model.transform(test_df)\n    #predictions.select(label, \"prediction\").show(30,False)\n    \n    evaluator \u003d RegressionEvaluator(metricName\u003d\"rmse\")  # rmse (default)|mse|r2|mae\n    RMSE \u003d evaluator.evaluate(predictions)\n    print(\u0027RMSE: {}\u0027.format(RMSE))\n    \n    evaluator \u003d RegressionEvaluator(metricName\u003d\"r2\")\n    R2 \u003d evaluator.evaluate(predictions)\n    print(\u0027R2:   {}\u0027.format(R2))\n    \n    return predictions\n\ndef evaluate_classification_model(model, test_df, label\u003d\u0027label\u0027):\n    predictions \u003d model.transform(test_df)\n    #predictions.select(\"prediction\", label).show(30,False)\n    \n    # Select (prediction, true label) and compute test error\n    evaluator \u003d MulticlassClassificationEvaluator(labelCol\u003dlabel, predictionCol\u003d\"prediction\", metricName\u003d\"accuracy\")   # f1|weightedPrecision|weightedRecall|accuracy\n    accuracy \u003d evaluator.evaluate(predictions)\n    print(\"Accuracy: \" + str(accuracy))\n    \n    return accuracy, predictions\n\n\n# Predictions\naccuracy_with_text, predictions_with_text \u003d evaluate_classification_model(mlmodel_with_text, testing, label\u003dtarget)\n\nprint(\u0027\\nAccuracy for Gradient Boosting (with text):  \u0027 + str(accuracy_with_text))\n\npredictions_with_text.select(\u0027id\u0027,\u0027title\u0027,\u0027revenue\u0027,\u0027revenue_over_100M\u0027,\u0027prediction\u0027).sort(predictions_with_text.id).show(50,False)",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:16:14.714",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Accuracy: 0.8321775312066574\n\nAccuracy for Gradient Boosting (with text):  0.8321775312066574\n+------+------------------------------------------------+-------------+-----------------+----------+\n|id    |title                                           |revenue      |revenue_over_100M|prediction|\n+------+------------------------------------------------+-------------+-----------------+----------+\n|100   |Lock, Stock and Two Smoking Barrels             |3897569.0    |0.0              |0.0       |\n|10013 |Peggy Sue Got Married                           |4.1382841E7  |0.0              |0.0       |\n|10017 |The Wraith                                      |3500000.0    |0.0              |0.0       |\n|10022 |The Pacifier                                    |1.1300688E8  |1.0              |1.0       |\n|10065 |The Amityville Horror                           |1.08047131E8 |1.0              |0.0       |\n|10069 |Stay Alive                                      |2.7105095E7  |0.0              |0.0       |\n|10072 |A Nightmare on Elm Street 3: Dream Warriors     |4.4793222E7  |0.0              |0.0       |\n|10092 |Cry_Wolf                                        |1.0047674E7  |0.0              |0.0       |\n|101267|Katy Perry: Part of Me                          |3.2726956E7  |0.0              |0.0       |\n|101299|The Hunger Games: Catching Fire                 |8.47423452E8 |1.0              |1.0       |\n|10135 |Road House                                      |3.0050028E7  |0.0              |0.0       |\n|10139 |Milk                                            |5.4586584E7  |0.0              |0.0       |\n|10189 |Pineapple Express                               |1.01624843E8 |1.0              |0.0       |\n|10193 |Toy Story 3                                     |1.066969703E9|1.0              |1.0       |\n|10199 |The Tale of Despereaux                          |5.0877145E7  |0.0              |0.0       |\n|10207 |Message in a Bottle                             |1.18880016E8 |1.0              |0.0       |\n|10218 |Swingers                                        |4505922.0    |0.0              |0.0       |\n|10220 |Rounders                                        |2.2921898E7  |0.0              |0.0       |\n|10225 |Friday the 13th Part VI: Jason Lives            |1.9472057E7  |0.0              |0.0       |\n|102382|The Amazing Spider-Man 2                        |7.05717432E8 |1.0              |1.0       |\n|10246 |Porky\u0027s                                         |1.25728258E8 |1.0              |0.0       |\n|10283 |Friday the 13th Part VIII: Jason Takes Manhattan|1.4E7        |0.0              |0.0       |\n|10313 |The Men Who Stare at Goats                      |6.8729358E7  |0.0              |0.0       |\n|10315 |Fantastic Mr. Fox                               |4.6471023E7  |0.0              |1.0       |\n|10329 |Congo                                           |1.52022101E8 |1.0              |0.0       |\n|10339 |Moby Dick                                       |1.04E7       |0.0              |0.0       |\n|10397 |Angela\u0027s Ashes                                  |13.0         |0.0              |0.0       |\n|10476 |Hustle \u0026 Flow                                   |2.3563727E7  |0.0              |0.0       |\n|10477 |Driven                                          |5.4744738E7  |0.0              |0.0       |\n|10490 |Drop Dead Gorgeous                              |1.0571408E7  |0.0              |0.0       |\n|10496 |Bats                                            |10.0         |0.0              |0.0       |\n|105   |Back to the Future                              |3.81109762E8 |1.0              |0.0       |\n|10501 |The Road to El Dorado                           |7.6432727E7  |0.0              |1.0       |\n|1051  |The French Connection                           |4.1158757E7  |0.0              |0.0       |\n|10514 |The Andromeda Strain                            |1.2376563E7  |0.0              |0.0       |\n|10528 |Sherlock Holmes                                 |5.24028679E8 |1.0              |1.0       |\n|10545 |The Hunchback of Notre Dame                     |1.00138851E8 |1.0              |1.0       |\n|10564 |Where the Heart Is                              |3.3771174E7  |0.0              |0.0       |\n|10577 |Dracula 2000                                    |3.3000337E7  |0.0              |0.0       |\n|10585 |Child\u0027s Play                                    |4.4196684E7  |0.0              |0.0       |\n|10590 |We Were Soldiers                                |1.14660784E8 |1.0              |1.0       |\n|10591 |The Girl Next Door                              |3.0411183E7  |0.0              |0.0       |\n|10646 |Tomcats                                         |2.3430766E7  |0.0              |0.0       |\n|10656 |Subway                                          |390659.0     |0.0              |0.0       |\n|10684 |Courage Under Fire                              |1.00860818E8 |1.0              |0.0       |\n|10691 |Crazy/Beautiful                                 |1.6929123E7  |0.0              |0.0       |\n|10696 |Glitter                                         |5271666.0    |0.0              |0.0       |\n|10718 |Torque                                          |4.6546197E7  |0.0              |0.0       |\n|10758 |Waitress                                        |2.217943E7   |0.0              |0.0       |\n|10762 |Without a Paddle                                |6.9631118E7  |0.0              |0.0       |\n+------+------------------------------------------------+-------------+-----------------+----------+\nonly showing top 50 rows\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://localhost:4040/jobs/job?id\u003d376",
+            "http://localhost:4040/jobs/job?id\u003d377",
+            "http://localhost:4040/jobs/job?id\u003d378"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766020_-712723272",
+      "id": "20180403-155112_2073476066",
+      "dateCreated": "2018-12-30 17:26:06.020",
+      "dateStarted": "2018-12-30 19:16:14.742",
+      "dateFinished": "2018-12-30 19:17:10.883",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Model Feature Importances",
+      "text": "%pyspark\n\nfeature_importance_vars \u003d sorted([(features[i],feature) for i,feature in enumerate(mlmodel_with_text.stages[-1].featureImportances)], key\u003dlambda x: x[1], reverse\u003dTrue)\n\nprint(\u0027Feature Importances (descending):\u0027)\nfor f in feature_importance_vars:\n    print(f)\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 19:18:40.036",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "fontSize": 9.0
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Feature Importances (descending):\n(\u0027vote_count\u0027, 0.256036159917993)\n(\u0027budget\u0027, 0.13122279655165597)\n(\u0027runtime\u0027, 0.04406694638813896)\n(\u0027Topic_8\u0027, 0.031785527039935764)\n(\u0027genre_index\u0027, 0.03146584443808316)\n(\u0027vote_average\u0027, 0.031077182856967395)\n(\u0027Topic_0\u0027, 0.030241186826786226)\n(\u0027Topic_10\u0027, 0.030232426181712152)\n(\u0027Topic_13\u0027, 0.02881155510726378)\n(\u0027Topic_1\u0027, 0.028410356774543132)\n(\u0027Topic_17\u0027, 0.0282840991404459)\n(\u0027Topic_15\u0027, 0.02636503975419837)\n(\u0027Topic_7\u0027, 0.025363816714465803)\n(\u0027Topic_2\u0027, 0.02404536195273929)\n(\u0027Topic_4\u0027, 0.023585471000970606)\n(\u0027Topic_14\u0027, 0.02134106212040761)\n(\u0027Topic_18\u0027, 0.020697390138262096)\n(\u0027Topic_19\u0027, 0.018624116132545186)\n(\u0027Topic_24\u0027, 0.01776130964442103)\n(\u0027Topic_9\u0027, 0.01772493779664122)\n(\u0027Topic_12\u0027, 0.0176333013479936)\n(\u0027Topic_5\u0027, 0.015766970635345042)\n(\u0027Topic_22\u0027, 0.015457517594467663)\n(\u0027Topic_3\u0027, 0.015248191595833243)\n(\u0027Topic_16\u0027, 0.014765255140066002)\n(\u0027Topic_21\u0027, 0.01438642084662379)\n(\u0027Topic_20\u0027, 0.012444554784189382)\n(\u0027Topic_11\u0027, 0.011103203186109438)\n(\u0027Topic_23\u0027, 0.010219353745329108)\n(\u0027Topic_6\u0027, 0.005832644645865969)\n(\u0027year\u0027, 0.0)\n(\u0027month\u0027, 0.0)\n(\u0027day\u0027, 0.0)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766020_1446718996",
+      "id": "20180405-002246_141443115",
+      "dateCreated": "2018-12-30 17:26:06.020",
+      "dateStarted": "2018-12-30 19:18:40.060",
+      "dateFinished": "2018-12-30 19:18:40.087",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%angular\n\u003cbr\u003e\u003cb\u003eAdditional Comments:\u003c/b\u003e\n\u003cbr\u003eThe point of this notebook was to show basic text analytics capabilities (mostly native to Spark). There are many additional libraries that are well suited for spark text analytics and are recommended, these include:\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"https://github.com/JohnSnowLabs/spark-nlp\"\u003eSpark NLP Library\u003c/a\u003e\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"https://spacy.io/\"\u003eSpaCy\u003c/a\u003e\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"http://textblob.readthedocs.io/en/dev/\"\u003eTextBlob\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cb\u003eAdditional References:\u003c/b\u003e\n\u003cbr\u003e\u003ca href\u003d\"https://community.hortonworks.com/articles/84781/spark-text-analytics-uncovering-data-driven-topics.html\"\u003eHCC Article\u003c/a\u003e that details some of the code and throught process being this notebook.\n\u003cbr\u003e\u003ca href\u003d\"https://github.com/zaratsian/Spark\"\u003eMisc Spark Examples\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:26:06.020",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": true,
+        "results": {},
+        "enabled": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "ANGULAR",
+            "data": "\u003cbr\u003e\u003cb\u003eAdditional Comments:\u003c/b\u003e\n\u003cbr\u003eThe point of this notebook was to show basic text analytics capabilities (mostly native to Spark). There are many additional libraries that are well suited for spark text analytics and are recommended, these include:\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"https://github.com/JohnSnowLabs/spark-nlp\"\u003eSpark NLP Library\u003c/a\u003e\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"https://spacy.io/\"\u003eSpaCy\u003c/a\u003e\n\u003cbr\u003e\u0026nbsp;\u0026bull;\u0026nbsp;\u003ca href\u003d\"http://textblob.readthedocs.io/en/dev/\"\u003eTextBlob\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003cb\u003eAdditional References:\u003c/b\u003e\n\u003cbr\u003e\u003ca href\u003d\"https://community.hortonworks.com/articles/84781/spark-text-analytics-uncovering-data-driven-topics.html\"\u003eHCC Article\u003c/a\u003e that details some of the code and throught process being this notebook.\n\u003cbr\u003e\u003ca href\u003d\"https://github.com/zaratsian/Spark\"\u003eMisc Spark Examples\u003c/a\u003e\n\u003cbr\u003e\n\u003cbr\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766020_-1507883339",
+      "id": "20171003-000618_1445939972",
+      "dateCreated": "2018-12-30 17:26:06.020",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%angular\n",
+      "user": "anonymous",
+      "dateUpdated": "2018-12-30 17:26:06.020",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1546190766020_-66506711",
+      "id": "20180403-145402_101101298",
+      "dateCreated": "2018-12-30 17:26:06.020",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Movie Text Analytics - Python",
+  "id": "2DYZWZN3R",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "angular:shared_process": [],
+    "sh:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}
