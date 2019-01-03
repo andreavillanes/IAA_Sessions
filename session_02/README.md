@@ -21,7 +21,7 @@
 https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/hive/assets/hive_example_2_query.sql
 
 More scripts and examples found here:
-https://github.com/zaratsian/Apache_Hive
+<br>https://github.com/zaratsian/Apache_Hive
 <br>https://github.com/zaratsian/HDP_Tuning_Unofficial
 
 ## Apache Phoenix (HBase)
