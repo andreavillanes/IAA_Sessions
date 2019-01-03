@@ -72,6 +72,5 @@ More scripts and examples found here:
 <br>```/spark/bin/pyspark --deploy-mode client --master local[*] --name sparksql```
 
 5. Within the Container - Execute SparkSQL Commands. Syntax shown here:
-<br>https://github.com/zaratsian/SQLSaturday/blob/master/sql_saturday_sparksql.py
-
+<br>https://github.com/zaratsian/IAA_Sessions/blob/master/session_02/spark_sql_example.py
 
