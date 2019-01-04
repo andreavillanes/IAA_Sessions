@@ -44,16 +44,16 @@ More scripts and examples found here:
 <br>```./connect_to_phoenix.sh```
 
 6. Within the Container, run Phoenix commands to create empty tables. Syntax shown here:
-<br>https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/phoenix/assets/1_create_phoenix_tables.sql
+<br>https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/phoenix/assets/phoenix_1_create_tables.sql.sql
 
 7. Within the Container, exit the phoenix shell and load CSV into the tables (from the bash shell):
-<br>```./2_load_csvs.sh```
+<br>```./phoenix_2_load_csvs.sh```
 
 8. Within the Container - Connect to Phoenix (again)
 <br>```./connect_to_phoenix.sh```
 
 9. Within Container - Execute Phoenix Queries. Syntax shown here:
-<br>https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/phoenix/assets/3_phoenix_queries.sql
+<br>https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/phoenix/assets/phoenix_3_queries.sql
 
 ## Apache Spark
 
