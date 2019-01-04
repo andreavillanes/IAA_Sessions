@@ -12,20 +12,20 @@ cd IAA_Sessions/docker/
 3. Run Container
 <br>```./spark_run.sh```
 
-4. Option #1: Open up Zeppelin Notebook
+4. Open up Zeppelin Notebook (use the UI to submit code)
 ```
 http://localhost:18080
 ```
-4. Option #2: Connect to the Docker container
-```
-docker exec -it spark bash
-```
-5. Within the Container - Connect to PySpark
-```
-/spark/bin/pyspark --deploy-mode client --master local[*] --name spark_lab
-```
-6. Work through the following Labs:
+5. Work through the following Labs:
 <br>(1) Getting Started - Python
 <br>(2) Flight Predictor - Python 
 <br>(3) Movie Text Analytics - Python
 
+Optional: Connect to the Docker container (submit code via cli)
+```
+docker exec -it spark bash
+```
+Within the Container - Connect to PySpark
+```
+/spark/bin/pyspark --deploy-mode client --master local[*] --name spark_lab
+```
