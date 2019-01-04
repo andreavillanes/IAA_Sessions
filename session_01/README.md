@@ -16,7 +16,12 @@ password: ```cloudbreak123```
 
 The second demo will demonstrate how to quickly deploy a Hadoop cluster using Google Cloud (specifically Google Dataproc). The cluster should spin up in ~2 minutes, and includes serives such as HDFS, Hive, Spark, and others.
 
-To Launch a Google Cloud Dataproc cluster, execute:
+To Launch a Google Cloud Dataproc cluster, execute these commands:
+```
+git clone https://github.com/zaratsian/IAA_Sessions.git
+cd IAA_Sessions/session_01/
+```
+Create the 3+ node cluster (with parameters as specified in the bash script)
 ```
 ./dataproc_1_create_cluster.sh
 ```
@@ -30,7 +35,10 @@ Demo flow once Dataproc has launched:
 /usr/lib/spark/bin/pyspark --deploy-mode client --master yarn --name spark_example
 ```
 ```
-# Manually run ./spark_test_script.py within the PySpark shell
+# Step through ./spark_test_script.py within the PySpark shell
+
+# Optional: For testing purposes, you can also create a Spark DF from python lists:
+df = spark.createDataFrame([(1,'nc'),(2,'ca'),(3,'ny')], ['id','state'])
 ```
 ```
 # Save sim DF as table
@@ -41,5 +49,8 @@ sim.write.mode("overwrite").format('orc').saveAsTable('sim_table_orc')
 # Execute queries in Hive
 /usr/lib/hive/bin/beeline -u jdbc:hive2://localhost:10000/default
 # It's recommended to use the JDBC connection, but you can also directly connect to hive via:
-/usr/lib/hive/bin/hive
+#/usr/lib/hive/bin/hive
+
+show tables;
+describe formatted sim_table;
 ```

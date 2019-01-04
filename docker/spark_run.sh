@@ -21,6 +21,7 @@ echo "*"
 echo "*  Spark Container has been started..."
 echo "*"
 echo "*  Port (Zeppelin):  18080"
+echo "*  Zeppelin Notebook should be running at http://localhost:18080
 echo "*"
 echo "*  Usage: docker exec -it spark bash"
 echo "*"
