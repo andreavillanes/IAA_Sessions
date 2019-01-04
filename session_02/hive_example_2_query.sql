@@ -12,8 +12,8 @@
 --#hadoop fs -mkdir /demo/ncaa
 --#hadoop fs -mkdir /demo/ncaa/SeasonResults
 --#hadoop fs -mkdir /demo/ncaa/Teams
---#hadoop fs -put /tmp/SeasonResults.csv /demo/ncaa/SeasonResults/.
---#hadoop fs -put /tmp/Teams.csv /demo/ncaa/Teams/.
+--#hadoop fs -put /data/SeasonResults.csv /demo/ncaa/SeasonResults/.
+--#hadoop fs -put /data/Teams.csv /demo/ncaa/Teams/.
 
 
 --###############################################################################################################
@@ -93,20 +93,21 @@ DESCRIBE mm_teams;
 CREATE TABLE IF NOT EXISTS mm_join1 AS
     SELECT mm_season.*, 
         teams2a.team_name AS WTEAM_NAME, 
-	        teams2b.team_name AS LTEAM_NAME
-		    FROM mm_season
-		    LEFT JOIN mm_teams teams2a ON (mm_season.wteam = teams2a.team_id)
-		    LEFT JOIN mm_teams teams2b ON (mm_season.lteam = teams2b.team_id);
+        teams2b.team_name AS LTEAM_NAME
+    FROM mm_season
+    LEFT JOIN mm_teams teams2a ON (mm_season.wteam = teams2a.team_id)
+    LEFT JOIN mm_teams teams2b ON (mm_season.lteam = teams2b.team_id);
 
-		SELECT * FROM mm_join1 LIMIT 10;
-		    
-		DESC mm_join1;
+SELECT * FROM mm_join1 LIMIT 10;
+    
+DESC mm_join1;
 
-		SELECT COUNT(*) FROM mm_season;
-		SELECT COUNT(*) FROM mm_teams;
-		SELECT COUNT(*) FROM mm_join1;
+SELECT COUNT(*) FROM mm_season;
+SELECT COUNT(*) FROM mm_teams;
+SELECT COUNT(*) FROM mm_join1;
 
-		--SHOW CREATE TABLE mm_join1;
+--SHOW CREATE TABLE mm_join1;
+
 
 --###############################################################################################################
 --#
@@ -117,10 +118,10 @@ CREATE TABLE IF NOT EXISTS mm_join1 AS
 CREATE VIEW IF NOT EXISTS mm_join1_view AS
     SELECT mm_season.*, 
         teams2a.team_name AS WTEAM_NAME, 
-	teams2b.team_name AS LTEAM_NAME
-        FROM mm_season
-        LEFT JOIN mm_teams teams2a ON (mm_season.wteam = teams2a.team_id)
-	LEFT JOIN mm_teams teams2b ON (mm_season.lteam = teams2b.team_id);
+        teams2b.team_name AS LTEAM_NAME
+    FROM mm_season
+    LEFT JOIN mm_teams teams2a ON (mm_season.wteam = teams2a.team_id)
+    LEFT JOIN mm_teams teams2b ON (mm_season.lteam = teams2b.team_id);
 
 
 --###############################################################################################################
@@ -185,8 +186,6 @@ ANALYZE TABLE testdata COMPUTE STATISTICS;
 ANALYZE TABLE testdata COMPUTE STATISTICS FOR COLUMNS;
 
 SELECT COUNT(*) FROM testdata;
-
-
 
 
 --#ZEND
