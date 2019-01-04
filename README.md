@@ -5,29 +5,29 @@ Distributed Data Processing Module - Dan Zaratsian, Jan 2019
 
 ## IAA Module - Session 1 - Platform Overview
 * Introduction and Module Agenda
-* Distributed Computing Platform Platform
+* Distributed Computing Platform
 * Walk-through of Apache Tools & Services (Spark, Zeppelin, Ambari, NiFi, Ranger, Hive, plus others)
 * Distributed Architectures and Use Cases
-* Demo - Hortonworks Data Platform (Hadoop)
+* Demo - Hortonworks/Cloudera Data Platform (Hadoop)
 * Demo - Google Dataproc (Hadoop)
 * Docker Setup & Troubleshooting
 
-## IAA Module - Session 2 - SQL and NoSQL
+## IAA Module - Session 2 - SQL and NoSQL Services
 * Intro to Apache Hive
 * Apache Hive Syntax and Schema Design
-* Demo & Lap - Apache Hive
+* Demo & Lab - Apache Hive
 * Intro to Apache HBase and Apache Phoenix
 * Apache HBase Schema Design & Best Practices
 * Apache Phoenix Syntax
-* Demo & Lap - Apache HBase/Phoenix
+* Demo & Lab - Apache HBase/Phoenix
 * Intro to Apache SparkSQL
 * Apache SparkSQL Syntax and Best Practices
-* Demo & Lap - SparkSQL
+* Demo & Lab - SparkSQL
 
-## IAA Module - Session 3 - Spark Machine Learning
+## IAA Module - Session 3 - Spark Data Processing & Machine Learning
 * Apache Spark Overview
 * Building and deploying Spark machine learning models
-* Considerations for ML in distributed environments 
+* Considerations for ML in distributed environments
 * Spark Best Practices and Tuning
 * Demo & Lab - Spark ML with NYC Taxi Data
 
@@ -36,14 +36,15 @@ Distributed Data Processing Module - Dan Zaratsian, Jan 2019
 * Demo - Apache Kafka
 * Intro to Apache NiFi
 * Demo - Apache NiFi Walk-through
-* Demo & Lap - Realtime Data Processing and Routing
+* Demo & Lab - Realtime Data Processing and Analysis
 
-## IAA Module - Session 5 - Google Cloud Platform
+## IAA Module - Session 5 - Google Cloud Platform (GCP)
 * Intro to Google Cloud Platform
-* Overview of the cloud ecosystem
-* Deploying solutions in the Cloud 
-* Industry trends 
+* Overview of the cloud ecosystem & services
+* Deploying solutions in the Cloud
+* Industry trends & Applications
 * Walk-through of Tools and Services
+* Demos & Lab
 
 ## IAA Module - Session 6 - Special Topics or Hackathon Project
 This session will be used as an overflow from previous sessions. If extra time is needed 
@@ -51,10 +52,10 @@ or a deeper dive is required for specific content, then this session will be use
 
 In the case that all sessions go smooth and on time, then this session will be designated 
 as a 75-minute hackathon. Here are the planned flow of events:
-    1) Ingest real-time streaming data using Apache NiFi
-    2) Process and storage the streaming data using Apache NiFi (bonus points if Apache Spark is used as well)
-    3) Use Hive to query the persisted data in order to answer specific queries
-    4) Use Spark ML to build a preditive model against the persisted data
+<br>1) Ingest real-time streaming data using Apache NiFi
+<br>2) Process and store the streaming data using Apache NiFi (bonus points if Apache Spark is used as well)
+<br>3) Use Hive to query the persisted data in order to answer specific queries
+<br>4) Use Spark ML to build a preditive model against the persisted data
 
 -----------------
 

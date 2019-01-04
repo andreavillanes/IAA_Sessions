@@ -1,10 +1,10 @@
 ## IAA Module - Session 1 - Platform Overview
 
-Google Slides
+[Google Slides](https://docs.google.com/presentation/d/1CC03MXct8pW9DblZ4i7sICcYlbXg81xgyB1DLtDh_ig/edit?usp=sharing)
 
 ## Demo: Hortonworks Data Platform
 
-For this demo, I am using [Cloudbreak](https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/index.html) to provision and deploy the [Hortonworks](https://docs.hortonworks.com) Apache tech stack across a set of [Google Cloud](https://cloud.google.com/) Instances.
+For this demo, I am using [Cloudbreak](https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/index.html) to provision and deploy [Hortonworks HDP](https://docs.hortonworks.com) (Apache tech stack) across a set of [Google Cloud](https://cloud.google.com/) servers.
 
 For single-machine, quick prototyping, you could also use the [Hortonworks Sandbox](https://hortonworks.com/products/sandbox/), which is available as VMWare, VirtualBox, or a Docker container.
 
@@ -13,6 +13,8 @@ user_email: ```admin@cloudbreak.com```
 password: ```cloudbreak123```
 
 ## Demo: Google Cloud Dataproc
+
+The second demo will demonstrate how to quickly deploy a Hadoop cluster using Google Cloud (specifically Google Dataproc). The cluster should spin up in ~2 minutes, and includes serives such as HDFS, Hive, Spark, and others.
 
 To Launch a Google Cloud Dataproc cluster, execute:
 ```
@@ -24,7 +26,7 @@ To run a test PySpark script, run:
 ```
 Demo flow once Dataproc has launched:
 ```
-# PySpark Shell, connected as Client to Yarn master
+# PySpark Shell - Connected as client to the  Yarn master
 /usr/lib/spark/bin/pyspark --deploy-mode client --master yarn --name spark_example
 ```
 ```
