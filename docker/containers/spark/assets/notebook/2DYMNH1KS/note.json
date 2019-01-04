@@ -337,10 +337,10 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "title": "Exercise 6 - Load data into Dataframe from file",
+      "title": "Exercise 6 - Load a CSV file into a Spark Dataframe (located here: file:///data/tmdb_5000_movies.csv)",
       "text": "%pyspark\n# https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrameReader\n\n",
       "user": "anonymous",
-      "dateUpdated": "2019-01-04 16:57:36.830",
+      "dateUpdated": "2019-01-04 17:15:14.592",
       "config": {
         "editorSetting": {
           "language": "python",
@@ -377,10 +377,10 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "title": "Exercise 7 - Load movie_df into a Spark temporary table (so that we can query the table using SparkSQL)",
+      "title": "Exercise 7 - Load the DF that you just created into a Spark temporary table (so that we can query the table using SparkSQL)",
       "text": "%pyspark\n# https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame.createOrReplaceTempView\n\n\n",
       "user": "anonymous",
-      "dateUpdated": "2019-01-04 16:57:39.647",
+      "dateUpdated": "2019-01-04 17:15:28.252",
       "config": {
         "editorSetting": {
           "language": "python",
@@ -523,12 +523,7 @@
   "id": "2DYMNH1KS",
   "noteParams": {},
   "noteForms": {},
-  "angularObjects": {
-    "md:shared_process": [],
-    "angular:shared_process": [],
-    "sh:shared_process": [],
-    "spark:shared_process": []
-  },
+  "angularObjects": {},
   "config": {
     "isZeppelinNotebookCronEnable": false
   },
