@@ -152,18 +152,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d89"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766016_2106072107",
       "id": "20171001-182907_522031746",
@@ -253,18 +241,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d90"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766016_-1374705959",
       "id": "20171002-231928_238341422",
@@ -345,18 +321,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d91"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766017_-1557297981",
       "id": "20171003-001046_1186615245",
@@ -370,7 +334,7 @@
       "title": "Frequency - Movie Language",
       "text": "%sql\n\nselect * from (\nselect original_language, count(*) as freq from rawdata group by original_language order by freq desc) as a\nlimit 5",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 19:13:22.207",
+      "dateUpdated": "2019-01-04 15:13:17.658",
       "config": {
         "editorSetting": {
           "language": "sql",
@@ -432,18 +396,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d92"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766017_-2130575691",
       "id": "20171002-232154_399447310",
@@ -457,7 +409,7 @@
       "title": "Frequency - Movie Status",
       "text": "%sql\n\nselect * from (\nselect status, count(*) as freq from rawdata group by status order by freq desc) as a\nlimit 5",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 19:13:22.316",
+      "dateUpdated": "2019-01-04 15:13:17.717",
       "config": {
         "editorSetting": {
           "language": "sql",
@@ -519,18 +471,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d93"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766018_-1978270459",
       "id": "20171002-233012_1103538654",
@@ -582,18 +522,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d94"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766018_-1222649172",
       "id": "20171002-233020_123657324",
@@ -636,24 +564,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d336",
-            "http://localhost:4040/jobs/job?id\u003d337",
-            "http://localhost:4040/jobs/job?id\u003d338",
-            "http://localhost:4040/jobs/job?id\u003d339",
-            "http://localhost:4040/jobs/job?id\u003d340",
-            "http://localhost:4040/jobs/job?id\u003d341",
-            "http://localhost:4040/jobs/job?id\u003d342"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766018_244374483",
       "id": "20171001-183040_1823851373",
@@ -695,53 +605,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d102",
-            "http://localhost:4040/jobs/job?id\u003d103",
-            "http://localhost:4040/jobs/job?id\u003d104",
-            "http://localhost:4040/jobs/job?id\u003d105",
-            "http://localhost:4040/jobs/job?id\u003d106",
-            "http://localhost:4040/jobs/job?id\u003d107",
-            "http://localhost:4040/jobs/job?id\u003d108",
-            "http://localhost:4040/jobs/job?id\u003d109",
-            "http://localhost:4040/jobs/job?id\u003d110",
-            "http://localhost:4040/jobs/job?id\u003d111",
-            "http://localhost:4040/jobs/job?id\u003d112",
-            "http://localhost:4040/jobs/job?id\u003d113",
-            "http://localhost:4040/jobs/job?id\u003d114",
-            "http://localhost:4040/jobs/job?id\u003d115",
-            "http://localhost:4040/jobs/job?id\u003d116",
-            "http://localhost:4040/jobs/job?id\u003d117",
-            "http://localhost:4040/jobs/job?id\u003d118",
-            "http://localhost:4040/jobs/job?id\u003d119",
-            "http://localhost:4040/jobs/job?id\u003d120",
-            "http://localhost:4040/jobs/job?id\u003d121",
-            "http://localhost:4040/jobs/job?id\u003d122",
-            "http://localhost:4040/jobs/job?id\u003d123",
-            "http://localhost:4040/jobs/job?id\u003d124",
-            "http://localhost:4040/jobs/job?id\u003d125",
-            "http://localhost:4040/jobs/job?id\u003d126",
-            "http://localhost:4040/jobs/job?id\u003d127",
-            "http://localhost:4040/jobs/job?id\u003d128",
-            "http://localhost:4040/jobs/job?id\u003d129",
-            "http://localhost:4040/jobs/job?id\u003d130",
-            "http://localhost:4040/jobs/job?id\u003d131",
-            "http://localhost:4040/jobs/job?id\u003d132",
-            "http://localhost:4040/jobs/job?id\u003d133",
-            "http://localhost:4040/jobs/job?id\u003d134",
-            "http://localhost:4040/jobs/job?id\u003d135",
-            "http://localhost:4040/jobs/job?id\u003d136",
-            "http://localhost:4040/jobs/job?id\u003d137"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766018_-943324089",
       "id": "20180403-153143_1316308743",
@@ -782,18 +645,6 @@
             "data": "+----------------+-----+\n|genre           |count|\n+----------------+-----+\n|Drama           |1207 |\n|Action/Adventure|1091 |\n|Comedy          |1041 |\n|Other           |754  |\n|Horror          |494  |\n|Science Fiction |213  |\n+----------------+-----+\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d138"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190766018_2113402749",
@@ -837,18 +688,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d139"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766019_-71022376",
       "id": "20171002-184842_1177830626",
@@ -887,47 +726,6 @@
             "data": "+-----+-----------------------------------------------------------------------------------+\n|topic|topic_desc                                                                         |\n+-----+-----------------------------------------------------------------------------------+\n|0    |[charlie, uncle, curse, town, school, life, cannot, embarks, guys, new]            |\n|1    |[annie, terrorist, driver, life, man, young, murder, track, wife, new]             |\n|2    |[game, ryan, humans, eyes, alien, men, president, war, world, earth]               |\n|3    |[vampire, band, dragon, warrior, vampires, rock, destroy, singer, war, blood]      |\n|4    |[don, brothers, life, brother, love, experiences, father, two, one, new]           |\n|5    |[school, reach, high, resistance, life, teacher, students, art, assistant, one]    |\n|6    |[alice, hunter, chase, smith, new, world, continues, encounter, unexpectedly, time]|\n|7    |[cia, nuclear, russian, general, richard, robot, simon, operative, joe, kate]      |\n|8    |[princess, king, rule, defeat, embark, virus, kingdom, land, peace, prince]        |\n|9    |[steve, buddy, christmas, wedding, basketball, eve, sons, store, school, one]      |\n|10   |[peter, train, danny, seeks, station, champion, crew, hero, agent, stolen]         |\n|11   |[tom, irish, agrees, sam, farm, retired, serial, killer, animal, caught]           |\n|12   |[black, female, role, park, male, uses, creatures, new, forest, prevent]           |\n|13   |[george, carter, lucy, ambitious, begins, grows, classic, goes, jack, family]      |\n|14   |[football, player, daughters, life, face, sinister, sea, planet, wife, dies]       |\n|15   |[bond, eye, bank, loves, daughter, jack, mothers, form, fights, heist]             |\n|16   |[white, queen, mafia, snow, mark, jimmy, elizabeth, baby, land, evil]              |\n|17   |[vegas, arthur, las, brother, brothers, turned, lies, johnson, king, hotel]        |\n|18   |[james, max, rose, weapons, ben, sarah, something, notorious, action, johnny]      |\n|19   |[alex, jason, rachel, producer, new, capture, tommy, big, investigate, victim]     |\n|20   |[sex, slave, love, film, games, life, one, relationship, new, story]               |\n|21   |[billy, sexual, change, life, bill, odds, young, forever, world, women]            |\n|22   |[nick, trip, meet, mom, kids, girls, steal, safety, lee, neighborhood]             |\n|23   |[business, movie, bad, eddie, huge, hotel, flight, date, seems, angeles]           |\n|24   |[david, mike, case, gift, child, determined, really, dead, agent, innocent]        |\n+-----+-----------------------------------------------------------------------------------+\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d343",
-            "http://localhost:4040/jobs/job?id\u003d344",
-            "http://localhost:4040/jobs/job?id\u003d345",
-            "http://localhost:4040/jobs/job?id\u003d346",
-            "http://localhost:4040/jobs/job?id\u003d347",
-            "http://localhost:4040/jobs/job?id\u003d348",
-            "http://localhost:4040/jobs/job?id\u003d349",
-            "http://localhost:4040/jobs/job?id\u003d350",
-            "http://localhost:4040/jobs/job?id\u003d351",
-            "http://localhost:4040/jobs/job?id\u003d352",
-            "http://localhost:4040/jobs/job?id\u003d353",
-            "http://localhost:4040/jobs/job?id\u003d354",
-            "http://localhost:4040/jobs/job?id\u003d355",
-            "http://localhost:4040/jobs/job?id\u003d356",
-            "http://localhost:4040/jobs/job?id\u003d357",
-            "http://localhost:4040/jobs/job?id\u003d358",
-            "http://localhost:4040/jobs/job?id\u003d359",
-            "http://localhost:4040/jobs/job?id\u003d360",
-            "http://localhost:4040/jobs/job?id\u003d361",
-            "http://localhost:4040/jobs/job?id\u003d362",
-            "http://localhost:4040/jobs/job?id\u003d363",
-            "http://localhost:4040/jobs/job?id\u003d364",
-            "http://localhost:4040/jobs/job?id\u003d365",
-            "http://localhost:4040/jobs/job?id\u003d366",
-            "http://localhost:4040/jobs/job?id\u003d367",
-            "http://localhost:4040/jobs/job?id\u003d368",
-            "http://localhost:4040/jobs/job?id\u003d369",
-            "http://localhost:4040/jobs/job?id\u003d370",
-            "http://localhost:4040/jobs/job?id\u003d371",
-            "http://localhost:4040/jobs/job?id\u003d372"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190766019_-305680325",
@@ -1017,18 +815,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d170"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766019_725699806",
       "id": "20171002-234013_1134996371",
@@ -1070,20 +856,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d171",
-            "http://localhost:4040/jobs/job?id\u003d172",
-            "http://localhost:4040/jobs/job?id\u003d173"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190766019_1835980681",
       "id": "20180403-171221_1435851564",
@@ -1119,179 +891,6 @@
       "results": {
         "code": "SUCCESS",
         "msg": []
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d174",
-            "http://localhost:4040/jobs/job?id\u003d175",
-            "http://localhost:4040/jobs/job?id\u003d176",
-            "http://localhost:4040/jobs/job?id\u003d177",
-            "http://localhost:4040/jobs/job?id\u003d178",
-            "http://localhost:4040/jobs/job?id\u003d179",
-            "http://localhost:4040/jobs/job?id\u003d180",
-            "http://localhost:4040/jobs/job?id\u003d181",
-            "http://localhost:4040/jobs/job?id\u003d182",
-            "http://localhost:4040/jobs/job?id\u003d183",
-            "http://localhost:4040/jobs/job?id\u003d184",
-            "http://localhost:4040/jobs/job?id\u003d185",
-            "http://localhost:4040/jobs/job?id\u003d186",
-            "http://localhost:4040/jobs/job?id\u003d187",
-            "http://localhost:4040/jobs/job?id\u003d188",
-            "http://localhost:4040/jobs/job?id\u003d189",
-            "http://localhost:4040/jobs/job?id\u003d190",
-            "http://localhost:4040/jobs/job?id\u003d191",
-            "http://localhost:4040/jobs/job?id\u003d192",
-            "http://localhost:4040/jobs/job?id\u003d193",
-            "http://localhost:4040/jobs/job?id\u003d194",
-            "http://localhost:4040/jobs/job?id\u003d195",
-            "http://localhost:4040/jobs/job?id\u003d196",
-            "http://localhost:4040/jobs/job?id\u003d197",
-            "http://localhost:4040/jobs/job?id\u003d198",
-            "http://localhost:4040/jobs/job?id\u003d199",
-            "http://localhost:4040/jobs/job?id\u003d200",
-            "http://localhost:4040/jobs/job?id\u003d201",
-            "http://localhost:4040/jobs/job?id\u003d202",
-            "http://localhost:4040/jobs/job?id\u003d203",
-            "http://localhost:4040/jobs/job?id\u003d204",
-            "http://localhost:4040/jobs/job?id\u003d205",
-            "http://localhost:4040/jobs/job?id\u003d206",
-            "http://localhost:4040/jobs/job?id\u003d207",
-            "http://localhost:4040/jobs/job?id\u003d208",
-            "http://localhost:4040/jobs/job?id\u003d209",
-            "http://localhost:4040/jobs/job?id\u003d210",
-            "http://localhost:4040/jobs/job?id\u003d211",
-            "http://localhost:4040/jobs/job?id\u003d212",
-            "http://localhost:4040/jobs/job?id\u003d213",
-            "http://localhost:4040/jobs/job?id\u003d214",
-            "http://localhost:4040/jobs/job?id\u003d215",
-            "http://localhost:4040/jobs/job?id\u003d216",
-            "http://localhost:4040/jobs/job?id\u003d217",
-            "http://localhost:4040/jobs/job?id\u003d218",
-            "http://localhost:4040/jobs/job?id\u003d219",
-            "http://localhost:4040/jobs/job?id\u003d220",
-            "http://localhost:4040/jobs/job?id\u003d221",
-            "http://localhost:4040/jobs/job?id\u003d222",
-            "http://localhost:4040/jobs/job?id\u003d223",
-            "http://localhost:4040/jobs/job?id\u003d224",
-            "http://localhost:4040/jobs/job?id\u003d225",
-            "http://localhost:4040/jobs/job?id\u003d226",
-            "http://localhost:4040/jobs/job?id\u003d227",
-            "http://localhost:4040/jobs/job?id\u003d228",
-            "http://localhost:4040/jobs/job?id\u003d229",
-            "http://localhost:4040/jobs/job?id\u003d230",
-            "http://localhost:4040/jobs/job?id\u003d231",
-            "http://localhost:4040/jobs/job?id\u003d232",
-            "http://localhost:4040/jobs/job?id\u003d233",
-            "http://localhost:4040/jobs/job?id\u003d234",
-            "http://localhost:4040/jobs/job?id\u003d235",
-            "http://localhost:4040/jobs/job?id\u003d236",
-            "http://localhost:4040/jobs/job?id\u003d237",
-            "http://localhost:4040/jobs/job?id\u003d238",
-            "http://localhost:4040/jobs/job?id\u003d239",
-            "http://localhost:4040/jobs/job?id\u003d240",
-            "http://localhost:4040/jobs/job?id\u003d241",
-            "http://localhost:4040/jobs/job?id\u003d242",
-            "http://localhost:4040/jobs/job?id\u003d243",
-            "http://localhost:4040/jobs/job?id\u003d244",
-            "http://localhost:4040/jobs/job?id\u003d245",
-            "http://localhost:4040/jobs/job?id\u003d246",
-            "http://localhost:4040/jobs/job?id\u003d247",
-            "http://localhost:4040/jobs/job?id\u003d248",
-            "http://localhost:4040/jobs/job?id\u003d249",
-            "http://localhost:4040/jobs/job?id\u003d250",
-            "http://localhost:4040/jobs/job?id\u003d251",
-            "http://localhost:4040/jobs/job?id\u003d252",
-            "http://localhost:4040/jobs/job?id\u003d253",
-            "http://localhost:4040/jobs/job?id\u003d254",
-            "http://localhost:4040/jobs/job?id\u003d255",
-            "http://localhost:4040/jobs/job?id\u003d256",
-            "http://localhost:4040/jobs/job?id\u003d257",
-            "http://localhost:4040/jobs/job?id\u003d258",
-            "http://localhost:4040/jobs/job?id\u003d259",
-            "http://localhost:4040/jobs/job?id\u003d260",
-            "http://localhost:4040/jobs/job?id\u003d261",
-            "http://localhost:4040/jobs/job?id\u003d262",
-            "http://localhost:4040/jobs/job?id\u003d263",
-            "http://localhost:4040/jobs/job?id\u003d264",
-            "http://localhost:4040/jobs/job?id\u003d265",
-            "http://localhost:4040/jobs/job?id\u003d266",
-            "http://localhost:4040/jobs/job?id\u003d267",
-            "http://localhost:4040/jobs/job?id\u003d268",
-            "http://localhost:4040/jobs/job?id\u003d269",
-            "http://localhost:4040/jobs/job?id\u003d270",
-            "http://localhost:4040/jobs/job?id\u003d271",
-            "http://localhost:4040/jobs/job?id\u003d272",
-            "http://localhost:4040/jobs/job?id\u003d273",
-            "http://localhost:4040/jobs/job?id\u003d274",
-            "http://localhost:4040/jobs/job?id\u003d275",
-            "http://localhost:4040/jobs/job?id\u003d276",
-            "http://localhost:4040/jobs/job?id\u003d277",
-            "http://localhost:4040/jobs/job?id\u003d278",
-            "http://localhost:4040/jobs/job?id\u003d279",
-            "http://localhost:4040/jobs/job?id\u003d280",
-            "http://localhost:4040/jobs/job?id\u003d281",
-            "http://localhost:4040/jobs/job?id\u003d282",
-            "http://localhost:4040/jobs/job?id\u003d283",
-            "http://localhost:4040/jobs/job?id\u003d284",
-            "http://localhost:4040/jobs/job?id\u003d285",
-            "http://localhost:4040/jobs/job?id\u003d286",
-            "http://localhost:4040/jobs/job?id\u003d287",
-            "http://localhost:4040/jobs/job?id\u003d288",
-            "http://localhost:4040/jobs/job?id\u003d289",
-            "http://localhost:4040/jobs/job?id\u003d290",
-            "http://localhost:4040/jobs/job?id\u003d291",
-            "http://localhost:4040/jobs/job?id\u003d292",
-            "http://localhost:4040/jobs/job?id\u003d293",
-            "http://localhost:4040/jobs/job?id\u003d294",
-            "http://localhost:4040/jobs/job?id\u003d295",
-            "http://localhost:4040/jobs/job?id\u003d296",
-            "http://localhost:4040/jobs/job?id\u003d297",
-            "http://localhost:4040/jobs/job?id\u003d298",
-            "http://localhost:4040/jobs/job?id\u003d299",
-            "http://localhost:4040/jobs/job?id\u003d300",
-            "http://localhost:4040/jobs/job?id\u003d301",
-            "http://localhost:4040/jobs/job?id\u003d302",
-            "http://localhost:4040/jobs/job?id\u003d303",
-            "http://localhost:4040/jobs/job?id\u003d304",
-            "http://localhost:4040/jobs/job?id\u003d305",
-            "http://localhost:4040/jobs/job?id\u003d306",
-            "http://localhost:4040/jobs/job?id\u003d307",
-            "http://localhost:4040/jobs/job?id\u003d308",
-            "http://localhost:4040/jobs/job?id\u003d309",
-            "http://localhost:4040/jobs/job?id\u003d310",
-            "http://localhost:4040/jobs/job?id\u003d311",
-            "http://localhost:4040/jobs/job?id\u003d312",
-            "http://localhost:4040/jobs/job?id\u003d313",
-            "http://localhost:4040/jobs/job?id\u003d314",
-            "http://localhost:4040/jobs/job?id\u003d315",
-            "http://localhost:4040/jobs/job?id\u003d316",
-            "http://localhost:4040/jobs/job?id\u003d317",
-            "http://localhost:4040/jobs/job?id\u003d318",
-            "http://localhost:4040/jobs/job?id\u003d319",
-            "http://localhost:4040/jobs/job?id\u003d320",
-            "http://localhost:4040/jobs/job?id\u003d321",
-            "http://localhost:4040/jobs/job?id\u003d322",
-            "http://localhost:4040/jobs/job?id\u003d323",
-            "http://localhost:4040/jobs/job?id\u003d324",
-            "http://localhost:4040/jobs/job?id\u003d325",
-            "http://localhost:4040/jobs/job?id\u003d326",
-            "http://localhost:4040/jobs/job?id\u003d327",
-            "http://localhost:4040/jobs/job?id\u003d328",
-            "http://localhost:4040/jobs/job?id\u003d329",
-            "http://localhost:4040/jobs/job?id\u003d330",
-            "http://localhost:4040/jobs/job?id\u003d331",
-            "http://localhost:4040/jobs/job?id\u003d332",
-            "http://localhost:4040/jobs/job?id\u003d333",
-            "http://localhost:4040/jobs/job?id\u003d334",
-            "http://localhost:4040/jobs/job?id\u003d335"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190766020_2065174007",
@@ -1333,20 +932,6 @@
             "data": "Accuracy: 0.8321775312066574\n\nAccuracy for Gradient Boosting (with text):  0.8321775312066574\n+------+------------------------------------------------+-------------+-----------------+----------+\n|id    |title                                           |revenue      |revenue_over_100M|prediction|\n+------+------------------------------------------------+-------------+-----------------+----------+\n|100   |Lock, Stock and Two Smoking Barrels             |3897569.0    |0.0              |0.0       |\n|10013 |Peggy Sue Got Married                           |4.1382841E7  |0.0              |0.0       |\n|10017 |The Wraith                                      |3500000.0    |0.0              |0.0       |\n|10022 |The Pacifier                                    |1.1300688E8  |1.0              |1.0       |\n|10065 |The Amityville Horror                           |1.08047131E8 |1.0              |0.0       |\n|10069 |Stay Alive                                      |2.7105095E7  |0.0              |0.0       |\n|10072 |A Nightmare on Elm Street 3: Dream Warriors     |4.4793222E7  |0.0              |0.0       |\n|10092 |Cry_Wolf                                        |1.0047674E7  |0.0              |0.0       |\n|101267|Katy Perry: Part of Me                          |3.2726956E7  |0.0              |0.0       |\n|101299|The Hunger Games: Catching Fire                 |8.47423452E8 |1.0              |1.0       |\n|10135 |Road House                                      |3.0050028E7  |0.0              |0.0       |\n|10139 |Milk                                            |5.4586584E7  |0.0              |0.0       |\n|10189 |Pineapple Express                               |1.01624843E8 |1.0              |0.0       |\n|10193 |Toy Story 3                                     |1.066969703E9|1.0              |1.0       |\n|10199 |The Tale of Despereaux                          |5.0877145E7  |0.0              |0.0       |\n|10207 |Message in a Bottle                             |1.18880016E8 |1.0              |0.0       |\n|10218 |Swingers                                        |4505922.0    |0.0              |0.0       |\n|10220 |Rounders                                        |2.2921898E7  |0.0              |0.0       |\n|10225 |Friday the 13th Part VI: Jason Lives            |1.9472057E7  |0.0              |0.0       |\n|102382|The Amazing Spider-Man 2                        |7.05717432E8 |1.0              |1.0       |\n|10246 |Porky\u0027s                                         |1.25728258E8 |1.0              |0.0       |\n|10283 |Friday the 13th Part VIII: Jason Takes Manhattan|1.4E7        |0.0              |0.0       |\n|10313 |The Men Who Stare at Goats                      |6.8729358E7  |0.0              |0.0       |\n|10315 |Fantastic Mr. Fox                               |4.6471023E7  |0.0              |1.0       |\n|10329 |Congo                                           |1.52022101E8 |1.0              |0.0       |\n|10339 |Moby Dick                                       |1.04E7       |0.0              |0.0       |\n|10397 |Angela\u0027s Ashes                                  |13.0         |0.0              |0.0       |\n|10476 |Hustle \u0026 Flow                                   |2.3563727E7  |0.0              |0.0       |\n|10477 |Driven                                          |5.4744738E7  |0.0              |0.0       |\n|10490 |Drop Dead Gorgeous                              |1.0571408E7  |0.0              |0.0       |\n|10496 |Bats                                            |10.0         |0.0              |0.0       |\n|105   |Back to the Future                              |3.81109762E8 |1.0              |0.0       |\n|10501 |The Road to El Dorado                           |7.6432727E7  |0.0              |1.0       |\n|1051  |The French Connection                           |4.1158757E7  |0.0              |0.0       |\n|10514 |The Andromeda Strain                            |1.2376563E7  |0.0              |0.0       |\n|10528 |Sherlock Holmes                                 |5.24028679E8 |1.0              |1.0       |\n|10545 |The Hunchback of Notre Dame                     |1.00138851E8 |1.0              |1.0       |\n|10564 |Where the Heart Is                              |3.3771174E7  |0.0              |0.0       |\n|10577 |Dracula 2000                                    |3.3000337E7  |0.0              |0.0       |\n|10585 |Child\u0027s Play                                    |4.4196684E7  |0.0              |0.0       |\n|10590 |We Were Soldiers                                |1.14660784E8 |1.0              |1.0       |\n|10591 |The Girl Next Door                              |3.0411183E7  |0.0              |0.0       |\n|10646 |Tomcats                                         |2.3430766E7  |0.0              |0.0       |\n|10656 |Subway                                          |390659.0     |0.0              |0.0       |\n|10684 |Courage Under Fire                              |1.00860818E8 |1.0              |0.0       |\n|10691 |Crazy/Beautiful                                 |1.6929123E7  |0.0              |0.0       |\n|10696 |Glitter                                         |5271666.0    |0.0              |0.0       |\n|10718 |Torque                                          |4.6546197E7  |0.0              |0.0       |\n|10758 |Waitress                                        |2.217943E7   |0.0              |0.0       |\n|10762 |Without a Paddle                                |6.9631118E7  |0.0              |0.0       |\n+------+------------------------------------------------+-------------+-----------------+----------+\nonly showing top 50 rows\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d376",
-            "http://localhost:4040/jobs/job?id\u003d377",
-            "http://localhost:4040/jobs/job?id\u003d378"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190766020_-712723272",

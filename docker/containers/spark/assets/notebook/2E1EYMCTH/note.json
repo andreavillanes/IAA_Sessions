@@ -3,7 +3,7 @@
     {
       "text": "%angular\n\n\u003ch3\u003e\u003cb\u003eReferences:\u003c/b\u003e\u003c/h3\u003e\n\u003ca href\u003d\"http://spark.apache.org/docs/latest/programming-guide.html\" target\u003d\"_blank\"\u003eSpark Documentation\u003c/a\u003e\n\u003cbr\u003e\u003ca href\u003d\"http://spark.apache.org/docs/latest/api/python/index.html\" target\u003d\"_blank\"\u003ePySpark Documentation\u003c/a\u003e\n\u003cbr\u003e",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:39:16.870",
+      "dateUpdated": "2019-01-04 14:49:12.973",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -47,8 +47,8 @@
       "jobName": "paragraph_1546190694325_1909285059",
       "id": "20170320-124619_794351413",
       "dateCreated": "2018-12-30 17:24:54.325",
-      "dateStarted": "2018-12-30 18:39:16.871",
-      "dateFinished": "2018-12-30 18:39:16.877",
+      "dateStarted": "2019-01-04 14:49:12.977",
+      "dateFinished": "2019-01-04 14:49:14.737",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -56,7 +56,7 @@
       "title": "Print Versions",
       "text": "%pyspark\nimport sys\nprint(\"Spark Version:  {}\".format(spark.version))\nprint(\"Python Version: {}\".format(sys.version))\n",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:39:20.616",
+      "dateUpdated": "2019-01-04 14:49:16.544",
       "config": {
         "editorSetting": {
           "language": "python",
@@ -81,7 +81,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "Spark Version:  2.3.2\nPython Version: 3.7.0 (default, Jun 28 2018, 13:15:42) \n[GCC 7.2.0]\n"
+            "data": "Spark Version:  2.3.2\nPython Version: 3.7.1 (default, Dec 14 2018, 19:28:38) \n[GCC 7.3.0]\n"
           }
         ]
       },
@@ -89,8 +89,8 @@
       "jobName": "paragraph_1546190694326_624361405",
       "id": "20180423-124437_961456404",
       "dateCreated": "2018-12-30 17:24:54.326",
-      "dateStarted": "2018-12-30 18:39:20.647",
-      "dateFinished": "2018-12-30 18:39:32.780",
+      "dateStarted": "2019-01-04 14:49:16.617",
+      "dateFinished": "2019-01-04 14:49:31.696",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -98,7 +98,7 @@
       "title": "Download and Load Data into HDFS",
       "text": "%sh\n\n# Download Data from Github\nwget https://github.com/hortonworks/data-tutorials/raw/master/tutorials/hdp/advanced-analytics-with-sparkr-in-rstudio/assets/airline_data.zip\n\n# Unzip\nunzip airline_data.zip\n\n# Make HDFS Directory and Load CSV files into HDFS \n# The hadoop lines are commented out because the Docker container will store the files on localhost. If using HDFS, then you can uncomment the lines below.\n\n#hadoop fs -mkdir /tmp/airline_data\n#hadoop fs -put ./airline_data/train_df.csv /tmp/airline_data/.\n#hadoop fs -put ./airline_data/test_df.csv /tmp/airline_data/.\n#hadoop fs -ls /tmp/airline_data\n",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:43:39.308",
+      "dateUpdated": "2019-01-04 16:33:17.008",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -206,19 +206,6 @@
       "results": {
         "code": "SUCCESS",
         "msg": []
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d0",
-            "http://localhost:4040/jobs/job?id\u003d1"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694327_-1234369458",
@@ -342,18 +329,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d2"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694327_-43484154",
       "id": "20170320-110237_163337070",
@@ -394,18 +369,6 @@
             "data": "+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+\n|YEAR|MONTH|DAY_OF_MONTH|DAY_OF_WEEK|CARRIER|FL_NUM|ORIGIN|DEST|DEP_TIME|DEP_DELAY|ARR_TIME|ARR_DELAY|CANCELLED|CANCELLATION_CODE|AIR_TIME|DISTANCE|WEEKEND|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+\n|2015|    1|           1|          4|     AA|     1|   JFK| LAX|     855|       -5|    1237|        7|        0|             null|     378|    2475|      0|\n|2015|    1|           2|          5|     AA|     1|   JFK| LAX|     850|      -10|    1211|      -19|        0|             null|     357|    2475|      1|\n|2015|    1|           3|          6|     AA|     1|   JFK| LAX|     853|       -7|    1151|      -39|        0|             null|     330|    2475|      1|\n|2015|    1|           4|          7|     AA|     1|   JFK| LAX|     853|       -7|    1218|      -12|        0|             null|     352|    2475|      1|\n|2015|    1|           5|          1|     AA|     1|   JFK| LAX|     853|       -7|    1222|       -8|        0|             null|     338|    2475|      0|\n|2015|    1|           6|          2|     AA|     1|   JFK| LAX|     856|       -4|    1300|       25|        0|             null|     335|    2475|      0|\n|2015|    1|           7|          3|     AA|     1|   JFK| LAX|     859|       -1|    1221|      -14|        0|             null|     341|    2475|      0|\n|2015|    1|           8|          4|     AA|     1|   JFK| LAX|     856|       -4|    1158|      -37|        0|             null|     333|    2475|      0|\n|2015|    1|           9|          5|     AA|     1|   JFK| LAX|     901|        1|    1241|        6|        0|             null|     353|    2475|      1|\n|2015|    1|          10|          6|     AA|     1|   JFK| LAX|     903|        3|    1235|        0|        0|             null|     345|    2475|      1|\n|2015|    1|          11|          7|     AA|     1|   JFK| LAX|     854|       -6|    1159|      -36|        0|             null|     337|    2475|      1|\n|2015|    1|          12|          1|     AA|     1|   JFK| LAX|     853|       -7|    1230|       -5|        0|             null|     354|    2475|      0|\n|2015|    1|          13|          2|     AA|     1|   JFK| LAX|     854|       -6|    1155|      -40|        0|             null|     336|    2475|      0|\n|2015|    1|          14|          3|     AA|     1|   JFK| LAX|     856|       -4|    1126|      -69|        0|             null|     302|    2475|      0|\n|2015|    1|          15|          4|     AA|     1|   JFK| LAX|     852|       -8|    1231|       -4|        0|             null|     320|    2475|      0|\n|2015|    1|          16|          5|     AA|     1|   JFK| LAX|     900|        0|    1206|      -29|        0|             null|     321|    2475|      1|\n|2015|    1|          17|          6|     AA|     1|   JFK| LAX|     852|       -8|    1157|      -38|        0|             null|     343|    2475|      1|\n|2015|    1|          18|          7|     AA|     1|   JFK| LAX|     916|       16|    1236|        1|        0|             null|     340|    2475|      1|\n|2015|    1|          19|          1|     AA|     1|   JFK| LAX|     854|       -6|    1218|      -17|        0|             null|     359|    2475|      0|\n|2015|    1|          20|          2|     AA|     1|   JFK| LAX|     853|       -7|    1203|      -32|        0|             null|     349|    2475|      0|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+\nonly showing top 20 rows\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d3"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694328_-5362811",
@@ -448,18 +411,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d4"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694328_-987735965",
       "id": "20180423-133532_746879178",
@@ -500,18 +451,6 @@
             "data": "+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\n|YEAR|MONTH|DAY_OF_MONTH|DAY_OF_WEEK|CARRIER|FL_NUM|ORIGIN|DEST|DEP_TIME|DEP_DELAY|ARR_TIME|ARR_DELAY|CANCELLED|CANCELLATION_CODE|AIR_TIME|DISTANCE|WEEKEND|DEP_HOUR|DELAY_LABELED|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\n|2015|    1|           1|          4|     AA|     1|   JFK| LAX|     855|       -5|    1237|        7|        0|             null|     378|    2475|      0|       8|            0|\n|2015|    1|           2|          5|     AA|     1|   JFK| LAX|     850|      -10|    1211|      -19|        0|             null|     357|    2475|      1|       8|            0|\n|2015|    1|           3|          6|     AA|     1|   JFK| LAX|     853|       -7|    1151|      -39|        0|             null|     330|    2475|      1|       8|            0|\n|2015|    1|           4|          7|     AA|     1|   JFK| LAX|     853|       -7|    1218|      -12|        0|             null|     352|    2475|      1|       8|            0|\n|2015|    1|           5|          1|     AA|     1|   JFK| LAX|     853|       -7|    1222|       -8|        0|             null|     338|    2475|      0|       8|            0|\n|2015|    1|           6|          2|     AA|     1|   JFK| LAX|     856|       -4|    1300|       25|        0|             null|     335|    2475|      0|       8|            1|\n|2015|    1|           7|          3|     AA|     1|   JFK| LAX|     859|       -1|    1221|      -14|        0|             null|     341|    2475|      0|       8|            0|\n|2015|    1|           8|          4|     AA|     1|   JFK| LAX|     856|       -4|    1158|      -37|        0|             null|     333|    2475|      0|       8|            0|\n|2015|    1|           9|          5|     AA|     1|   JFK| LAX|     901|        1|    1241|        6|        0|             null|     353|    2475|      1|       9|            0|\n|2015|    1|          10|          6|     AA|     1|   JFK| LAX|     903|        3|    1235|        0|        0|             null|     345|    2475|      1|       9|            0|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\nonly showing top 10 rows\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d5"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694328_2024784853",
@@ -554,18 +493,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d6"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694328_-605128767",
       "id": "20180423-135248_410945782",
@@ -606,20 +533,6 @@
             "data": "Initial Train_DF Count: 1033485\nNew Train_DF Count:     1030606\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\n|YEAR|MONTH|DAY_OF_MONTH|DAY_OF_WEEK|CARRIER|FL_NUM|ORIGIN|DEST|DEP_TIME|DEP_DELAY|ARR_TIME|ARR_DELAY|CANCELLED|CANCELLATION_CODE|AIR_TIME|DISTANCE|WEEKEND|DEP_HOUR|DELAY_LABELED|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\n|2015|    1|           1|          4|     AA|     1|   JFK| LAX|     855|       -5|    1237|        7|        0|             null|     378|    2475|      0|       8|            0|\n|2015|    1|           2|          5|     AA|     1|   JFK| LAX|     850|      -10|    1211|      -19|        0|             null|     357|    2475|      1|       8|            0|\n|2015|    1|           3|          6|     AA|     1|   JFK| LAX|     853|       -7|    1151|      -39|        0|             null|     330|    2475|      1|       8|            0|\n|2015|    1|           4|          7|     AA|     1|   JFK| LAX|     853|       -7|    1218|      -12|        0|             null|     352|    2475|      1|       8|            0|\n|2015|    1|           5|          1|     AA|     1|   JFK| LAX|     853|       -7|    1222|       -8|        0|             null|     338|    2475|      0|       8|            0|\n|2015|    1|           6|          2|     AA|     1|   JFK| LAX|     856|       -4|    1300|       25|        0|             null|     335|    2475|      0|       8|            1|\n|2015|    1|           7|          3|     AA|     1|   JFK| LAX|     859|       -1|    1221|      -14|        0|             null|     341|    2475|      0|       8|            0|\n|2015|    1|           8|          4|     AA|     1|   JFK| LAX|     856|       -4|    1158|      -37|        0|             null|     333|    2475|      0|       8|            0|\n|2015|    1|           9|          5|     AA|     1|   JFK| LAX|     901|        1|    1241|        6|        0|             null|     353|    2475|      1|       9|            0|\n|2015|    1|          10|          6|     AA|     1|   JFK| LAX|     903|        3|    1235|        0|        0|             null|     345|    2475|      1|       9|            0|\n+----+-----+------------+-----------+-------+------+------+----+--------+---------+--------+---------+---------+-----------------+--------+--------+-------+--------+-------------+\nonly showing top 10 rows\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d7",
-            "http://localhost:4040/jobs/job?id\u003d8",
-            "http://localhost:4040/jobs/job?id\u003d9"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694329_1104382478",
@@ -676,18 +589,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d10"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694329_488274815",
       "id": "20170320-105240_996898077",
@@ -737,7 +638,7 @@
       "title": "EXPLORATORY DATA ANALYSIS - Find the number of delays (and on-time flights) by Airline Carrier",
       "text": "%sql\n\nSELECT CARRIER, DELAY_LABELED, count(*) as count\n    FROM train_df \n    GROUP BY CARRIER, DELAY_LABELED \n    LIMIT 20",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:45:20.636",
+      "dateUpdated": "2019-01-04 16:32:38.694",
       "config": {
         "editorSetting": {
           "language": "sql",
@@ -818,22 +719,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d11",
-            "http://localhost:4040/jobs/job?id\u003d12",
-            "http://localhost:4040/jobs/job?id\u003d13",
-            "http://localhost:4040/jobs/job?id\u003d14",
-            "http://localhost:4040/jobs/job?id\u003d15"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694329_-1429301903",
       "id": "20170320-105033_610898887",
@@ -874,29 +759,6 @@
             "data": "+------+-------+\n| count| STATUS|\n+------+-------+\n|187216|delayed|\n|843390| ontime|\n+------+-------+\n\nTotal Count: 1030606\n+------+-------+-----------------+\n| count| STATUS|       PERCENTAGE|\n+------+-------+-----------------+\n|187216|delayed|18.16562294417071|\n|843390| ontime| 81.8343770558293|\n+------+-------+-----------------+\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d16",
-            "http://localhost:4040/jobs/job?id\u003d17",
-            "http://localhost:4040/jobs/job?id\u003d18",
-            "http://localhost:4040/jobs/job?id\u003d19",
-            "http://localhost:4040/jobs/job?id\u003d20",
-            "http://localhost:4040/jobs/job?id\u003d21",
-            "http://localhost:4040/jobs/job?id\u003d22",
-            "http://localhost:4040/jobs/job?id\u003d23",
-            "http://localhost:4040/jobs/job?id\u003d24",
-            "http://localhost:4040/jobs/job?id\u003d25",
-            "http://localhost:4040/jobs/job?id\u003d26",
-            "http://localhost:4040/jobs/job?id\u003d27"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694330_1224396295",
@@ -985,22 +847,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d28",
-            "http://localhost:4040/jobs/job?id\u003d29",
-            "http://localhost:4040/jobs/job?id\u003d30",
-            "http://localhost:4040/jobs/job?id\u003d31",
-            "http://localhost:4040/jobs/job?id\u003d32"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694330_815497412",
       "id": "20170320-023510_703313108",
@@ -1042,19 +888,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d33",
-            "http://localhost:4040/jobs/job?id\u003d34"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694331_-1362381729",
       "id": "20180423-150622_233344042",
@@ -1068,11 +901,13 @@
       "title": "Percentage of Delays by Day of Week (1\u003dMonday, 7\u003dSunday)",
       "text": "%sql\n\nselect DAY_OF_WEEK, ((DELAY_COUNT / (DELAY_COUNT + NON_DELAY_COUNT))*100) AS DELAY_PERCENT\n    from dayofweek_count\n    \n",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:45:56.423",
+      "dateUpdated": "2019-01-04 16:32:39.229",
       "config": {
         "editorSetting": {
           "language": "sql",
-          "editOnDblClick": false
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
         },
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -1127,19 +962,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d35",
-            "http://localhost:4040/jobs/job?id\u003d36"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694331_-1148394533",
       "id": "20180423-153606_25272067",
@@ -1153,10 +975,13 @@
       "title": "Percentage of Delays by Origin",
       "text": "%sql\n\nselect ORIGIN, round((sum(DELAY_LABELED) / count(*))*100, 2) as delay_percentage\n    from train_df\n    group by ORIGIN\n    order by delay_percentage desc",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:46:05.412",
+      "dateUpdated": "2019-01-04 16:32:39.305",
       "config": {
         "editorSetting": {
-          "language": "sql"
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
         },
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -1211,18 +1036,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d37"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694331_400315593",
       "id": "20180423-154247_471724541",
@@ -1276,18 +1089,6 @@
             "data": "+-------+-----------------+------------------+------------------+------------------+---------+------------------+------------------+-------------------+\n|summary|     day_of_month|       day_of_week|         dep_delay|         arr_delay|cancelled|          air_time|          distance|      delay_labeled|\n+-------+-----------------+------------------+------------------+------------------+---------+------------------+------------------+-------------------+\n|  count|          1030606|           1030606|           1030606|           1030606|  1030606|           1030606|           1030606|            1030606|\n|   mean|15.39944071740316|3.9361967619051317|10.939452128165371|4.4964680974106495|      0.0|137.35455644543114|1027.7749382402199|0.18165622944170712|\n| stddev|8.730470469828356|1.9823334094478118| 41.68744996874924| 44.15147169489554|      0.0| 79.03324434313053| 667.7328895728122| 0.3855611339196745|\n|    min|                1|                 1|               -68|               -87|        0|                17|                74|                  0|\n|    max|               31|                 7|              1988|              1971|        0|               683|              4983|                  1|\n+-------+-----------------+------------------+------------------+------------------+---------+------------------+------------------+-------------------+\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d38"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694331_-900030010",
@@ -1375,18 +1176,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d39"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694332_1045169830",
       "id": "20180423-155743_1963966507",
@@ -1428,21 +1217,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d40",
-            "http://localhost:4040/jobs/job?id\u003d41",
-            "http://localhost:4040/jobs/job?id\u003d42",
-            "http://localhost:4040/jobs/job?id\u003d43"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694332_-1717487804",
       "id": "20180423-160510_290046713",
@@ -1481,22 +1255,6 @@
             "data": "+-------------+-----+\n|delay_labeled|count|\n+-------------+-----+\n|            1|54235|\n|            0|86884|\n+-------------+-----+\n\n"
           }
         ]
-      },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d44",
-            "http://localhost:4040/jobs/job?id\u003d45",
-            "http://localhost:4040/jobs/job?id\u003d46",
-            "http://localhost:4040/jobs/job?id\u003d47",
-            "http://localhost:4040/jobs/job?id\u003d48"
-          ],
-          "interpreterSettingId": "spark"
-        }
       },
       "apps": [],
       "jobName": "paragraph_1546190694332_-1163155540",
@@ -1584,32 +1342,6 @@
         "code": "SUCCESS",
         "msg": []
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d49",
-            "http://localhost:4040/jobs/job?id\u003d50",
-            "http://localhost:4040/jobs/job?id\u003d51",
-            "http://localhost:4040/jobs/job?id\u003d52",
-            "http://localhost:4040/jobs/job?id\u003d53",
-            "http://localhost:4040/jobs/job?id\u003d54",
-            "http://localhost:4040/jobs/job?id\u003d55",
-            "http://localhost:4040/jobs/job?id\u003d56",
-            "http://localhost:4040/jobs/job?id\u003d57",
-            "http://localhost:4040/jobs/job?id\u003d58",
-            "http://localhost:4040/jobs/job?id\u003d59",
-            "http://localhost:4040/jobs/job?id\u003d60",
-            "http://localhost:4040/jobs/job?id\u003d61",
-            "http://localhost:4040/jobs/job?id\u003d62",
-            "http://localhost:4040/jobs/job?id\u003d63"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694333_-653390556",
       "id": "20170320-105544_864298752",
@@ -1651,28 +1383,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d64",
-            "http://localhost:4040/jobs/job?id\u003d65",
-            "http://localhost:4040/jobs/job?id\u003d66",
-            "http://localhost:4040/jobs/job?id\u003d67",
-            "http://localhost:4040/jobs/job?id\u003d68",
-            "http://localhost:4040/jobs/job?id\u003d69",
-            "http://localhost:4040/jobs/job?id\u003d70",
-            "http://localhost:4040/jobs/job?id\u003d71",
-            "http://localhost:4040/jobs/job?id\u003d72",
-            "http://localhost:4040/jobs/job?id\u003d73",
-            "http://localhost:4040/jobs/job?id\u003d74"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694333_-851711348",
       "id": "20180423-161730_894316472",
@@ -1686,11 +1396,13 @@
       "title": "Visualize Delays vs Non-Delays (actuals vs predictions)",
       "text": "%sql\n\nselect delay_labeled, prediction, count(*) as counts\n    from predictions\n    group by delay_labeled, prediction",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:48:26.301",
+      "dateUpdated": "2019-01-04 16:32:40.039",
       "config": {
         "editorSetting": {
           "language": "sql",
-          "editOnDblClick": false
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
         },
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -1752,22 +1464,6 @@
           }
         ]
       },
-      "runtimeInfos": {
-        "jobUrl": {
-          "propertyName": "jobUrl",
-          "label": "SPARK JOB",
-          "tooltip": "View in Spark web UI",
-          "group": "spark",
-          "values": [
-            "http://localhost:4040/jobs/job?id\u003d75",
-            "http://localhost:4040/jobs/job?id\u003d76",
-            "http://localhost:4040/jobs/job?id\u003d77",
-            "http://localhost:4040/jobs/job?id\u003d78",
-            "http://localhost:4040/jobs/job?id\u003d79"
-          ],
-          "interpreterSettingId": "spark"
-        }
-      },
       "apps": [],
       "jobName": "paragraph_1546190694333_1932838841",
       "id": "20180423-221313_139723671",
@@ -1812,6 +1508,7 @@
   "noteParams": {},
   "noteForms": {},
   "angularObjects": {
+    "md:shared_process": [],
     "angular:shared_process": [],
     "sh:shared_process": [],
     "spark:shared_process": []

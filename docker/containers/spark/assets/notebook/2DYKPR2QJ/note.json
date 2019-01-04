@@ -1016,7 +1016,7 @@
       "title": "Preview Data in an interactive table format",
       "text": "%sql\n\nSELECT * FROM flightsView LIMIT 20",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:51:15.408",
+      "dateUpdated": "2019-01-04 14:55:13.474",
       "config": {
         "editorSetting": {
           "editOnDblClick": false,
@@ -1096,7 +1096,7 @@
                       "SecurityDelay": "string",
                       "LateAircraftDelay": "string"
                     },
-                    "updated": true
+                    "updated": false
                   },
                   "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
                   "tableOptionValue": {
@@ -1258,7 +1258,7 @@
       "title": "Compare Total Delayed Time (min) by Carrier",
       "text": "%sql\n--- Compare Total Delayed Time (min) by Carrier\nSELECT UniqueCarrier, SUM(DepDelay) AS TotalTimeDelay FROM flightsView GROUP BY UniqueCarrier",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:51:16.903",
+      "dateUpdated": "2019-01-04 14:55:15.133",
       "config": {
         "editorSetting": {
           "editOnDblClick": false,
@@ -1407,7 +1407,7 @@
       "title": "Find Out When Most Flights Get Delayed by Day of Week",
       "text": "%sql\n\nSELECT DayOfWeek, CASE WHEN isDelayedUDF(DepDelay) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY DayOfWeek, CASE WHEN isDelayedUDF(DepDelay) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END\nORDER BY DayOfWeek",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:51:17.655",
+      "dateUpdated": "2019-01-04 14:55:15.202",
       "config": {
         "editorSetting": {
           "editOnDblClick": false,
@@ -1498,7 +1498,7 @@
       "title": "Find Out When Most Flights Get Delayed by Hour",
       "text": "%sql\n\nSELECT CAST(CRSDepTime / 100 AS INT) AS Hour, CASE WHEN isDelayedUDF(DepDelay) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END AS Delay, COUNT(1) AS Count\nFROM flightsView\nGROUP BY CAST(CRSDepTime / 100 AS INT), CASE WHEN isDelayedUDF(DepDelay) \u003d 1 THEN \u0027delayed\u0027 ELSE \u0027ok\u0027 END\nORDER BY Hour",
       "user": "anonymous",
-      "dateUpdated": "2018-12-30 18:51:17.796",
+      "dateUpdated": "2019-01-04 14:55:15.313",
       "config": {
         "editorSetting": {
           "editOnDblClick": false,
