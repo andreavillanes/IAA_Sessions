@@ -1,3 +1,6 @@
+
+Google Slides
+
 ## Apache Spark - Data Processing & Machine Learning
 1. Clone (or download) Repo:
 ```
@@ -29,3 +32,7 @@ Within the Container - Connect to PySpark:
 ```
 /spark/bin/pyspark --deploy-mode client --master local[*] --name spark_lab
 ```
+
+**Additional Scripts and References:**
+https://github.com/zaratsian/Spark
+

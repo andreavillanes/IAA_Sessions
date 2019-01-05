@@ -1,3 +1,6 @@
+
+[Google Slides](https://docs.google.com/presentation/d/1zB7K2ud91WOKuCENic4WNLz6lSqJ0yUbijYQJ3HbFU0/edit?usp=sharing)
+
 ## Apache Hive 
 
 1. Build Container
@@ -55,6 +58,10 @@ More scripts and examples found here:
 9. Within Container - Execute Phoenix Queries. Syntax shown here:
 <br>https://github.com/zaratsian/IAA_Sessions/blob/master/docker/containers/phoenix/assets/phoenix_3_queries.sql
 
+More scripts and examples found here:
+<br>https://github.com/zaratsian/HBase_Phoenix
+<br>https://github.com/zaratsian/SparkPhoenix
+
 ## Apache Spark
 
 1. Build Container
@@ -73,4 +80,7 @@ More scripts and examples found here:
 
 5. Within the Container - Execute SparkSQL Commands. Syntax shown here:
 <br>https://github.com/zaratsian/IAA_Sessions/blob/master/session_02/spark_sql_example.py
+
+More scripts and examples found here:
+https://github.com/zaratsian/Spark
 
