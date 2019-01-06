@@ -8,6 +8,11 @@ For this demo, I am using [Cloudbreak](https://docs.hortonworks.com/HDPDocuments
 
 For single-machine, quick prototyping, you could also use the [Hortonworks Sandbox](https://hortonworks.com/products/sandbox/), which is available as VMWare, VirtualBox, or a Docker container.
 
+Start a new GCP Cloudbreak Deployment (in Deployment Manager):
+```
+gcloud deployment-manager deployments create cbd-deployment --config=/home/dtz001/github/cbd-quickstart/gcp/vm_template_config.yaml
+```
+
 Login to Cloudbreak (based on external IP of Cloudbreak VM instance):
 user_email: ```admin@cloudbreak.com```
 password: ```cloudbreak123```
