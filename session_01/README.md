@@ -63,18 +63,18 @@ describe formatted sim_table;
 ## Docker Setup
 
 **For Windows:** https://docs.docker.com/docker-for-windows/install/
-**For Mac:** https://docs.docker.com/docker-for-mac/install/
-**For Linux (Ubuntu):** https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
+<br>**For Mac:** https://docs.docker.com/docker-for-mac/install/
+<br>**For Linux (Ubuntu):** https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
 
 **For Window/Mac (older versions, if the above does not work):** https://docs.docker.com/toolbox/overview/
 
-In order to check if Docker was installed, open the command line / terminal and run:
+In order to check if Docker was installed properly, open the command line / terminal and run:
 ```
 docker run hello-world
 ```
-If it works correctly, it should display:
+If it works correctly, it should display the following:
 ```
 Hello from Docker!
 This message shows that your installation appears to be working correctly. 
-...more...
+...and more content...
 ```
