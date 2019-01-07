@@ -58,28 +58,23 @@ sim.write.mode("overwrite").format('orc').saveAsTable('sim_table_orc')
 
 show tables;
 describe formatted sim_table;
-``
+```
 
 ## Docker Setup
 
-For Windows:
-```
-https://docs.docker.com/docker-for-windows/install/
-```
-For Mac:
-```
-https://docs.docker.com/docker-for-mac/install/
-```
-For Window/Mac (older versions):
-```
-https://docs.docker.com/toolbox/overview/
-```
-Run this cmd to skip virtualization check:
-```
-docker-machine create default --virtualbox-no-vtx-check
-```
+**For Windows:** https://docs.docker.com/docker-for-windows/install/
+**For Mac:** https://docs.docker.com/docker-for-mac/install/
+**For Linux (Ubuntu):** https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
 
-For Linux (Centos):
+**For Window/Mac (older versions, if the above does not work): https://docs.docker.com/toolbox/overview/
+
+In order to check if Docker was installed, open the command line / terminal and run:
 ```
-https://docs.docker.com/install/linux/docker-ce/ubuntu/
+docker run hello-world
+```
+If it works correctly, it should display:
+```
+Hello from Docker!
+This message shows that your installation appears to be working correctly. 
+...more...
 ```
