@@ -15,7 +15,7 @@ gcloud deployment-manager deployments create cbd-deployment --config=/home/dtz00
 
 Login to Cloudbreak (based on external IP of Cloudbreak VM instance):
 user_email: ```admin@cloudbreak.com```
-password: ```cloudbreak123```
+password: ```cloudbreakz1```
 
 ## Demo: Google Cloud Dataproc
 
@@ -58,4 +58,28 @@ sim.write.mode("overwrite").format('orc').saveAsTable('sim_table_orc')
 
 show tables;
 describe formatted sim_table;
+``
+
+## Docker Setup
+
+For Windows:
+```
+https://docs.docker.com/docker-for-windows/install/
+```
+For Mac:
+```
+https://docs.docker.com/docker-for-mac/install/
+```
+For Window/Mac (older versions):
+```
+https://docs.docker.com/toolbox/overview/
+```
+Run this cmd to skip virtualization check:
+```
+docker-machine create default --virtualbox-no-vtx-check
+```
+
+For Linux (Centos):
+```
+https://docs.docker.com/install/linux/docker-ce/ubuntu/
 ```
