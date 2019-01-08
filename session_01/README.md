@@ -80,6 +80,7 @@ This message shows that your installation appears to be working correctly.
 ```
 
 **TROUBLESHOOTING DOCKER** 
+
 This is a common error - "This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory". By default, most Windows computers do not have virtualization enabled. 
 
 You can ENABLE virtualization by following [these steps](https://www.shaileshjha.com/step-by-step-guide-to-enable-intel-vt-x-or-amd-v-in-bios-or-uefi-in-windows-10-and-windows-8/)
