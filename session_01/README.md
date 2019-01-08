@@ -83,4 +83,8 @@ This message shows that your installation appears to be working correctly.
 
 This is a common error - "This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory". By default, most Windows computers do not have virtualization enabled. 
 
-You can ENABLE virtualization by following [these steps](https://www.shaileshjha.com/step-by-step-guide-to-enable-intel-vt-x-or-amd-v-in-bios-or-uefi-in-windows-10-and-windows-8/)
+You can ENABLE virtualization by following [these steps](https://www.shaileshjha.com/step-by-step-guide-to-enable-intel-vt-x-or-amd-v-in-bios-or-uefi-in-windows-10-and-windows-8/) for Windows 10 and Windows 8 Operating Systems.
+
+Additional [Troubleshooting info from Docker](https://docs.docker.com/docker-for-windows/troubleshoot/#virtualization).
+
+
