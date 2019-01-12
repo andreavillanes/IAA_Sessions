@@ -89,7 +89,9 @@ git clone https://github.com/zaratsian/IAA_Sessions.git
 
 4. Open up Chrome (or another browser) and go to [http://localhost:18080](http://localhost:18080). [Apache Zeppelin](https://zeppelin.apache.org/) should open up within the browser, along with several preloaded notebooks that enables you to run and edit code interactively.
 
-5. Run the notebooks from within Apache Zeppelin (which is a browser-based code editor). The notebooks that you can run include **Getting Started - Python**, **Flight Predictor - Python**, and **Movie Text Analytics - Python**
+5. Run the notebooks from within Apache Zeppelin (which is a browser-based code editor). The notebooks that you can run include: <br>[Getting Started - Python](https://github.com/zaratsian/IAA_Sessions/blob/master/session_03/Getting%20Started%20-%20Python.json)
+<br>[Flight Predictor - Python](https://github.com/zaratsian/IAA_Sessions/blob/master/session_03/Flight%20Predictor%20-%20Python.json)
+<br>[Movie Text Analytics - Python](https://github.com/zaratsian/IAA_Sessions/blob/master/session_03/Movie%20Text%20Analytics%20-%20Python.json)
 
 **Alnatively, you can run commands from the command line**
 
@@ -103,5 +105,5 @@ git clone https://github.com/zaratsian/IAA_Sessions.git
 <br>https://github.com/zaratsian/IAA_Sessions/blob/master/session_02/spark_sql_example.py
 
 More scripts and examples found here:
-https://spark.apache.org/docs/latest/sql-getting-started.html
-https://github.com/zaratsian/Spark
+<br>https://spark.apache.org/docs/latest/sql-getting-started.html
+<br>https://github.com/zaratsian/Spark
