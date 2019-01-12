@@ -3,11 +3,10 @@
 
 ## Apache Hive 
 
-1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions).
+1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions). You can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip). Unzip the directory to a location that you can remember. If you have git locally installed, you can run this command:
 ```
 git clone https://github.com/zaratsian/IAA_Sessions.git
 ```
-Or you can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip)
 
 2. Build Container
 <br>```cd ./IAA_Sessions/docker```
@@ -35,11 +34,10 @@ More scripts and examples found here:
 
 ## Apache Phoenix (HBase)
 
-1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions).
+1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions). You can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip). Unzip the directory to a location that you can remember. If you have git locally installed, you can run this command:
 ```
 git clone https://github.com/zaratsian/IAA_Sessions.git
 ```
-Or you can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip)
 
 2. Build Container
 <br>```cd ./IAA_Sessions/docker```
@@ -76,11 +74,10 @@ More scripts and examples found here:
 
 ## Apache Spark
 
-1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions).
+1. If you have not already done so, clone (or download) this [github repo](https://github.com/zaratsian/IAA_Sessions). You can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip). Unzip the directory to a location that you can remember. If you have git locally installed, you can run this command:
 ```
 git clone https://github.com/zaratsian/IAA_Sessions.git
 ```
-Or you can manually download the zip from [here](https://github.com/zaratsian/IAA_Sessions/archive/master.zip)
 
 2. Build Container
 <br>```cd ./IAA_Sessions/docker```
@@ -90,13 +87,12 @@ Or you can manually download the zip from [here](https://github.com/zaratsian/IA
 3. Run Container
 <br>```./spark_run.sh```
 
-4. Open up Chrome (or another browser) and go to [localhost:18080](localhost:18080)
-
-[Apache Zeppelin](https://zeppelin.apache.org/) should open up within the browser, along with several preloaded notebooks that enables you to run and edit code interactively.
+4. Open up Chrome (or another browser) and go to [http://localhost:18080](http://localhost:18080). [Apache Zeppelin](https://zeppelin.apache.org/) should open up within the browser, along with several preloaded notebooks that enables you to run and edit code interactively.
 
 5. Run the notebooks from within Apache Zeppelin (which is a browser-based code editor). The notebooks that you can run include **Getting Started - Python**, **Flight Predictor - Python**, and **Movie Text Analytics - Python**
 
 **Alnatively, you can run commands from the command line**
+
 4. Connect to Container
 <br>```docker exec -it spark bash```
 
@@ -107,4 +103,5 @@ Or you can manually download the zip from [here](https://github.com/zaratsian/IA
 <br>https://github.com/zaratsian/IAA_Sessions/blob/master/session_02/spark_sql_example.py
 
 More scripts and examples found here:
+https://spark.apache.org/docs/latest/sql-getting-started.html
 https://github.com/zaratsian/Spark
