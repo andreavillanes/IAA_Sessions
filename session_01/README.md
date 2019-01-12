@@ -62,29 +62,6 @@ describe formatted sim_table;
 
 ## Docker Setup
 
-**For Windows:** https://docs.docker.com/docker-for-windows/install/
-<br>**For Mac:** https://docs.docker.com/docker-for-mac/install/
-<br>**For Linux (Ubuntu):** https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
+We'll step through the process in class.
 
-**For Window/Mac (older versions, if the above does not work):** https://docs.docker.com/toolbox/overview/
-
-In order to check if Docker was installed properly, open the command line / terminal and run:
-```
-docker run hello-world
-```
-If it works correctly, it should display the following:
-```
-Hello from Docker!
-This message shows that your installation appears to be working correctly. 
-...and more content...
-```
-
-**TROUBLESHOOTING DOCKER** 
-
-This is a common error - "This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory". By default, most Windows computers do not have virtualization enabled. 
-
-You can ENABLE virtualization by following [these steps](https://www.shaileshjha.com/step-by-step-guide-to-enable-intel-vt-x-or-amd-v-in-bios-or-uefi-in-windows-10-and-windows-8/) for Windows 10 and Windows 8 Operating Systems.
-
-Additional [Troubleshooting info from Docker](https://docs.docker.com/docker-for-windows/troubleshoot/#virtualization).
-
-
+As a reference, you can refer to [these instructions](https://github.com/zaratsian/IAA_Sessions/blob/master/setup_and_installation.md) when installing Docker and getting setup) which describe the process of installing docker, cloning my github repo, building, and then running the Docker container.
