@@ -21,9 +21,8 @@ cd IAA_Sessions/docker/
 <br>Windows: Double-click on ```spark_run.bat``` or you could also try to run ```spark_run.bat``` from the command line.
 
 5. Open up Zeppelin Notebook (use the UI to submit code):
-```
-[http://localhost:18080](http://localhost:18080)
-```
+<br>[http://localhost:18080](http://localhost:18080)
+
 6. Work through the following Labs (these notebooks & code should all be pre-loaded in your Apache Zeppelin notebook):
 <br>(1) Getting Started - Python (lab)
 <br>(2) Flight Predictor - Python 
