@@ -14,7 +14,8 @@ git clone https://github.com/zaratsian/IAA_Sessions.git
 <br>Windows:    Double-click on ```hive_build.bat```
 
 3. Run Container
-<br>```./hive_run.sh```
+<br>Mac/Linux: ```./hive_run.sh```
+<br>Windows: Double-click on ```hive_run.bat``` or you can run ```hive_run.bat``` from the command line.
 
 4. Connect to Container
 <br>```docker exec -it hadoop-master bash```
@@ -45,7 +46,8 @@ git clone https://github.com/zaratsian/IAA_Sessions.git
 <br>Windows:    Double-click on ```phoenix_build.bat```
 
 3. Run Container
-<br>```./phoenix_run.sh```
+<br>Mac/Linux: ```./phoenix_run.sh```
+<br>Windows: Double-click on ```phoenix_run.bat``` or you can run ```phoenix_run.bat``` from the command line.
 
 4. Connect to Container
 <br>```docker exec -it phoenix bash```
@@ -85,7 +87,8 @@ git clone https://github.com/zaratsian/IAA_Sessions.git
 <br>Windows:    Double-click on ```spark_build.bat```
 
 3. Run Container
-<br>```./spark_run.sh```
+<br>Mac/Linux: ```./spark_run.sh```
+<br>Windows: Double-click on ```spark_run.bat``` or you can run ```spark_run.bat``` from the command line.
 
 4. Open up Chrome (or another browser) and go to [http://localhost:18080](http://localhost:18080). [Apache Zeppelin](https://zeppelin.apache.org/) should open up within the browser, along with several preloaded notebooks that enables you to run and edit code interactively.
 
