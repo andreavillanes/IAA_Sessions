@@ -1,11 +1,14 @@
 # Docker Container Setup Installation Notes
 
 ## 1) Install Docker
-For Windows: ```https://docs.docker.com/docker-for-windows/install/```
-<br>For Mac: ```https://docs.docker.com/docker-for-mac/install/```
-<br>For Ubuntu/Linux:  ```https://docs.docker.com/install/linux/docker-ce/centos/```
 
-**NOTE:** For Windows 10 Home and older, or for Mac operating systems older than El Capitan 10.11, you will need to install [Docker Toolbox](https://docs.docker.com/toolbox/overview/)
+**For Windows:** https://docs.docker.com/docker-for-windows/install/
+<br>**For Mac:** https://docs.docker.com/docker-for-mac/install/
+<br>**For Linux (Ubuntu):** https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
+
+**For Window/Mac (if the above does not install, then you may need "Docker Toolbox"):** https://docs.docker.com/toolbox/overview/
+
+Specifically, if you are running Windows 10 Home Edition and older, or a Mac operating systems older than El Capitan 10.11, you will need to install [Docker Toolbox](https://docs.docker.com/toolbox/overview/)
 
 To test Docker, you can run the hello world container, by opening up the command line / terminal and entering: ```docker run hello-world```
 
@@ -14,6 +17,14 @@ If the "docker hello-world" test completes successfully, you should see a meesag
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ```
+
+**TROUBLESHOOTING DOCKER** 
+
+This is a common error - "This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory". By default, most Windows computers do not have virtualization enabled. 
+
+You can ENABLE virtualization by following [these steps](https://www.shaileshjha.com/step-by-step-guide-to-enable-intel-vt-x-or-amd-v-in-bios-or-uefi-in-windows-10-and-windows-8/) for Windows 10 and Windows 8 Operating Systems.
+
+Additional [Troubleshooting info from Docker](https://docs.docker.com/docker-for-windows/troubleshoot/#virtualization).
 
 ## 2) Download my [Github Repo](https://github.com/zaratsian/IAA_Sessions):
 For Windows/Mac Users: Manually download the repo from https://github.com/zaratsian/IAA_Sessions and unzip into a location that you can remember.
