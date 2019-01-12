@@ -25,7 +25,7 @@ Navigate to the downloaded github repo, specifically to this path ./IAA_Sessions
 ```
 cd ./IAA_Sessions/docker
 ```
-## 5) Build the Docker Container
+## 4) Build the Docker Container
 
 This process will build the Docker container, which involves pulldown down libraries and depencenies from the web (so be sure that you are connected to the internet). 
 
@@ -38,12 +38,14 @@ docker network create dev
 docker build -t spark containers/spark
 ```
 
-## 6) Run the Spark Container 
+## 5) Run the Spark Container 
 
 This process will start the Docker container, start Zeppelin (which is a code editor), and also run a test spark script.
     
 For Windows Users:      ```spark_run.bat```
 <br>For Mac/Linux Users:    ```./spark_run.sh```
 
-**NOTE:** If successful, you should see data displayed once the processing completes, as well as a message that says "[ INFO ] Spark Test Successful!"
-
+**NOTE:** If successful, you should see data displayed once the processing completes, as well as a message that says:
+```
+[ INFO ] Spark Test Successful!"
+```
