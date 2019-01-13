@@ -13,6 +13,7 @@ Distributed Data Processing Module - Dan Zaratsian, Jan 2019
 * Docker Setup & Troubleshooting
 
 ## IAA Module - Session 2 - SQL and NoSQL Services
+* Docker Setup & Troubleshooting
 * Intro to Apache Hive
 * Apache Hive Syntax and Schema Design
 * Demo & Lab - Apache Hive
@@ -29,7 +30,7 @@ Distributed Data Processing Module - Dan Zaratsian, Jan 2019
 * Building and deploying Spark machine learning models
 * Considerations for ML in distributed environments
 * Spark Best Practices and Tuning
-* Demo & Lab - Spark ML with NYC Taxi Data
+* Spark Demo & Labs (pre-loaded within your Apache Zeppelin Notebooks)
 
 ## IAA Module - Session 4 - Realtime, Streaming Systems
 * Intro to Apache Kafka
