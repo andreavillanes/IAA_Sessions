@@ -41,3 +41,16 @@ Within the Container - Connect to PySpark:
 <br>https://spark.apache.org/docs/latest/sql-getting-started.html
 <br>https://github.com/zaratsian/Spark
 
+**Alternative Docker Container for Spark/Zeppelin**
+
+Pull the Docker container from Docker Hub using this command:
+```
+docker pull mirkoprescha/spark-zeppelin-docker
+```
+
+Run the Docker container:
+```
+docker run -it -p 18080:18080 -p 8088:8080 -d mirkoprescha/spark-zeppelin-docker
+```
+
+Open up your Browser and go to http://localhost:8088
