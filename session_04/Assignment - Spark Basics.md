@@ -27,4 +27,4 @@ Here's the Spark Documentation:
 * [PySpark SQL Functions](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame.groupBy)
 * [PySpark Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 
-Please email your final code file to me (d.zaratsian@gmail.com) by **Thursday, January 24th at 11:59pm EST**
+Please email your final code to me (d.zaratsian@gmail.com) by **Thursday, January 24th at 11:59pm EST**
