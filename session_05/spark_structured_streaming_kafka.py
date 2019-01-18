@@ -36,7 +36,7 @@ from pyspark.sql.types import *
 }
 '''
 
-# JSON Schema
+# JSON Schema (for Meetup.com RSVPs)
 schema = schema = StructType([
         StructField("event_name", StringType(), False),
         StructField("event_url", StringType(), False),
@@ -60,28 +60,31 @@ schema = schema = StructType([
     ])
 
 
-# Create Kafka Source for Streaming Queries 
+# Create Kafka source for Streaming Queries 
 sdf = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "kafka.dev:9092") \
   .option("subscribe", "dztopic1") \
   .load() \
-  .select(F.from_json(F.col("value").cast("string"), schema).alias("parsed_value"))
-
+  .withColumn("parsed_value", F.from_json(F.col("value").cast("string"), schema)) \
+  .select([F.col("parsed_value"), F.col("timestamp")])
 
 
 # Check for streaming data
 #sdf.isStreaming()
 
+
 # Print Schema
 sdf.printSchema()
+
 
 # Cast key-value stream
 #sdf.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
 
-# Extract each column / field
-sdf = sdf.withColumn('event_name',        sdf.parsed_value.event_name) \
+
+# Extract columns / fields from the parsed json
+sdf = sdf.withColumn('event_name',  sdf.parsed_value.event_name) \
         .withColumn('event_url',    sdf.parsed_value.event_url) \
         .withColumn('lat',          sdf.parsed_value.venue.lat) \
         .withColumn('lon',          sdf.parsed_value.venue.lon) \
@@ -92,34 +95,41 @@ sdf = sdf.withColumn('event_name',        sdf.parsed_value.event_name) \
         .withColumn('group_state',  sdf.parsed_value.group.group_state) \
         .withColumn('urlkey',       sdf.parsed_value.group.urlkey) \
         .withColumn('topic_name',   sdf.parsed_value.group.topic_name) \
-        .withColumn('timestamp',    datetime.datetime.now()) \
         .drop('parsed_value')
 
-# Setup windowed aggregation
-windowedCounts = sdf.groupBy(
-    window(sdf.timestamp, "1 minutes", "5 seconds"),
-    words.word
-).count()
 
-# Write stream to endpoint (in this case, it is an in-memory DStream DF)
+# Start write stream - outputs to an in-memory table called "q1"
 q1 = sdf \
     .writeStream \
     .queryName("q1")\
     .format("memory")\
     .start()
 
-# Write stream to endpoint (in this case, it is an in-memory DStream DF)
-q1_window = sdf \
-    .writeStream \
-    .queryName("q1_window")\
-    .format("memory")\
-    .start()
 
-# Query the in-memory DStream DF
+# Query the in-memory table
 spark.sql('''select * from q1''').show(10,False)
 
-# Move the streaming DStream DF to a normal Pyspark DF
+
+# Load the in-memory table (DStream) into a standard Spark DF
 df = spark.sql('''select * from q1''')
+
+
+# Windowing - Windowed grouped aggregation with a 10 minute window, sliding every 10 minutes
+windowedCounts = sdf.groupBy(
+    F.window(sdf.timestamp, "10 minutes", "10 minutes"),
+    'event_name'
+).count().sort( F.col("count").desc() )
+
+
+# Start write stream - output to the console
+q1_window = windowedCounts \
+    .writeStream \
+    .queryName("q1_window")\
+    .outputMode("complete")\
+    .format("console")\
+    .option("truncate", False)\
+    .start()
+
 
 
 #ZEND
