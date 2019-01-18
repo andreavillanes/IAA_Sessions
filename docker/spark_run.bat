@@ -3,7 +3,7 @@
 docker stop spark
 docker rm -f spark
 
-docker run -it -d -p 18080:8080 -e SPARK_LOCAL_HOSTNAME=localhost --hostname spark --net dev --name spark spark
+docker run -it -d -p 18080:8080 -p 9090:9090 -e SPARK_LOCAL_HOSTNAME=localhost --hostname spark --net dev --name spark spark
 
 docker exec spark /zeppelin/bin/zeppelin-daemon.sh start
 
