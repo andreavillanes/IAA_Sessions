@@ -10,7 +10,7 @@ Here's what I want you to do:
 
 3)  Display the total number of records in the spark dataframe.
 
-4)  Filter the spark dataframe (I'll let you choose what column(s) you want to filter on).
+4)  [Filter](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame.filter) the spark dataframe (I'll let you choose what column(s) you want to filter on).
 
 5)  Perform a [groupby](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame.groupBy) (aggregation) that sums one of your numeric variables within a category that you choose. 
 
@@ -21,6 +21,7 @@ If you need to make assumptions, please add those as comments to your code. Anyt
 If you need some help, here are examples:
 * [Zeppelin Notebok - Getting Started - Python 1 (lab - answers)](https://github.com/zaratsian/IAA_Sessions/blob/master/session_03/Getting%20Started%20-%20Python%20(lab%20-%20answers).json)
 * [NYCTaxi_PySpark.py](https://github.com/zaratsian/Spark/blob/master/NYCTaxi_PySpark.py)
+* [Spark Misc Code Examples](https://github.com/zaratsian/Spark)
 
 Here's the Spark Documentation:
 * [PySpark SQL Functions](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame.groupBy)
