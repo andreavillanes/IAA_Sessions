@@ -12,11 +12,12 @@
 * CloudML - Model building and deployment
 
 **Resources:**
-<br>* [Google Cloud Platform](https://console.cloud.google.com/) - [Free Trial](https://console.cloud.google.com/freetrial)
-<br>* [Google Machine Learning Engine](https://cloud.google.com/ml-engine/docs/)
-<br>* [Google App Engine](https://cloud.google.com/appengine/)
-<br>* [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
-<br>* [Google BigQuery](https://cloud.google.com/bigquery/docs/)
-<br>
-<br>* [Qwiklabs - GCP Essentials Labs](https://www.qwiklabs.com/quests/23?locale=en)
-<br>* [Coursera - Google Cloud](https://www.coursera.org/googlecloud)
+
+* [Google Cloud Platform](https://console.cloud.google.com/) - [Free Trial](https://console.cloud.google.com/freetrial)
+* [Google Machine Learning Engine](https://cloud.google.com/ml-engine/docs/)
+* [Google App Engine](https://cloud.google.com/appengine/)
+* [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
+* [Google BigQuery](https://cloud.google.com/bigquery/docs/)
+
+* [Qwiklabs - GCP Essentials Labs](https://www.qwiklabs.com/quests/23?locale=en)
+* [Coursera - Google Cloud](https://www.coursera.org/googlecloud)
