@@ -6,10 +6,15 @@
 **Demos:**
 
 * Machine Learning APIs
+  * [Google Vision API](https://cloud.google.com/vision/)
+  * [Google NLP API](https://cloud.google.com/natural-language/)
+  * [Google Video Intelligence](https://cloud.google.com/video-intelligence/)
+  * [Google Translate API](https://cloud.google.com/translate/docs/)
+  * [Google Speech API](https://cloud.google.com/speech-to-text/)
 * Google Cloud Functions
 * App Engine Deployments
 * BigQuery - Serverless data warehouse for analytics
-* CloudML - Model building and deployment
+* CloudML - [Model building and deployment](https://github.com/zaratsian/ML-Model-Deployment/tree/master/sklearn_nfl)
 
 **Resources:**
 
