@@ -4,11 +4,16 @@
 ## Google Cloud Platform
 
 **Demos:**
-<br>*Machine Learning APIs
-<br>*Google Cloud Functions
-<br>*App Engine Deployments
-<br>*BigQuery - Serverless data warehouse for analytics
-<br>*CloudML - Model building and deployment
+
+*Machine Learning APIs
+
+*Google Cloud Functions
+
+*App Engine Deployments
+
+*BigQuery - Serverless data warehouse for analytics
+
+*CloudML - Model building and deployment
 
 **Resources:**
 <br>* [Google Cloud Platform](https://console.cloud.google.com/) - [Free Trial](https://console.cloud.google.com/freetrial)
