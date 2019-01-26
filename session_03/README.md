@@ -41,7 +41,7 @@ Within the Container - Connect to PySpark:
 <br>https://spark.apache.org/docs/latest/sql-getting-started.html
 <br>https://github.com/zaratsian/Spark
 
-**Alternative Docker Container for Spark/Zeppelin**
+## Alternative Docker Container for Spark/Zeppelin
 
 Run this command to pull down and run the Docker container:
 ```
