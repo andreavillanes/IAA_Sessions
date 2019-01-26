@@ -4,37 +4,37 @@
 
 ## Demo: Hortonworks Data Platform
 
-For this demo, I am using [Cloudbreak](https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/index.html) to provision and deploy [Hortonworks HDP](https://docs.hortonworks.com) (Apache tech stack) across a set of [Google Cloud](https://cloud.google.com/) servers.
+For this first demo, I am using [Cloudbreak](https://docs.hortonworks.com/HDPDocuments/Cloudbreak/Cloudbreak-2.7.2/index.html) to provision and deploy a [Hortonworks](https://docs.hortonworks.com) (Hadoop plus other apache services) across a set of [Google Cloud](https://cloud.google.com/) GCE instances.
 
-For single-machine, quick prototyping, you could also use the [Hortonworks Sandbox](https://hortonworks.com/products/sandbox/), which is available as VMWare, VirtualBox, or a Docker container.
+For single-machine (quick prototyping) you could use [Google Dataproc](https://cloud.google.com/dataproc/) or the [Hortonworks Sandbox VM](https://hortonworks.com/products/sandbox/), which is available as VMWare, VirtualBox, or a Docker container.
 
-Start a new GCP Cloudbreak Deployment (in Deployment Manager):
+1) This command was used to start a new GCP Cloudbreak Deployment (within Deployment Manager):
 ```
 gcloud deployment-manager deployments create cbd-deployment --config=/home/dtz001/github/cbd-quickstart/gcp/vm_template_config.yaml
 ```
 
-Login to Cloudbreak (based on external IP of Cloudbreak VM instance):
+2) Login to Cloudbreak, then config the cluster services:
 user_email: ```admin@cloudbreak.com```
 password: ```cloudbreakz1```
 
 ## Demo: Google Cloud Dataproc
 
-The second demo will demonstrate how to quickly deploy a Hadoop cluster using Google Cloud (specifically Google Dataproc). The cluster should spin up in ~2 minutes, and includes serives such as HDFS, Hive, Spark, and others.
+The second demo will demonstrate how to quickly deploy a Hadoop cluster using Google Cloud (specifically [Google Dataproc](https://cloud.google.com/dataproc/)). The cluster should spin up in about 2 minutes, and includes services such as Hadoop/HDFS, Hive, Spark, and others.
 
-To Launch a Google Cloud Dataproc cluster, execute these commands:
+1) To Launch a Google Cloud Dataproc cluster, execute these commands:
 ```
 git clone https://github.com/zaratsian/IAA_Sessions.git
 cd IAA_Sessions/session_01/
 ```
-Create the 3+ node cluster (with parameters as specified in the bash script)
+2) Create the 3+ node cluster (with parameters as specified in the bash script)
 ```
 ./dataproc_1_create_cluster.sh
 ```
-To run a test PySpark script, run:
+3) Run a test PySpark script, run:
 ```
 ./dataproc_2_spark_submit.sh
 ```
-Demo flow once Dataproc has launched:
+4) Step through this demo flow once Dataproc has launched:
 ```
 # PySpark Shell - Connected as client to the  Yarn master
 /usr/lib/spark/bin/pyspark --deploy-mode client --master yarn --name spark_example
@@ -64,4 +64,4 @@ describe formatted sim_table;
 
 We'll step through the process in class.
 
-As a reference, you can refer to [these instructions](https://github.com/zaratsian/IAA_Sessions/blob/master/setup_and_installation.md) when installing Docker and getting setup) which describe the process of installing docker, cloning my github repo, building, and then running the Docker container.
+As a reference, you can refer to [these instructions](https://github.com/zaratsian/IAA_Sessions/blob/master/setup_and_installation.md) when installing Docker and getting setup, which describes the process of installing Docker, cloning my Github repo, building it, and then running the Docker container(s).
